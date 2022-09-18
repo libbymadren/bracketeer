@@ -7,7 +7,7 @@
 
 There are two main types of users to consider - the tournament organizer (TO) who creates and runs brackets, and the participant who is viewing the bracket. A TO needs an account to access features specific to them, while a participant can access features with or without an account. TO-specific features are marked as such in the feature list below.
 
-<strong>Core Features</strong><br>
+<strong>Core Features</strong>
 1. Create an Event [TO]<br>
 2. Edit Event Details [TO]<br>
 3. Create and Manage Bracket for an Event [TO]<br>
@@ -18,7 +18,7 @@ There are two main types of users to consider - the tournament organizer (TO) wh
 8. View Event Page (Banner, About, Bracket, Placements, etc) [Offline Accessible] <br>
 9. View Overall Bracket [Offline Accessible]<br>
 10. View Indvidual Placement and Scores within Bracket [Offline Accessible]<br>
-<br><br>
+<br>
 
 <strong>Additional Features</strong><br>
 11. Search for Tournaments <br>
@@ -62,9 +62,9 @@ Tournament
 <img src="https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-groupT-Wireframe-Full.png" >
 <h3>Landing Page</h3>
 <img src="https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-groupT-Wireframe-Landing.png">
-<h3>Create or Join Tournament</h3>
+<h3>Create or Join Event</h3>
 <img src="https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-createjoin.png" >
-<h3>Edit Tournament</h3>
+<h3>Edit Event</h3>
 <img src="https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-edittournament.png" >
 <h3>View Bracket and Match Info</h3>
 <img src="https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-bracketviewedit.png" >
