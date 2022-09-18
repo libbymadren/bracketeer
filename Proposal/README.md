@@ -45,14 +45,13 @@ User
   <li>User Stats (Number Played, Number Won, Recent Rankings, etc)</li>
 </ul>
 
-Tournament
+Event
 <ul>
   <li>Name</li>
   <li>Banner</li>
   <li>About Page</li>
   <li>Bracket(s)</li>
   <li>Timetables</li>
-  <li>Events</li>
   <li>Organizer(s)</li>
   <li>Participants</li>
 </ul>
