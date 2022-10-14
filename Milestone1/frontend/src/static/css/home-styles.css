@@ -4,3 +4,12 @@
     font-family: 'Lilita One', cursive;
     margin-top: 3rem;
 }
+
+#example-bracket {
+    margin-top: 2rem;
+    width: 60rem;
+}
+
+.btn {
+    margin-top: 1rem;
+}
