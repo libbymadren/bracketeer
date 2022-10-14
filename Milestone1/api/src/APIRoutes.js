@@ -47,6 +47,41 @@ apiRouter.get('/tournaments/:tournamentId', (req,  res) => {
 });
 
 // Update a specific tournament
+apiRouter.post('/tournaments', (req, res) => {
+
+    //Check if all fields are provided and are valid:
+    if(!req.params.id.toString().match(/^[0-9]{3,}$/g) ||
+        !req.body.picture ||
+        !req.body.name ||
+        !req.body.organizer_id.toString().match(/^[0-9]{3,}$/g) ||
+        !req.body.address || 
+        !req.body.description ||
+        !req.body.created || 
+        !req.body.start ||
+        !req.body.address || 
+        !req.body.participants){
+       
+       res.status(404).json({error: 'Could not update tournaments'});
+    } else {
+
+        // Create new tournament
+        tournaments.push({
+            id: req.params.id,
+            picture: req.body.picture,
+            name: req.body.name,
+            organizer_id: req.body.organizer_id,
+            address: req.body.address,
+            description: req.body.description,
+            created: req.body.created,
+            start: req.body.start,
+            participants: req.body.participants
+        });
+
+       res.json(tournament);
+    }
+ });
+
+// Update a specific tournament
 apiRouter.put('/tournaments/:tournamentId', (req, res) => {
 
     //Check if all fields are provided and are valid:
@@ -70,18 +105,8 @@ apiRouter.put('/tournaments/:tournamentId', (req, res) => {
        }).indexOf(parseInt(req.params.id));
        
        if(updateIndex === -1){
-            // Tournament not found, create new
-            tournaments.push({
-                id: req.params.id,
-                picture: req.body.picture,
-                name: req.body.name,
-                organizer_id: req.body.organizer_id,
-                address: req.body.address,
-                description: req.body.description,
-                created: req.body.created,
-                start: req.body.start,
-                participants: req.body.participants
-            });
+            // Tournament not found
+            res.status(404).json({error: 'Tournament not found'});
        } else {
             // Update existing tournament
             tournaments[updateIndex] = {
@@ -99,6 +124,19 @@ apiRouter.put('/tournaments/:tournamentId', (req, res) => {
 
        res.json(tournament);
     }
- });
+});
+
+apiRouter.delete('/tournaments/:tournamentId', (req, res) => {
+    var removeIndex = tournaments.map((tournament) => {
+       return tournament.id;
+    }).indexOf(req.params.id); //Gets us the index of tournament with given id.
+    
+    if(removeIndex === -1){
+        res.status(404).json({error: 'Tournament not found'});
+    } else {
+        tournaments.splice(removeIndex, 1);
+        res.json(tournament);
+    }
+});
 
 module.exports = apiRouter;
