@@ -47,7 +47,7 @@ apiRouter.get('/tournaments/:tournamentId', (req,  res) => {
 });
 
 // Update a specific tournament
-router.put('/tournaments/:tournamentId', (req, res) => {
+apiRouter.put('/tournaments/:tournamentId', (req, res) => {
 
     //Check if all fields are provided and are valid:
     if(!req.params.id.toString().match(/^[0-9]{3,}$/g) ||
