@@ -12,5 +12,14 @@ app.get('/home', (req, res) => {
 });
 
 
+app.get('/create', (req, res) => {
+    res.sendFile(html_path + '/create.html');
+});
+  
+app.get('/edit', (req, res) => {
+    res.sendFile(html_path + '/edit.html');
+});
+
+
 // As our server to listen for incoming connections
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));
