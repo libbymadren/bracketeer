@@ -33,7 +33,7 @@ input {
     border-radius: 10px;
     border-width: 2px;
     border-color: black;
-    background-color: #F3F3F3;
+    /* background-color: #F3F3F3; */
     font-size: 12pt;
 }
 
@@ -57,7 +57,7 @@ input[type="submit"] {
 }
 
 input[value="Cancel"] {
-    background-color: #F3F3F3;
+    /* background-color: #F3F3F3; */
     color: black;
 }
 
@@ -68,6 +68,6 @@ textarea {
     border-radius: 10px;
     border-width: 2px;
     border-color: black;
-    background-color: #F3F3F3;
+    /* background-color: #F3F3F3; */
     font-size: 12pt;
 }
