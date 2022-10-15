@@ -28,6 +28,10 @@ app.get('/tournaments/:tournamentId', (req, res) => {
     res.sendFile(html_path + "/tournaments.html");
 });
 
+app.get('/matches/:matchId', (req, res) => {
+    res.sendFile(html_path + "/matches.html");
+});
+
 
 // As our server to listen for incoming connections
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));

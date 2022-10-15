@@ -283,9 +283,14 @@ apiRouter.post('/join/:joinId', (req, res) => {
 apiRouter.get('/matches/:matchId', (req, res) => {
     let targetMatchId = req.params.matchId;
 
-    let match = matches.find(match => match.id == targetMatchId);
+    let match = Object.create(matches.find(match => match.id == targetMatchId));
+
+    
 
     if (match) {
+        // load the participants for the match
+        match.participant_one = users.find(user => user.id == match.participant_one);
+        match.participant_two = users.find(user => user.id == match.participant_two);
         res.json(match);
     } else {
         res.status(404).json({error: "No match found with id: " + targetMatchId});
