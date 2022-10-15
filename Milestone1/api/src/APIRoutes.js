@@ -31,10 +31,78 @@ apiRouter.get('/users/:userId', (req,  res) => {
     }
 });
 
+// Get all matches for a specific user
+apiRouter.get('/users/:userId/matches', (req,  res) => {
+    const userId = req.params.userId;
+    let userMatches = matches.filter(match => match.participant_one == userId || match.participant_two == userId);
+    if(userMatches) {
+
+        res.json(userMatches);
+    }
+    else {
+        res.status(404).json({error: 'No matches found for this user'});
+    }
+});
+
+// Delete a user
+apiRouter.delete('/users/:userId', (req,  res) => {
+    const userId = req.params.userId;
+    let user = users.find(user => user.id == userId);
+
+    if(user) {
+        users.splice(users.indexOf(user), 1);
+        res.json(users);
+    }
+    else {
+        res.status(404).json({error: 'User not found'});
+    }
+});
+
+// Create a user
+apiRouter.post('/users', (req,  res) => {
+    let newUser = req.body;
+    let user = users.find(user => user.username == newUser.username || user.email == newUser.email);
+    
+    if (user) {
+        if (user.username == newUser.username) {
+            res.status(409).json({error: 'User with this username already exists'});
+        }
+        else {
+            res.status(409).json({error: 'User with this email already exists'});
+        }
+    }
+    else {
+        newUser['id'] = users.length;
+        users.push(newUser);
+        res.json(newUser);
+    }
+});
+
+// Update a user
+apiRouter.put('/users/:userId', (req,  res) => {
+    const userId = req.params.userId;
+    let newUser = req.body;
+    let user = users.find(user => user.id == userId);
+
+    if (user) {
+        users[users.indexOf(user)] = newUser;
+        res.json(newUser);
+    }
+    else {
+        res.status(404).json({error: 'User not found'});
+    }
+});
+
+
 
 // ----------------------------------------------------
 // TOURNAMENTS API
 // ----------------------------------------------------
+
+// get all tournaments
+apiRouter.get('/tournaments/', (req, res) => {
+    res.json(tournaments);
+});
 
 // get tournament by id
 apiRouter.get('/tournaments/:tournamentId', (req, res) => {
@@ -125,6 +193,22 @@ apiRouter.get('/matches/:matchId', (req, res) => {
         res.json(match);
     } else {
         res.status(404).json({error: "No match found with id: " + targetMatchId});
+    }
+});
+
+// ----------------------------------------------------
+// LOGIN API
+// ----------------------------------------------------
+
+apiRouter.post('/login', (req,  res) => {
+    const userRequest = req.body;
+    let user = users.find(user => user.username == userRequest.username && user.password == userRequest.password);
+    
+    if(user) {
+        res.json(user)
+    }
+    else {
+        res.status(404).json({error: 'User not found'});
     }
 });
 
