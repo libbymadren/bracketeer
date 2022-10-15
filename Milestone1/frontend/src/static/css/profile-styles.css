@@ -1,0 +1,32 @@
+#user-info {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    margin-left: 10%;
+}
+
+#user-info span {
+    margin-bottom: 0;
+}
+
+#profile-picture {
+    object-fit: scale-down;
+    width: 15%;
+    height: auto;
+}
+
+.card {
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+} 
+
+.tournament-image {
+    width: 15%;
+    height: auto;
+}
+
+@media (max-width:600px) {
+    .tournament-image {
+      display: none;
+    }
+} 

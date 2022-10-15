@@ -11,6 +11,10 @@ app.get('/home', (req, res) => {
     res.sendFile(html_path + '/home.html');
 });
 
+app.get('/profile', (req, res) => {
+    res.sendFile(html_path + '/profile.html');
+});
+
 
 app.get('/create', (req, res) => {
     res.sendFile(html_path + '/create.html');
