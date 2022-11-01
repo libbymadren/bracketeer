@@ -1,0 +1,64 @@
+
+main {
+    margin-top: 20px;
+    width: 50vw;
+}
+
+img {
+    max-height: unset;
+}
+
+
+@font-face {
+    font-family: Teko-Medium;
+    src: url(../fonts/Teko/Teko-Medium.ttf);
+  }
+
+
+#match-header {
+    display: flex;
+    justify-content: center;
+    align-items:baseline;
+}
+#match-header div {
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+#match-header div img {
+    max-width: 150px;
+    max-height: 150px;
+}
+#vs-label {
+    font-family: Teko-Medium;
+    font-size: 40pt;
+}
+
+
+
+#match-info-container label.field-title {
+    font-weight: bold;
+}
+
+
+#match-info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.13);
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+#match-info-container div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    width: 100%;
+}
+
