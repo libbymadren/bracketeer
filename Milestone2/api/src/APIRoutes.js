@@ -4,6 +4,8 @@ const apiRouter = express.Router();
 
 const data_path = __dirname + '/data/';
 
+const UserDAO = require('./data/UserDAO');
+
 let users = require(data_path + 'users.json');
 let tournaments = require(data_path + 'tournaments.json');
 let matches = require(data_path + 'matches.json');
@@ -16,20 +18,28 @@ apiRouter.use(express.json());
 
 // Get all users
 apiRouter.get('/users', (req,  res) => {
-    res.json(users);
+    UserDAO.getUsers().then(users => {
+        res.json(users);
+      })
+      .catch(err => {
+        res.status(400).json({error: err});
+      });
 });
 
 // Get specific user
 apiRouter.get('/users/:userId', (req,  res) => {
     const userId = req.params.userId;
-    let user = users.find(user => user.id == userId);
-
-    if(user) {
-        res.json(user);
-    }
-    else {
-        res.status(404).json({error: 'User not found'});
-    }
+    UserDAO.getUserById(userId).then(user => {
+        if(user) {
+            res.json(user);
+        }
+        else {
+            res.status(404).json({error: 'User not found'});
+        }
+    })
+    .catch(err => {
+        res.status(500).json({error: err});
+    });
 });
 
 // Get all matches for a specific user
@@ -48,50 +58,29 @@ apiRouter.get('/users/:userId/matches', (req,  res) => {
 // Delete a user
 apiRouter.delete('/users/:userId', (req,  res) => {
     const userId = req.params.userId;
-    let user = users.find(user => user.id == userId);
-
-    if(user) {
-        users.splice(users.indexOf(user), 1);
+    UserDAO.getUserById(userId).then(users => {
         res.json(users);
-    }
-    else {
-        res.status(404).json({error: 'User not found'});
-    }
+    })
+    .catch(err => {
+        res.status(500).json({error: err});
+    });
 });
 
 // Create a user
 apiRouter.post('/users', (req,  res) => {
     let newUser = req.body;
-    let user = users.find(user => user.username == newUser.username || user.email == newUser.email);
-    
-    if (user) {
-        if (user.username == newUser.username) {
-            res.status(409).json({error: 'User with this username already exists'});
-        }
-        else {
-            res.status(409).json({error: 'User with this email already exists'});
-        }
-    }
-    else {
-        newUser['id'] = users.length;
-        users.push(newUser);
-        res.json(newUser);
-    }
+    newUser = UserDAO.createUser(newUser).then(user => {
+        res.json(user);
+    });
 });
 
 // Update a user
 apiRouter.put('/users/:userId', (req,  res) => {
     const userId = req.params.userId;
-    let newUser = req.body;
-    let user = users.find(user => user.id == userId);
-
-    if (user) {
-        users[users.indexOf(user)] = newUser;
-        res.json(newUser);
-    }
-    else {
-        res.status(404).json({error: 'User not found'});
-    }
+    let user = req.body;
+    user = UserDAO.updateUser(user, userId).then(user => {
+        res.json(user);
+    })
 });
 
 
