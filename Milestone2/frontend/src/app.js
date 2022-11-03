@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require('./utils/jwt');
 
 const app = express();
 const PORT = process.env.PORT;
@@ -11,25 +12,32 @@ app.get('/home', (req, res) => {
     res.sendFile(html_path + '/home.html');
 });
 
-app.get('/profile', (req, res) => {
+app.get('/profile', jwt.middleware, (req, res) => {
     res.sendFile(html_path + '/profile.html');
 });
 
-
-app.get('/create', (req, res) => {
+app.get('/create', jwt.middleware, (req, res) => {
     res.sendFile(html_path + '/create.html');
 });
   
-app.get('/edit', (req, res) => {
+app.get('/edit', jwt.middleware, (req, res) => {
     res.sendFile(html_path + '/edit.html');
 });
 
-app.get('/tournaments/:tournamentId', (req, res) => {
+app.get('/tournaments/:tournamentId', jwt.middleware, (req, res) => {
     res.sendFile(html_path + "/tournaments.html");
 });
 
-app.get('/matches/:matchId', (req, res) => {
+app.get('/matches/:matchId', jwt.middleware, (req, res) => {
     res.sendFile(html_path + "/matches.html");
+});
+
+app.get('/register', (req, res) => {
+    res.sendFile(html_path + "/register.html");
+});
+
+app.get('/login', (req, res) => {
+    res.sendFile(html_path + "/login.html");
 });
 
 

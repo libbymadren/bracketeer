@@ -2,20 +2,18 @@ const crypto = require('crypto');
 const argon2 = require('argon2');
 
 module.exports = class {
-  #passwordHash;
-  #salt;
 
   constructor(data) {
     this.id = data.id;
     this.username = data.username;
     this.profile_piture = data.profile_picture;
-    this.#salt = data.salt;
-    this.#passwordHash = data.passwordHash;
+    this.salt = data.salt;
+    this.passwordHash = data.passwordHash;
   }
 
   async validatePassword(password) {
     try {
-      if (await argon2.verify(this.#passwordHash, password + this.#salt)) {
+      if (await argon2.verify(this.passwordHash, password + this.salt)) {
         return true;
       } else {
         return false;
@@ -27,13 +25,18 @@ module.exports = class {
 
   async setPasswordHash(password) {
     // generate salt if none
-    if (!this.#salt) {
-      let newSalt = crypto.createHash('sha256').update(Math.random()).digest('base64');
-      this.#salt = newSalt;
+    if (!this.salt) {
+      console.log("GENERATING SALT")
+      let newSalt = crypto.createHash('sha256').update(Math.random() + "").digest('base64');
+      this.salt = newSalt;
     }
     
     // hash password
-    this.#passwordHash = await argon2.hashPassword(password + this.#salt);
+    console.log("APPLYING ARGON2 HASH")
+    this.passwordHash = await argon2.hash(password + this.salt);
+
+    console.log(this.salt);
+    console.log(this.passwordHash);
   }
 
   toJSON() {

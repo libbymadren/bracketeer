@@ -25,33 +25,33 @@ async function getUserByCredentials(username, password) {
 }
 
 function getAllUsers() {
-    return db.query('SELECT * FROM users').then(({results}) => {
+    return db.query('SELECT * FROM user').then(({results}) => {
       return results.map(user => new User(user).toJSON()); 
     });
 }
 
 function getUserById(userId) {
-    return db.query('SELECT * FROM users WHERE id=?', [userId]).then(({results}) => {
+    return db.query('SELECT * FROM user WHERE id=?', [userId]).then(({results}) => {
       if(results[0])
         return new User(results[0]).toJSON();
     });
 }
 
 function deleteUser(userId) {
-    return db.query('DELETE FROM users WHERE id=?', [userId]).then(({results}) => {
+    return db.query('DELETE FROM user WHERE id=?', [userId]).then(({results}) => {
         return getAllUsers();
     });
 }
 
 function createUser(user) {
-    return db.query('INSERT INTO users (id, username, salt, password, profile_picture) VALUES (?, ?, ?, ?, ?)',
-    [user.id, user.username, user.salt, user.password, user.profile_picture]).then(({results}) => {
+    return db.query('INSERT INTO user (id, username, salt, password, profile_picture) VALUES (?, ?, ?, ?, ?)',
+    [user.id, user.username, user.salt, user.passwordHash, user.profile_picture]).then(({results}) => {
         return getUserById(results.insertId);
     });
 }
 
 function updateUser(userBody, userId) {
-    return db.query('UPDATE users SET ? WHERE id=?', [userBody, userId]).then(({results}) => {
+    return db.query('UPDATE user SET ? WHERE id=?', [userBody, userId]).then(({results}) => {
         return (getUserById(userId));
     });
 }
