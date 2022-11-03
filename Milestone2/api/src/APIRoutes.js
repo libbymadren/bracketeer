@@ -5,6 +5,7 @@ const apiRouter = express.Router();
 const data_path = __dirname + '/data/';
 
 const UserDAO = require('./data/UserDAO');
+const MatchDAO = require('./data/MatchDAO');
 
 let users = require(data_path + 'users.json');
 let tournaments = require(data_path + 'tournaments.json');
@@ -216,6 +217,7 @@ apiRouter.get('/tournaments/:tournamentId/matches', (req, res) => {
     }
 });
 
+
 // create a match for a tournament
 apiRouter.post('/tournaments/:tournamentId/matches', (req, res) => {
     let targetTournamentId = req.params.tournamentId;
@@ -230,22 +232,6 @@ apiRouter.post('/tournaments/:tournamentId/matches', (req, res) => {
         res.status(404).json({error: "No matches found for tournament with id: " + targetTournamentId});
     }
 });
-
-apiRouter.post('/tournaments/:tournamentId/matches', (req, res) => {
-    let targetTournamentId = req.params.tournamentId;
-
-    let tournament = tournaments.find(tournament => tournament.id == targetTournamentId);
-
-    if (tournament) {
-        // if the tournament exists then add the match
-        tournament.matches = req.body;
-        res.status(200).json(tournament.matches);
-    } else {
-        res.status(404).json({error: "No matches found for tournament with id: " + targetTournamentId});
-    }
-});
-
-
 
 // ----------------------------------------------------
 // AUTHENTICATION API
@@ -272,18 +258,11 @@ apiRouter.post('/join/:joinId', (req, res) => {
 apiRouter.get('/matches/:matchId', (req, res) => {
     let targetMatchId = req.params.matchId;
 
-    let match = Object.create(matches.find(match => match.id == targetMatchId));
-
-    
-
-    if (match) {
-        // load the participants for the match
-        match.participant_one = users.find(user => user.id == match.participant_one);
-        match.participant_two = users.find(user => user.id == match.participant_two);
+    MatchDAO.getMatchById(targetMatchId).then(match => {
         res.json(match);
-    } else {
-        res.status(404).json({error: "No match found with id: " + targetMatchId});
-    }
+    }).catch(err => {
+        res.status(400).json({error: err});
+    });
 });
 
 // ----------------------------------------------------
