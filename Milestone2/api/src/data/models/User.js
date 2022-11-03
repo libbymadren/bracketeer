@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const argon2 = require('argon2');
 
 module.exports = class {
   #passwordHash;
@@ -9,25 +10,30 @@ module.exports = class {
     this.username = data.username;
     this.profile_piture = data.profile_picture;
     this.#salt = data.salt;
-    this.#passwordHash = data.password;
+    this.#passwordHash = data.passwordHash;
   }
 
-  validatePassword(password) {
-    return new Promise((resolve, reject) => {
-      crypto.pbkdf2(password, this.#salt, 100000, 64, 'sha512', (err, derivedKey) => {
-        if (err) { 
-         reject("Error: " +err);
-        }
+  async validatePassword(password) {
+    try {
+      if (await argon2.verify(this.#passwordHash, password + this.#salt)) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
 
-        const digest = derivedKey.toString('hex');
-        if (this.#passwordHash == digest) {
-          resolve(this);
-        }
-        else {
-          reject("Invalid username or password");
-        }
-      });
-    });
+  async setPasswordHash(password) {
+    // generate salt if none
+    if (!this.#salt) {
+      let newSalt = crypto.createHash('sha256').update(Math.random()).digest('base64');
+      this.#salt = newSalt;
+    }
+    
+    // hash password
+    this.#passwordHash = await argon2.hashPassword(password + this.#salt);
   }
 
   toJSON() {

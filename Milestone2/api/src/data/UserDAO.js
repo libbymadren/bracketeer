@@ -1,14 +1,25 @@
 const db = require('./DBConnection');
 const User = require('./models/User');
 
-function getUserByCredentials(username, password) {
-  return db.query('SELECT * FROM user WHERE username=?', [username]).then(({results}) => {
+async function getUserByCredentials(username, password) {
+  return db.query('SELECT * FROM user WHERE username=?', [username]).then(async ({results}) => {
+
+    // Create a user based off of the first match of the query for username
     const user = new User(results[0]);
-    if (user) { 
-      return user.validatePassword(password);
-    }
-    else {
-      throw new Error("No such user");
+
+    // If a user was found then validate credentials, if not throw error
+    if (user) {
+
+      let validatePassword = await user.validatePassword(password);
+
+      if (validatePassword) {
+        return user;
+      } else {
+        throw new Error("Invalid password")
+      }
+      
+    } else {
+      throw new Error("Invalid username");
     }
   });
 }

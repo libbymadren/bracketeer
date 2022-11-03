@@ -1,15 +1,16 @@
 const express = require('express');
-const apiRouter = express.Router();
-
-
-const data_path = __dirname + '/data/';
-
 const UserDAO = require('./data/UserDAO');
 const MatchDAO = require('./data/MatchDAO');
-
+const { User } = require('./data/models/User');
+const jwt = require('./utils/jwt')
 let users = require(data_path + 'users.json');
 let tournaments = require(data_path + 'tournaments.json');
 let matches = require(data_path + 'matches.json');
+
+const apiRouter = express.Router();
+const data_path = __dirname + '/data/';
+
+
 
 apiRouter.use(express.json());
 
@@ -18,7 +19,12 @@ apiRouter.use(express.json());
 // ----------------------------------------------------
 
 // Get all users
-apiRouter.get('/users', (req,  res) => {
+apiRouter.get('/users', jwt.middleware, (req,  res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
     UserDAO.getUsers().then(users => {
         res.json(users);
       })
@@ -28,7 +34,12 @@ apiRouter.get('/users', (req,  res) => {
 });
 
 // Get specific user
-apiRouter.get('/users/:userId', (req,  res) => {
+apiRouter.get('/users/:userId', jwt.middleware, (req,  res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
     const userId = req.params.userId;
     UserDAO.getUserById(userId).then(user => {
         if(user) {
@@ -44,7 +55,12 @@ apiRouter.get('/users/:userId', (req,  res) => {
 });
 
 // Get all matches for a specific user
-apiRouter.get('/users/:userId/matches', (req,  res) => {
+apiRouter.get('/users/:userId/matches', jwt.middleware, (req,  res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
     const userId = req.params.userId;
     let userMatches = matches.filter(match => match.participant_one == userId || match.participant_two == userId);
     if(userMatches) {
@@ -57,7 +73,12 @@ apiRouter.get('/users/:userId/matches', (req,  res) => {
 });
 
 // Delete a user
-apiRouter.delete('/users/:userId', (req,  res) => {
+apiRouter.delete('/users/:userId', jwt.middleware, (req,  res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
     const userId = req.params.userId;
     UserDAO.getUserById(userId).then(users => {
         res.json(users);
@@ -68,7 +89,12 @@ apiRouter.delete('/users/:userId', (req,  res) => {
 });
 
 // Create a user
-apiRouter.post('/users', (req,  res) => {
+apiRouter.post('/users', jwt.middleware, (req,  res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
     let newUser = req.body;
     newUser = UserDAO.createUser(newUser).then(user => {
         res.json(user);
@@ -76,7 +102,12 @@ apiRouter.post('/users', (req,  res) => {
 });
 
 // Update a user
-apiRouter.put('/users/:userId', (req,  res) => {
+apiRouter.put('/users/:userId', jwt.middleware, (req,  res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
     const userId = req.params.userId;
     let user = req.body;
     user = UserDAO.updateUser(user, userId).then(user => {
@@ -85,18 +116,38 @@ apiRouter.put('/users/:userId', (req,  res) => {
 });
 
 
+apiRouter.get('/users/current', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
+    console.log("User:");
+    res.json(req.user);
+    console.log(req.user);
+});
+
 
 // ----------------------------------------------------
 // TOURNAMENTS API
 // ----------------------------------------------------
 
 // Get all tournaments
-apiRouter.get('/tournaments', (req,  res) => {
+apiRouter.get('/tournaments', jwt.middleware, (req,  res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
     res.json(tournaments);
 });
 
 // Create a specific tournament
-apiRouter.post('/tournaments', (req, res) => {
+apiRouter.post('/tournaments', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
 
     //Check if all fields are provided and are valid:
     if(!req.params.id.toString().match(/^[0-9]{3,}$/g) ||
@@ -131,7 +182,11 @@ apiRouter.post('/tournaments', (req, res) => {
  });
 
 // Update a specific tournament
-apiRouter.put('/tournaments/:tournamentId', (req, res) => {
+apiRouter.put('/tournaments/:tournamentId', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
 
     //Check if all fields are provided and are valid:
     if(!req.params.id.toString().match(/^[0-9]{3,}$/g) ||
@@ -176,7 +231,12 @@ apiRouter.put('/tournaments/:tournamentId', (req, res) => {
 });
 
 // delete a tournament
-apiRouter.delete('/tournaments/:tournamentId', (req, res) => {
+apiRouter.delete('/tournaments/:tournamentId', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
     var removeIndex = tournaments.map((tournament) => {
        return tournament.id;
     }).indexOf(req.params.id); //Gets us the index of tournament with given id.
@@ -190,7 +250,11 @@ apiRouter.delete('/tournaments/:tournamentId', (req, res) => {
 });
 
 // get tournament by id
-apiRouter.get('/tournaments/:tournamentId', (req, res) => {
+apiRouter.get('/tournaments/:tournamentId', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
 
     let targetTournamentId = req.params.tournamentId;
 
@@ -204,7 +268,12 @@ apiRouter.get('/tournaments/:tournamentId', (req, res) => {
 });
 
 // get all matches relating to a tournament
-apiRouter.get('/tournaments/:tournamentId/matches', (req, res) => {
+apiRouter.get('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
     let targetTournamentId = req.params.tournamentId;
 
     // filter for only matches associated with the current tournament
@@ -219,7 +288,12 @@ apiRouter.get('/tournaments/:tournamentId/matches', (req, res) => {
 
 
 // create a match for a tournament
-apiRouter.post('/tournaments/:tournamentId/matches', (req, res) => {
+apiRouter.post('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
     let targetTournamentId = req.params.tournamentId;
 
     let tournament = tournaments.find(tournament => tournament.id == targetTournamentId);
@@ -234,10 +308,15 @@ apiRouter.post('/tournaments/:tournamentId/matches', (req, res) => {
 });
 
 // ----------------------------------------------------
-// AUTHENTICATION API
+// JOIN API
 // ----------------------------------------------------
 
-apiRouter.post('/join/:joinId', (req, res) => {
+apiRouter.post('/join/:joinId', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
     let targetJoinId = req.params.tournamentId;
 
     let tournament = tournaments.find(tournament => tournament.join_id == targetJoinId);
@@ -249,13 +328,16 @@ apiRouter.post('/join/:joinId', (req, res) => {
     }
 });
 
-
-
 // ----------------------------------------------------
 // MATCHES API
 // ----------------------------------------------------
 
 apiRouter.get('/matches/:matchId', (req, res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
     let targetMatchId = req.params.matchId;
 
     MatchDAO.getMatchById(targetMatchId).then(match => {
@@ -266,19 +348,55 @@ apiRouter.get('/matches/:matchId', (req, res) => {
 });
 
 // ----------------------------------------------------
-// LOGIN API
+// AUTHENTICATION API
 // ----------------------------------------------------
 
 apiRouter.post('/login', (req,  res) => {
-    const userRequest = req.body;
-    let user = users.find(user => user.username == userRequest.username && user.password == userRequest.password);
+
+    // search the database for the user by credentials
+    try {
+        let user = UserDAO.getUserByCredentials(req.body.username, req.body.password);
+
+        // Create a JWT for the user
+        let payload = {
+            "id": user.id,
+            "username": user.username,
+            "profile_picture": user.profile_picture            
+        }
+
+        jwt.generateToken(req, res, payload);
+
+    } catch(err) {
+        console.log(err.message);
+        res.status(401).json({"error": "Authentication failed"});
+    }
+
+});
+
+apiRouter.post('/register', (req, res) => {
+    let username = req.body.username;
+    let password = req.body.password;
+    let profile_picture = req.body.profile_picture;
+
+    let newUser = new User({
+        "username": username,
+        "profile_picture": profile_picture
+    });
+
+    newUser.setPasswordHash(password);
+
+    try {
+        let addedUser = UserDAO.createUser(newUser);
+        res.status(200).json({"user": addedUser.toJSON()});
+    } catch(err) {
+        res.status(500).json({"error": "Could not register user"});
+    }
     
-    if(user) {
-        res.json(user)
-    }
-    else {
-        res.status(404).json({error: 'User not found'});
-    }
+
+});
+
+apiRouter.post('/logout', (req, res) => {
+    jwt.removeToken(req, res);
 });
 
 module.exports = apiRouter;
