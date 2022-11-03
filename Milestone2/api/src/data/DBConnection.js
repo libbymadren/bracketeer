@@ -6,10 +6,11 @@ let connection;
 exports.getDatabaseConnection = () => {
   if(!connection) {
     connection = mysql.createConnection({
+    //   port: process.env.DB_PORT,
       host: process.env.DB_HOST,
       user: process.env.MYSQL_USER,
       password: process.env.MYSQL_PASSWORD,
-      database: process.env.MYSQL_DATABASE
+      database: process.env.MYSQL_DATABASE,
     })
   }
   return connection;

@@ -104,8 +104,8 @@ apiRouter.put('/users/:userId', (req,  res) => {
 
 // Get all tournaments
 apiRouter.get('/tournaments', (req,  res) => {
-    TournamentDAO.getTournaments().then(tournaments => {
-        res.json(tournaments);
+    TournamentDAO.getAllTournaments().then(tournament => {
+        res.json(tournament);
       })
       .catch(err => {
         res.status(400).json({error: err});
@@ -132,8 +132,8 @@ apiRouter.put('/tournaments/:tournamentId', (req, res) => {
 // delete a tournament
 apiRouter.delete('/tournaments/:tournamentId', (req, res) => {
     const tournamentId = req.params.tournamentId;
-    TournamentDAO.getUserById(tournamentId).then(tournaments => {
-        res.json(tournaments);
+    TournamentDAO.getUserById(tournamentId).then(tournament => {
+        res.json(tournament);
     })
     .catch(err => {
         res.status(500).json({error: err});
