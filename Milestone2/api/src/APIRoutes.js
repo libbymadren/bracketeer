@@ -118,15 +118,30 @@ apiRouter.post('/tournaments', (req, res) => {
     newTournament = TournamentDAO.createTournament(newTournament).then(tournament => {
         res.json(tournament);
     });
+
+    if(newTournament) {
+        let tournamentId = req.body.id;
+        res.redirect('/tournaments/' + tournamentId);
+    }
+    else {
+        res.status(400).json({error: 'Could not create Tournament'});
+    }
  });
 
 // Update a specific tournament
 apiRouter.put('/tournaments/:tournamentId', (req, res) => {
     const tournamentId = req.params.tournamentId;
-    let tournament = req.body;
-    tournament = TournamentDAO.updateTournament(tournament, tournamentId).then(tournament => {
+    let newTournament = req.body;
+    newTournament = TournamentDAO.updateTournament(newTournament, tournamentId).then(tournament => {
         res.json(tournament);
-    })
+    });
+
+    if(newTournament) {
+        res.redirect('/tournaments/' + tournamentId);
+    }
+    else {
+        res.status(400).json({error: 'Could not update Tournament'});
+    }
 });
 
 // delete a tournament

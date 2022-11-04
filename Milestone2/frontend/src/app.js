@@ -20,7 +20,7 @@ app.get('/create', (req, res) => {
     res.sendFile(html_path + '/create.html');
 });
   
-app.get('/edit', (req, res) => {
+app.get('/edit/:tournamentId', (req, res) => {
     res.sendFile(html_path + '/edit.html');
 });
 
