@@ -1,5 +1,6 @@
 const express = require('express');
-const jwt = require('./utils/jwt');
+const jwt = require('./utils/jwt')
+
 
 const app = express();
 const PORT = process.env.PORT;
@@ -40,6 +41,9 @@ app.get('/login', (req, res) => {
     res.sendFile(html_path + "/login.html");
 });
 
+app.get('/landing', jwt.middleware, (req, res) => {
+    res.sendFile(html_path + "/landing.html");
+});
 
 // As our server to listen for incoming connections
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));

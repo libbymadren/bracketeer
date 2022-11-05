@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bracketeer - Register</title>
+    <title>Bracketeer - Login</title>
     <link href="/css/register.css" rel="stylesheet">
     <link href="/css/register-sm.css" rel="stylesheet" media="screen and (max-width: 900px)">
     <link href="/css/register-lg.css" rel="stylesheet" media="screen and (min-width: 900px)">
@@ -40,7 +40,7 @@
     </div>
 
     <main>
-        <h1 id="display-text" class="display-2 text-center mb-3">Register</h1>
+        <h1 id="display-text" class="display-2 text-center">Login</h1>
 
         <div id="form-container">
             <form>
@@ -52,15 +52,7 @@
                     <label for="password">Password: </label>
                     <input id="password-input" type="password" name="password">
                 </div>
-                <div>
-                    <label for="repeatPassword">Repeat Password: </label>
-                    <input id="password-repeat-input" type="password" name="repeatPassword">
-                </div>
-                <div>
-                    <label for="Avatar">Avatar URL: </label>
-                    <input id="avatar-input" type="text" name="avatar">
-                </div>
-                <input id="register-button" type="submit" value="Register" class="btn btn-danger">
+                <input id="login-submit" type="submit" value="Login" class="btn btn-danger">
             </form>
         </div>
         <div id="errorbox" class="hidden text-center text-danger mt-3"></div>
@@ -68,5 +60,5 @@
     </main>
 </body>
 
-<script src="/js/register.js"></script>
+<script src="/js/login.js"></script>
 </html>

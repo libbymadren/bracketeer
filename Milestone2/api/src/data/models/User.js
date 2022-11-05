@@ -6,9 +6,9 @@ module.exports = class {
   constructor(data) {
     this.id = data.id;
     this.username = data.username;
-    this.profile_piture = data.profile_picture;
+    this.profile_picture = data.profile_picture;
     this.salt = data.salt;
-    this.passwordHash = data.passwordHash;
+    this.passwordHash = data.password;
   }
 
   async validatePassword(password) {
@@ -43,7 +43,7 @@ module.exports = class {
     return {
       id: this.id,
       username: this.username,
-      profile_piture: this.profile_piture
+      profile_picture: this.profile_picture
     }
   }
 };

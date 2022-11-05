@@ -6,10 +6,10 @@ async function getUserByCredentials(username, password) {
 
     // Create a user based off of the first match of the query for username
     const user = new User(results[0]);
+    // console.log(user);
 
     // If a user was found then validate credentials, if not throw error
     if (user) {
-
       let validatePassword = await user.validatePassword(password);
 
       if (validatePassword) {
@@ -44,6 +44,7 @@ function deleteUser(userId) {
 }
 
 function createUser(user) {
+    // console.log(user);
     return db.query('INSERT INTO user (id, username, salt, password, profile_picture) VALUES (?, ?, ?, ?, ?)',
     [user.id, user.username, user.salt, user.passwordHash, user.profile_picture]).then(({results}) => {
         return getUserById(results.insertId);

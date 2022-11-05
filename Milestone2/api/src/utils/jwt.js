@@ -50,7 +50,7 @@ module.exports["middleware"] = function(req, res, next) {
 }
 
 module.exports["generateToken"] = function(req, res, payload) {
-    let token = jwt.sign(payload, API_SECRET_KEY, {"algorithm": "H256"});
+    let token = jwt.sign(payload, API_SECRET_KEY);
 
     // Send the jwt back as a cookie
     res.cookie(TOKEN_COOKIE_NAME, token, {

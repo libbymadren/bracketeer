@@ -89,19 +89,6 @@ apiRouter.delete('/users/:userId', jwt.middleware, (req,  res) => {
     });
 });
 
-// Create a user
-apiRouter.post('/users', jwt.middleware, (req,  res) => {
-    if (!req.valid_jwt) {
-        res.status(401).json({"error": "Authentication Failed"});
-        return;
-    }
-
-    let newUser = req.body;
-    newUser = UserDAO.createUser(newUser).then(user => {
-        res.json(user);
-    });
-});
-
 // Update a user
 apiRouter.put('/users/:userId', jwt.middleware, (req,  res) => {
     if (!req.valid_jwt) {
@@ -304,7 +291,6 @@ apiRouter.post('/login', (req,  res) => {
     // search the database for the user by credentials
     try {
         let user = UserDAO.getUserByCredentials(req.body.username, req.body.password);
-
         // Create a JWT for the user
         let payload = {
             "id": user.id,
@@ -313,6 +299,7 @@ apiRouter.post('/login', (req,  res) => {
         }
 
         jwt.generateToken(req, res, payload);
+        res.json(payload);
 
     } catch(err) {
         console.log(err.message);
@@ -322,7 +309,7 @@ apiRouter.post('/login', (req,  res) => {
 });
 
 apiRouter.post('/register', async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
 
     let username = req.body.username;
     let password = req.body.password;
@@ -336,10 +323,31 @@ apiRouter.post('/register', async (req, res) => {
     console.log("HASING PASSWORD")
     await newUser.setPasswordHash(password);
 
+    // get the largest user id and check for duplicate username
+    UserDAO.getAllUsers().then(users => {
+        const duplicateUser = users.find(user => user.username === newUser.username);
+        if (duplicateUser) {
+            res.status(400).json({"error": "Duplicate User"});
+        }
+
+        let newUserId = 0;
+        if (users.length > 0) {
+            const ids = users.map(user => {
+                return user.id;
+            });
+            const max = Math.max(...ids);
+            newUserId = max + 1;
+        }
+        newUser['id'] = newUserId;
+    });
+
+    // create the user in the database
     try {
-        console.log(newUser);
-        let addedUser = UserDAO.createUser(newUser);
-        res.status(200).json({"user": addedUser.toJSON()});
+        UserDAO.createUser(newUser).then(user => {
+            // console.log(user);
+            res.status(200).json({"user": user});
+        });
+
     } catch(err) {
         res.status(500).json({"error": "Could not register user"});
     }
