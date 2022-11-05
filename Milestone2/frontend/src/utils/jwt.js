@@ -29,20 +29,31 @@ module.exports["middleware"] = function(req, res, next) {
         return;
     }
 
+    console.log(token);
+
     // validate token
     try {
         const decoded = jwt.verify(token, API_SECRET_KEY)
 
+        console.log(decoded);
+
         // set the request variables
-        req.user = decoded.payload.user;
+        req.jwt_payload = decoded;
         req.valid_jwt = true;
 
+        let newPayload = JSON.parse(JSON.stringify(decoded));
+        delete newPayload['exp'];
+        delete newPayload['iat'];
+
+        console.log(newPayload);
+
         // refresh the token
-        module.exports.generateToken(req, res, decoded);
+        module.exports.generateToken(req, res, newPayload);
 
         next();
 
     } catch(err) {
+        console.log(err);
         console.log("Token wasn't valid.");
         req.valid_jwt = false;
         next();
@@ -50,7 +61,12 @@ module.exports["middleware"] = function(req, res, next) {
 }
 
 module.exports["generateToken"] = function(req, res, payload) {
-    let token = jwt.sign(payload, API_SECRET_KEY, {"algorithm": "H256"});
+    console.log("Generating token with payload: ");
+    console.log(payload);
+    let token = jwt.sign(payload, API_SECRET_KEY, {
+        "algorithm": "HS256",
+        "expiresIn": "1m"
+    });
 
     // Send the jwt back as a cookie
     res.cookie(TOKEN_COOKIE_NAME, token, {

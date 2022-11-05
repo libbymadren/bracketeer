@@ -5,12 +5,18 @@ async function getUserByCredentials(username, password) {
   return db.query('SELECT * FROM user WHERE username=?', [username]).then(async ({results}) => {
 
     // Create a user based off of the first match of the query for username
+
+    console.log(results[0]);
     const user = new User(results[0]);
-    throw new Error("error");
+
+    console.log(user.toJSON());
+
     // If a user was found then validate credentials, if not throw error
     if (user) {
 
       let validatePassword = await user.validatePassword(password);
+
+      console.log(validatePassword);
 
       if (validatePassword) {
         return user;

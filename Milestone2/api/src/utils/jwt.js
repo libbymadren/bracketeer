@@ -7,8 +7,8 @@ module.exports["middleware"] = function(req, res, next) {
 
     // look for the token in the cookie
     let token = null;
-    if (!req.cookies[TOKEN_COOKIE_NAME]) {
-        console.log("no cookie");
+    if (!("cookies" in req) || !req.cookies[TOKEN_COOKIE_NAME]) {
+
         // If the cookie doesn't exist, check for a header
         const authHeader = req.get("Authorization");
         if (authHeader && authHeader.startsWith("Bearer "))
@@ -16,7 +16,6 @@ module.exports["middleware"] = function(req, res, next) {
 
 
     } else {
-        console.log("cookie?");
         // If the cookie did exist then get the token value
         token = req.cookies[TOKEN_COOKIE_NAME]
     }
@@ -30,20 +29,29 @@ module.exports["middleware"] = function(req, res, next) {
         return;
     }
 
+    console.log(token);
+
     // validate token
     try {
         const decoded = jwt.verify(token, API_SECRET_KEY)
 
+        console.log(decoded);
+
         // set the request variables
-        req.user = decoded.payload.user;
+        req.jwt_payload = decoded;
         req.valid_jwt = true;
 
+        let newPayload = JSON.parse(JSON.stringify(decoded))
+
+        console.log(newPayload);
+
         // refresh the token
-        module.exports.generateToken(req, res, decoded);
+        module.exports.generateToken(req, res, newPayload);
 
         next();
 
     } catch(err) {
+        console.log(err);
         console.log("Token wasn't valid.");
         req.valid_jwt = false;
         next();
@@ -51,7 +59,12 @@ module.exports["middleware"] = function(req, res, next) {
 }
 
 module.exports["generateToken"] = function(req, res, payload) {
-    let token = jwt.sign(payload, API_SECRET_KEY);
+    console.log("Generating token with payload: ");
+    console.log(payload);
+    let token = jwt.sign(payload, API_SECRET_KEY, {
+        "algorithm": "HS256",
+        "expiresIn": "1m"
+    });
 
     // Send the jwt back as a cookie
     res.cookie(TOKEN_COOKIE_NAME, token, {

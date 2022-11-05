@@ -113,8 +113,13 @@ apiRouter.get('/users/current', jwt.middleware, (req, res) => {
     }
 
     console.log("User:");
-    res.json(req.user);
-    console.log(req.user);
+
+    let currentUserInfo = {
+        "username": req.jwt_payload.username,
+        "profile_picture": req.jwt_payload.profile_picture
+    }
+
+    res.json(currentUserInfo);
 });
 
 
@@ -288,11 +293,11 @@ apiRouter.get('/matches/:matchId', (req, res) => {
 // AUTHENTICATION API
 // ----------------------------------------------------
 
-apiRouter.post('/login', (req,  res) => {
+apiRouter.post('/login', async (req,  res) => {
 
     // search the database for the user by credentials
     try {
-        let user = UserDAO.getUserByCredentials(req.body.username, req.body.password);
+        let user = await UserDAO.getUserByCredentials(req.body.username, req.body.password);
         // Create a JWT for the user
         let payload = {
             "id": user.id,
