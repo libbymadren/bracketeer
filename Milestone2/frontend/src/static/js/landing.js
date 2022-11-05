@@ -5,5 +5,10 @@ fetch('api/users/current').then(res => {
 })
 .then(loggedInUser => {
     console.log("logged in user found!");
-    console.log(loggedInUser);
+    document.querySelector('#profile-link').href = "/profile/" + loggedInUser.id;
+
+    welcomeText.innerHTML = "Welcome, " + loggedInUser.username + "!"
+})
+.catch(err => {
+    console.log(err);
 })

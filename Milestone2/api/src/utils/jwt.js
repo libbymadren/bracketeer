@@ -8,7 +8,6 @@ module.exports["middleware"] = function(req, res, next) {
     // look for the token in the cookie
     let token = null;
     if (!("cookies" in req) || !req.cookies[TOKEN_COOKIE_NAME]) {
-
         // If the cookie doesn't exist, check for a header
         const authHeader = req.get("Authorization");
         if (authHeader && authHeader.startsWith("Bearer "))
@@ -29,24 +28,19 @@ module.exports["middleware"] = function(req, res, next) {
         return;
     }
 
+    console.log("found a token!");
     console.log(token);
 
     // validate token
     try {
         const decoded = jwt.verify(token, API_SECRET_KEY)
 
+        console.log("decoded token:");
         console.log(decoded);
 
         // set the request variables
         req.jwt_payload = decoded;
         req.valid_jwt = true;
-
-        let newPayload = JSON.parse(JSON.stringify(decoded))
-
-        console.log(newPayload);
-
-        // refresh the token
-        module.exports.generateToken(req, res, newPayload);
 
         next();
 
@@ -62,8 +56,7 @@ module.exports["generateToken"] = function(req, res, payload) {
     console.log("Generating token with payload: ");
     console.log(payload);
     let token = jwt.sign(payload, API_SECRET_KEY, {
-        "algorithm": "HS256",
-        "expiresIn": "1m"
+        "algorithm": "HS256"
     });
 
     // Send the jwt back as a cookie

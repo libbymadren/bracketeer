@@ -21,31 +21,35 @@
   </nav>
   <div class="collapse" id="navbarToggleExternalContent">
     <div class="p-4 text-center" id="nav-home-button">
-        <a href="/home"><h5 class="text-white h4">Home</h5></a>
+        <a href="/landing"><h5 class="text-white h4">Home</h5></a>
     </div>
     <div>
         <hr class="nav-hr">
     </div>
     <div class="p-4 text-center" id="nav-login-button">
-        <a href="/login"><h5 class="text-white h4">Login</h5></a>
+        <a id="profile-link" href="/profile"><h5 class="text-white h4">Profile</h5></a>
     </div>
     <div>
         <hr class="nav-hr">
     </div>
     <div class="p-4 text-center" id="nav-register-button">
-        <a href="/register"><h5 class="text-white h4">Register</h5></a>
+        <a id="logout-link" href="/login"><h5 class="text-white h4">Logout</h5></a>
     </div>
 </div>
 
   <div>
-    <h1 id="display-text" class="display-2 text-center"></h1>
+    <h1 id="display-text" class="display-2 text-center mb-5"></h1>
+    <p class="h3 text-center">Start a tournament, join a new tournament, or view tournaments you're participating in.</p>
     <div class="text-center mt-2">
       <a href="/create" class="btn btn-danger btn-lg me-1">Create Tournament</a>
       <!-- link join tournament button when join page is made -->
       <a class="btn btn-danger btn-lg ms-1">Join Tournament</a>
+      <!-- link my tournament button when join page is made -->
+      <a class="btn btn-danger btn-lg ms-1">My Active Tournaments</a>
     </div>
   </div>
 </body>
 
 <script src="/js/landing.js"></script>
+<script src="/js/logout.js"></script>
 </html>

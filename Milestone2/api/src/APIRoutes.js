@@ -37,7 +37,7 @@ apiRouter.get('/users', jwt.middleware, (req,  res) => {
 });
 
 // Get specific user
-apiRouter.get('/users/:userId', jwt.middleware, (req,  res) => {
+apiRouter.get('/users/byId/:userId', jwt.middleware, (req,  res) => {
     if (!req.valid_jwt) {
         res.status(401).json({"error": "Authentication Failed"});
         return;
@@ -107,17 +107,19 @@ apiRouter.put('/users/:userId', jwt.middleware, (req,  res) => {
 
 
 apiRouter.get('/users/current', jwt.middleware, (req, res) => {
+    console.log(req.valid_jwt);
     if (!req.valid_jwt) {
         res.status(401).json({"error": "Authentication Failed"});
         return;
     }
 
-    console.log("User:");
-
     let currentUserInfo = {
+        "id": req.jwt_payload.id,
         "username": req.jwt_payload.username,
         "profile_picture": req.jwt_payload.profile_picture
     }
+    console.log("User:");
+    console.log(currentUserInfo);
 
     res.json(currentUserInfo);
 });
