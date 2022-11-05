@@ -13,16 +13,18 @@ createForm.addEventListener('submit', (e) => {
     }).then(tournaments => {
         const newTournament = {
             id: tournaments.length + 1,
-            picture: data.get('image'),
+            picture: 'placeholder', // data.get('image') NEED LINK
             name: data.get('name'),
             organizer_id: 1, // CHANGE THIS LATER, NEED A getUserByUsername() API ROUTE
             location: data.get('location'),
             description: data.get('description'),
-            created: Date.now(),
+            created: new Date(Date.now()).toLocaleDateString(),
             start: data.get('start'),
-            join_id: genRandonString(10),
-            participants: []
+            join_id: genRandonString(10)
+            // participants: []
         }
+
+        console.log(newTournament);
 
         fetch('/api/tournaments', {
             method: 'POST', 
@@ -31,11 +33,13 @@ createForm.addEventListener('submit', (e) => {
             },
             body: JSON.stringify(newTournament),
             })
-            .then((response) => response.json())
-            // .then((data) => {
-            //     // Upon creating successfully, notify the user
-                
-            // })
+            .then(response => {
+                console.log(response.status);
+                if (response.status == 200) {
+                    console.log("Navigating to created tournament")
+                    window.location.replace("/tournaments/" + newTournament.id);
+                }
+            })
             .catch((error) => {
                 console.error('Error:', error);
          });

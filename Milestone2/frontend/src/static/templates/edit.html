@@ -47,29 +47,31 @@
   </div>
 
   <h1>Edit Tournament</h1>
+
+  <div id="currentInfo"></div>
   
   <form id="edit">
 
     <fieldset>
 
         <!-- ENTER NAME -->
-        <input type="text" placeholder="Enter name" name="name" required>
+        <input type="text" placeholder="Enter name" name="name">
         <br>
 
         <!-- SELECT BANNER IMAGE -->
         <img id="preview"/>
         <br>
         <div id="long">
-            <input type="file" accept="image/*" onchange="previewImage(event)" name="image" required>
+            <input type="file" accept="image/*" onchange="previewImage(event)" name="image">
         </div>
         <br>
 
         <!-- ABOUT -->
-        <textarea id="description" name="description" placeholder="Add a description..." required minlength="10"></textarea>
+        <textarea id="description" name="description" placeholder="Add a description..." minlength="10"></textarea>
         <br>
 
         <!-- START DATE -->
-        <input type="date" name="start" id="date" required>
+        <input type="date" name="start" id="date">
         <br>
 
         <!-- MATCH LENGTH -->
@@ -80,7 +82,7 @@
         <br> -->
 
         <!-- Tournament LOCATION -->
-        <input type="location" name="location" placeholder="Tournament location" required>
+        <input type="location" name="location" placeholder="Tournament location">
         <br>
 
         <!-- CREATE BUTTON -->

@@ -9,10 +9,10 @@ function getAllTournaments() {
 
 function createTournament(tournament) {
     return db.query('INSERT INTO tournament (id, picture, name, organizer_id, location, ' + 
-        'description, created, start, join_id, participants) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        'description, created, start, join_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
 
         [tournament.id, tournament.picture, tournament.name, tournament.organizer_id, tournament.location, 
-            tournament.description, tournament.created, tournament.start, tournament.join_id, tournament.participants]).then(({results}) => {
+            tournament.description, tournament.created, tournament.start, tournament.join_id]).then(({results}) => {
             getTournamentById(results.insertId)
    });
 }
