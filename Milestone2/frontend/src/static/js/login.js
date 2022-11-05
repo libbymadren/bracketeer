@@ -13,8 +13,6 @@ loginButton.addEventListener("click", e => {
         "username": username
     }
 
-    // console.log(body);
-
     fetch('/api/login', {
         "method": "post",
         "body": JSON.stringify(body),
@@ -25,10 +23,28 @@ loginButton.addEventListener("click", e => {
         return response.json();
     }).then(json => {
         console.log(json);
-        document.location = "/landing";
     }).catch(error => {
         console.error(error);
-        errorBox.classList.remove("hidden");
-        errorBox.innerHTML = "Incorrect username or password";
-    });
+    })
+
+    // fetch('/api/login', {
+    //     "method": "post",
+    //     "body": JSON.stringify(body),
+    //     "headers": {
+    //         "Content-Type": "application/json"
+    //     }
+    // }).then(response => {
+    //     if (!response.ok) {
+    //         errorBox.classList.remove("hidden");
+    //         errorBox.innerHTML = "Incorrect username or password";
+    //     }
+    //     else {
+    //         document.location = "/landing";
+    //     }
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    //     errorBox.classList.remove("hidden");
+    //     errorBox.innerHTML = "Incorrect username or password";
+    // });
 });

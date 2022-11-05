@@ -6,10 +6,10 @@ async function getUserByCredentials(username, password) {
 
     // Create a user based off of the first match of the query for username
     const user = new User(results[0]);
-    // console.log(user);
-
+    throw new Error("error");
     // If a user was found then validate credentials, if not throw error
     if (user) {
+
       let validatePassword = await user.validatePassword(password);
 
       if (validatePassword) {

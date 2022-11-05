@@ -12,6 +12,8 @@ const apiRouter = express.Router();
 const data_path = __dirname + '/data/';
 
 
+const cookieParser = require('cookie-parser');
+apiRouter.use(cookieParser());
 
 apiRouter.use(express.json());
 

@@ -7,8 +7,8 @@ module.exports["middleware"] = function(req, res, next) {
 
     // look for the token in the cookie
     let token = null;
-    if (!("cookies" in req) || !req.cookies[TOKEN_COOKIE_NAME]) {
-
+    if (!req.cookies[TOKEN_COOKIE_NAME]) {
+        console.log("no cookie");
         // If the cookie doesn't exist, check for a header
         const authHeader = req.get("Authorization");
         if (authHeader && authHeader.startsWith("Bearer "))
@@ -16,6 +16,7 @@ module.exports["middleware"] = function(req, res, next) {
 
 
     } else {
+        console.log("cookie?");
         // If the cookie did exist then get the token value
         token = req.cookies[TOKEN_COOKIE_NAME]
     }
