@@ -9,6 +9,8 @@ Pages    | Status | Contributor(s) | Wireframe
 Home     | ✅     | Libby          | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-groupT-Wireframe-Landing.png)
 Profile  | ✅     | Libby          |
 Register | ✅     | Jack, Libby    | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342%20-%20Wireframes-register.png)
+Login    | ✅     | Libby          |
+Landing  | ✅     | Libby          |
 Create   | ✅     | Nathan         | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-createjoin.png)
 Edit     | ✅     | Nathan         | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-edittournament.png)
 T. View  | ✅     | Jack           |
@@ -16,9 +18,10 @@ Matches  | 0%     | N/A            | [wireframe](https://github.ncsu.edu/engr-cs
 M. View  | ✅     | Jack           | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-bracketviewedit.png)
 Join     | 50% (currently part of T. View) | N/A | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-createjoin.png)
 
-**7.5 pages / 9 pages = 83%**
+**9.5 pages / 11 pages = 86%**
 
 ## API Routes
+All API routes from the previous milestone were updated to connect to the database instead of using mock data.
 
 Method   | Route                                         | Description                                                     | Contributor(s)
 -------- | --------------------------------------------- | --------------------------------------------------------------- | --------------
@@ -30,15 +33,19 @@ Method   | Route                                         | Description          
 `PUT`    | `/tournaments/:tournamentId/matches/register` | Updates matches for a specific tournament                       | Jack
 `DELETE` | `/tournaments/:tournamentId`                  | Delete a specific tournament                                    | Nathan
 `PUT`    | `/tournaments/:tournamentId`                  | Update a specific tournament                                    | Nathan
-`GET`    | `/users/:userId`                              | Return a specific user                                          | Nathan
+`GET`    | `/users/byId/:userId`                         | Return a specific user                                          | Nathan
 `GET`    | `/users`                                      | Return all users                                                | Nathan
 `GET`    | `/users/:userId/matches`                      | Returns all matches for a specific user                         | Libby
+`GET`    | `/users/:userId/tournaments`                  | Returns all tournaments for a specific user                     | Libby
 `DELETE` | `/users/:userId`                              | Delete a specific user                                          | Libby
+`DELETE` | `/users/current`                              | Return the user currently logged in                             | Jack
 `PUT`    | `/users/:userId`                              | Create/Update a specific user                                   | Libby
 `POST`   | `/login`                                      | Receives an email and password to log a registered user in      | Libby
 `POST`   | `/join/:joinId`                               | Receives passcode or QR Code                                    | Jack
-`POST`   | `/users`                                      | Creates a new user account and returns the new user object      | Libby
 `GET`    | `/matches/:matchId`                           | Return a specific match                                         | Jack
+`GET`    | `/login`                                      | Logs in a user                                                  | Jack
+`GET`    | `/register`                                   | Registers a new user                                            | Jack
+`GET`    | `/logout`                                     | Logs out the current user                                       | Jack
 
 
 <h2> What is Done </h2>
