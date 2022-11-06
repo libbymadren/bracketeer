@@ -49,30 +49,26 @@ Method   | Route                                         | Description          
 
 
 <h2> What is Done </h2>
-<p>Authentication and authorization are fully implemented. We have also fully designed and implemented our database model with the required DAOs and model classes.</p>
-<p>xxx</p>
+<p>Authentication and authorization are fully implemented, allowing users to log in, log out, register an account, view their own profile, etc. We have also fully designed and implemented our database model with the required DAOs and model classes. The following frontend pages now make use of use dynamic data from our server: create.html, edit.html, login.html, profile.html, register.html, and tournaments.html. </p>
 
 <h2> What is Not Done </h2>
-<p>xxx</p>
+<p>Functionality for joining tournaments and most funtionality relating to matches still needs to be completed. Users should be able to create and manage brackets for each tournament, view brackets for each tournament, view placements for finished tournaments, and manually seed tournaments. Our frontend route to view matches has been created, but it is the only route in our application to still use mock data.</p>
 
-Some things you could include based on what I've seen --Nathan
-* Need solution for storing user-chosen banner images. Currently auto-generated
-* Need a getUserByUsername API function to retrieve organizerId when creating tournaments
-* Not yet a way to add matches or participants to tournament via frontend, but possible through database
-* Match View route still uses mock data, but it is the only route that still uses mock data (I'm pretty sure). Should be compliant with 90% dynamic data requirement
+Included below are a few more minor features that need to be implemented:
 
-tl;dr joining tournaments and most functionality relating to matches
+* A way to store user-chosen banner images is needed. Currently, these banner images are auto-generated. This storage would likely have to be server-side, so users can view images they themselves did not upload. Any suggestions on how to implement this would be greatly appreciated.
+* An additional API route to retrieve users by their username is needed. This way, we can assign an organizerId to a created tournament based on which user is logged in
+* Adding matches and participants to a tournament is possible via our database, but is not yet supported through our application. Finishing the Join frontend route and implementing match functionality should address this
+* Our User model should be expanded to include user statistics (e.g. number of matches played, number of tournaments won, etc) that users can view on their profile page
 
 <h2> Authentication/Authorization Process </h2>
 <p>For authentication we are using JWT tokens and password hashing + salt using Argon2. The JWT token implementation is using the jsonwebtoken Node.JS libary. We have a jwt utility javascript file that facilitates generating, deleting, and verifiying jwt tokens. As a part of the jwt.js file we have a middleware function that is used within our protected routes. In terms of password storage, we are using Argon2 to hash passwords and we are generating a random salt value by using a sha256 hash of a random value. To integrate Argon2, we are using the node.js argon2 library: https://www.npmjs.com/package/argon2. Lastly, I would like to mention that our JWT tokens have a short expiry time of 5 min and are refreshed on every valid request. The users hashed passwords and salts are being stored in our database's user table. Authorization is being facilitated by our middleware, certain routes are protected and require a valid JWT, then that JWT's payload will provide the route/frontend page with necessary information to retrieve/dispaly data that the user should have access to.</p>
 
 ## ER Diagram
-[diagram](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Milestone2/ER_Diagram.png)
 <img src="https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Milestone2/ER_Diagram.png"/>
 
+
 ## Individual Contributions
-** Link file here when it's finished? **
-___
 
 <table>
   <tr>
@@ -216,6 +212,14 @@ ___
     <th>Due Date</th>
     <th>Completion Date</th>
   </tr> 
+    <tr>
+    <td>Create Login Page</td>
+    <td>Create a login page</td>
+    <td>Libby</td>
+    <td>Libby</td>
+    <td>11/5/22</td>
+    <td>11/5/22</td>
+  </tr>
   <tr>
     <td>Create Register Page</td>
     <td>Create register page that allows for a user to register with a username and password</td>
@@ -330,7 +334,7 @@ ___
 
 <table>
   <tr>
-    <th colspan=6 >Step Three B: Implement Dynamic Frontend</th>
+    <th colspan=6 >Step Four: Update Readme</th>
   </tr>
   <tr>
     <th>Task Name</th>
@@ -342,19 +346,19 @@ ___
   </tr>
   <tr>
     <td>Write "What is done" section of readme</td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Self-explanitory</td>
+    <td>Nathan</td>
+    <td>Jack </br> Nathan</td>
     <td>11/6/22</td>
-    <td></td>
+    <td>11/6/22</td>
   </tr>
   <tr>
     <td>Write "What is not done" section of readme</td>
-    <td></td>
-    <td></td>
+    <td>Self-explanitory</td>
+    <td>Nathan</td>
     <td>Nathan</td>
     <td>11/6/22</td>
-    <td></td>
+    <td>11/6/22</td>
   </tr>
   <tr>
     <td>Write a description of our authentication and authorization process.</td>
@@ -368,24 +372,24 @@ How are you making sure users only access what they are allowed to?"</td>
   <tr>
     <td>Create a list of all the pages in our app and their status</td>
     <td>Add links to wireframes for the pages that aren't completed yet</td>
-    <td>Nathan</td>
-    <td></td>
+    <td>Libby</td>
+    <td>Libby </br> Nathan</td>
     <td>11/6/22</td>
     <td>11/5/22</td>
   </tr>
   <tr>
     <td>Create a list of all the API endpoints with a description of their behavior</td>
     <td>If you made changes since the previous milestone, make sure you update this table</td>
-    <td></td>
-    <td></td>
+    <td>Libby</td>
+    <td>Libby</td>
     <td>11/6/22</td>
-    <td></td>
+    <td>11/6/22</td>
   </tr>
   <tr>
     <td>Add Entity Relationship diagram</td>
-    <td></td>
+    <td>Self-explanitory</td>
     <td>Nathan</td>
-    <td></td>
+    <td>Nathan</td>
     <td>11/6/22</td>
     <td>11/5/22</td>
   </tr>
