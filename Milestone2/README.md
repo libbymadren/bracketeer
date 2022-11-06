@@ -56,7 +56,6 @@ ___
 
 Some things you could include based on what I've seen --Nathan
 * Need solution for storing user-chosen banner images. Currently auto-generated
-* Small bug where tournaments are missing a field when retrieved by id. Will need to be adressed when creating join feature
 * Need a getUserByUsername API function to retrieve organizerId when creating tournaments
 * Not yet a way to add matches or participants to tournament via frontend, but possible through database
 * Match View route still uses mock data, but it is the only route that still uses mock data (I'm pretty sure). Should be compliant with 90% dynamic data requirement
