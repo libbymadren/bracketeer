@@ -41,7 +41,7 @@ fetch('/api/tournaments/' + tournamentId).then(response => {
 
         const newTournament = {
             id: json.id,
-            picture: 'placeholder', // data.get('image') NEED LINK
+            picture: json.picture, // data.get('image') NEED LINK
             name: data.get('name') || json.name,
             organizer_id: json.organizer_id,
             location: data.get('location') || json.location,
@@ -49,7 +49,6 @@ fetch('/api/tournaments/' + tournamentId).then(response => {
             created: json.created,
             start: data.get('start') || json.start,
             join_id: json.join_id
-            // participants: json.participants
         }
 
         console.log(newTournament);

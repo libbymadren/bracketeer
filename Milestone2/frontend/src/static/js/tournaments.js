@@ -66,19 +66,19 @@ fetch('/api/tournaments/' + targetTournamentId).then(response => {
 
     let participantsContainer = document.querySelector("#participants-container");
 
-    for (let participant of json.participants) {
+    // for (let participant of json.participants) {
 
-        let pContainer = document.createElement('div');
-        pContainer.className = "participant-info"
-        let pImg = document.createElement('img');
-        pImg.src = "https://robohash.org/" + Math.random();
-        let pUsr = document.createElement('label');
-        pUsr.innerHTML = participant.id;
-        pContainer.appendChild(pImg);
-        pContainer.appendChild(pUsr);
+    //     let pContainer = document.createElement('div');
+    //     pContainer.className = "participant-info"
+    //     let pImg = document.createElement('img');
+    //     pImg.src = "https://robohash.org/" + Math.random();
+    //     let pUsr = document.createElement('label');
+    //     pUsr.innerHTML = participant.id;
+    //     pContainer.appendChild(pImg);
+    //     pContainer.appendChild(pUsr);
 
-        participantsContainer.appendChild(pContainer);
+    //     participantsContainer.appendChild(pContainer);
 
-    }
+    // }
 
 });

@@ -13,15 +13,14 @@ createForm.addEventListener('submit', (e) => {
     }).then(tournaments => {
         const newTournament = {
             id: tournaments.length + 1,
-            picture: 'placeholder', // data.get('image') NEED LINK
+            picture: 'https://placeimg.com/640/480/tech', // data.get('image') NEED LINK
             name: data.get('name'),
             organizer_id: 1, // CHANGE THIS LATER, NEED A getUserByUsername() API ROUTE
             location: data.get('location'),
             description: data.get('description'),
             created: new Date(Date.now()).toLocaleDateString(),
-            start: data.get('start'),
+            start: formatDate(data.get('start')),
             join_id: genRandonString(10)
-            // participants: []
         }
 
         console.log(newTournament);
@@ -37,7 +36,7 @@ createForm.addEventListener('submit', (e) => {
                 console.log(response.status);
                 if (response.status == 200) {
                     console.log("Navigating to created tournament")
-                    window.location.replace("/tournaments/" + newTournament.id);
+                    // window.location.replace("/tournaments/" + newTournament.id);
                 }
             })
             .catch((error) => {
@@ -54,4 +53,13 @@ function genRandonString(length) {
        result += chars.charAt(Math.floor(Math.random() * charLength));
     }
     return result;
- }
+}
+
+// Converts yyyy-mm-dd to mm/dd/yyyy
+function formatDate(date) {
+    const [year, month, day] = date.split('-');
+
+    const result = `${month}/${day}/${year}`;
+
+    return result;
+}
