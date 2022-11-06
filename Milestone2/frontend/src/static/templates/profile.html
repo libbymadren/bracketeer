@@ -15,19 +15,31 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="/home">
+    <a class="navbar-brand" href="/landing">
       <img src="/images/logo-cropped.jpeg" alt="logo">
     </a>
   </nav>
   <div class="collapse" id="navbarToggleExternalContent">
-    <div class="bg-dark p-4">
-      <h5 class="text-white h4">Collapsed content</h5>
+    <div class="p-4 text-center" id="nav-home-button">
+        <a href="/landing"><h5 class="text-white h4">Home</h5></a>
+    </div>
+    <div>
+        <hr class="nav-hr">
+    </div>
+    <div class="p-4 text-center" id="nav-login-button">
+        <a id="profile-link" href="/profile"><h5 class="text-white h4">Profile</h5></a>
+    </div>
+    <div>
+        <hr class="nav-hr">
+    </div>
+    <div class="p-4 text-center" id="nav-register-button">
+        <a id="logout-link" href="/login"><h5 class="text-white h4">Logout</h5></a>
     </div>
   </div>
 
   <div id="user-info" class="d-flex align-items-center">
     <img id="profile-picture" class="rounded-circle" src="/images/default-avatar-example.jpg" alt="avatar">
-    <span class="h1 ms-5 fw-bold">Username</span>
+    <span id="profile-username" class="h1 ms-5 fw-bold"></span>
   </div>
 
   <div class="text-center">
@@ -36,49 +48,52 @@
         <div class="row gx-5">
           <div class="col-md-6 mt-3">
            <div class="p-3 border bg-danger text-light rounded">Total Tournaments Entered:
-               <div class="h2 mt-2">
+               <div id="total-tournaments-enetered" class="h2 mt-2">
                 0
                </div>
            </div>
           </div>
           <div class="col-md-6 mt-3">
             <div class="p-3 border bg-danger text-light rounded">Total Matches Played:
-                <div class="h2 mt-2">
+                <div id="total-matches-played" class="h2 mt-2">
                     0
                 </div>
             </div>
           </div>
-          <div class="col-md-6 mt-3">
+          <!-- TODO: add stats to frontend when tournament placements are added to backend -->
+          <!-- <div class="col-md-6 mt-3">
             <div class="p-3 border bg-danger text-light rounded">Total Tournaments Won:
-                <div class="h2 mt-2">
+                <div id="total-tournaments-won" class="h2 mt-2">
                     0
                 </div>
             </div>
           </div>
           <div class="col-md-6 mt-3">
             <div class="p-3 border bg-danger text-light rounded">Top Ten Finishes:
-                <div class="h2 mt-2">
+                <div id="top-ten-finishes" class="h2 mt-2">
                     0
                 </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
   </div>
 
   <div class="mb-5">
     <h2 class="fw-bold mt-5 mb-3 text-center">Recent Tournaments</h2>
-    <div class="card">
-        <div class="card-body d-flex align-items-center">
-            <img class="tournament-image rounded-circle" src="/images/default-avatar-example.jpg" alt="avatar">
-            <div class="ms-3">
-            <span class="h5 card-title">Tournament Name - 1st Place</span>
-            <p class="card-subtitle fst-italic text-muted mt-1">Chess</p>
-            </div>
-        </div>
-      </div>
+    <div id="recent-tournaments-list">
+      <!-- <div class="card">
+          <div class="card-body d-flex align-items-center">
+              <img class="tournament-image rounded-circle" src="/images/default-avatar-example.jpg" alt="avatar">
+              <div class="ms-3">
+              <span class="h5 card-title">Tournament Name - 1st Place</span>
+              <p class="card-subtitle fst-italic text-muted mt-1">Chess</p>
+              </div>
+          </div>
+      </div> -->
+    </div>
   </div>
 </body>
 
-<script src="/js/main.js"></script>
+<script src="/js/profile.js"></script>
 </html>

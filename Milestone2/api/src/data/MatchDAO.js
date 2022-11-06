@@ -9,7 +9,7 @@ function getMatchById(matchId) {
 }
 
 function getMatchesByUser(userId) {
-    return db.query('SELECT * FROM match WHERE participant_one_id=? UNION SELECT * FROM match WHERE participant_two_id=?', [userId, userId]).then(({results}) => {
+    return db.query('SELECT * FROM `match` WHERE participant_one_id=? OR participant_two_id=?', [userId, userId]).then(({results}) => {
         return results.map(match => Match(match));
     });
 }
@@ -26,3 +26,10 @@ function createMatch(match) {
         return getMatchById(results.insertId);
     })
 }
+
+module.exports = {
+    getMatchById: getMatchById,
+    getMatchesByUser: getMatchesByUser,
+    getMatchesByTournament: getMatchesByTournament,
+    createMatch: createMatch
+};

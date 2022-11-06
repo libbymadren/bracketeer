@@ -3,7 +3,7 @@ const Tournament = require('./models/Tournament');
 
 function getAllTournaments() {
     return db.query('SELECT * FROM tournaments').then(({results}) => {
-        return results.map(tournament => new Tournament(tournament)); ;
+        return results.map(tournament => new Tournament(tournament)); 
     });
 }
 
@@ -36,10 +36,17 @@ function getTournamentByID(tournamentId) {
     });
 }
 
+function getTournamentsByUser(userId) {
+    return db.query('SELECT * FROM tournament_user WHERE user_id=?', [userId]).then(({results}) => {
+        return results.map(tournamentUser => getTournamentById(tournamentUser.tournament_id));
+    });
+}
+
 module.exports = {
     getAllTournaments: getAllTournaments,
     createTournament: createTournament,
     updateTournament: updateTournament,
     deleteTournament: deleteTournament,
-    getTournamentByID: getTournamentByID
-  };
+    getTournamentByID: getTournamentByID,
+    getTournamentsByUser: getTournamentsByUser
+};

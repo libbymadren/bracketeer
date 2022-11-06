@@ -65,14 +65,28 @@ apiRouter.get('/users/:userId/matches', jwt.middleware, (req,  res) => {
     }
 
     const userId = req.params.userId;
-    let userMatches = matches.filter(match => match.participant_one == userId || match.participant_two == userId);
-    if(userMatches) {
+    MatchDAO.getMatchesByUser(userId).then(match => {
+        res.json(match);
+    }).catch(err => {
+        res.status(400).json({error: err});
+    });
+});
 
-        res.json(userMatches);
+// Get all tournaments for a specific user
+apiRouter.get('/users/:userId/tournaments', jwt.middleware, (req,  res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
     }
-    else {
-        res.status(404).json({error: 'No matches found for this user'});
-    }
+
+    const userId = req.params.userId;
+    TournamentDAO.getTournamentsByUser(userId).then(tournaments => {
+        console.log(tournaments);
+        res.json(tournaments);
+    }) 
+    .catch(err => {
+        res.status(500).json({error: err});
+    });
 });
 
 // Delete a user
