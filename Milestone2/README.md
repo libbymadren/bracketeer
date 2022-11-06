@@ -66,3 +66,4 @@ tl;dr joining tournaments and most functionality relating to matches
 
 ## ER Diagram
 [diagram](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Milestone2/ER_Diagram.png)
+<img src="https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Milestone2/ER_Diagram.png"/>
