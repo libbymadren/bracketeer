@@ -41,8 +41,7 @@ Method   | Route                                         | Description          
 `GET`    | `/matches/:matchId`                           | Return a specific match                                         | Jack
 
 
-## ER Diagram
-[diagram](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Milestone2/ER_Diagram.png)
+
 
 ## Individual Contributions
 ** Link file here when it's finished? **
@@ -63,5 +62,7 @@ Some things you could include based on what I've seen --Nathan
 tl;dr joining tournaments and most functionality relating to matches
 
 <h2> Authentication/Authorization Process </h2>
-<p>xxx</p>
+<p>For authentication we are using JWT tokens and password hashing + salt using Argon2. The JWT token implementation is using the jsonwebtoken Node.JS libary. We have a jwt utility javascript file that facilitates generating, deleting, and verifiying jwt tokens. As a part of the jwt.js file we have a middleware function that is used within our protected routes. In terms of password storage, we are using Argon2 to hash passwords and we are generating a random salt value by using a sha256 hash of a random value. To integrate Argon2, we are using the node.js argon2 library: https://www.npmjs.com/package/argon2. Lastly, I would like to mention that our JWT tokens have a short expiry time of 5 min and are refreshed on every valid request.</p>
 
+## ER Diagram
+[diagram](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Milestone2/ER_Diagram.png)
