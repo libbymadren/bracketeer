@@ -34,12 +34,11 @@ app.get('/create', jwt.middleware, (req, res) => {
     res.sendFile(html_path + '/create.html');
 });
   
-app.get('/edit', jwt.middleware, (req, res) => {
+app.get('/edit/:tournamentId', (req, res) => {
     if (!req.valid_jwt) {
         res.redirect('/login');
         return;
     }
-
     res.sendFile(html_path + '/edit.html');
 });
 

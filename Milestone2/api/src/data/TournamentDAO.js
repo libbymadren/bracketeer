@@ -2,35 +2,35 @@ const db = require('./DBConnection');
 const Tournament = require('./models/Tournament');
 
 function getAllTournaments() {
-    return db.query('SELECT * FROM tournaments').then(({results}) => {
-        return results.map(tournament => new Tournament(tournament)); 
+    return db.query('SELECT * FROM tournament').then(({results}) => {
+        return results.map(tournament => new Tournament(tournament)); ;
     });
 }
 
 function createTournament(tournament) {
-    return db.query('INSERT INTO tournaments (id, picture, name, organizer_id, location, ' + 
-        'description, created, start, join_id, participants) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    return db.query('INSERT INTO tournament (id, picture, name, organizer_id, location, ' + 
+        'description, created, start, join_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
 
         [tournament.id, tournament.picture, tournament.name, tournament.organizer_id, tournament.location, 
-            tournament.description, tournament.created, tournament.start, tournament.join_id, tournament.participants]).then(({results}) => {
+            tournament.description, tournament.created, tournament.start, tournament.join_id]).then(({results}) => {
             getTournamentById(results.insertId)
    });
 }
 
 function updateTournament(tournamentBody, tournamentId) {
-    return db.query('UPDATE tournaments SET ? WHERE id=?', [tournamentBody, tournamentId]).then(({results}) => {
+    return db.query('UPDATE tournament SET ? WHERE id=?', [tournamentBody, tournamentId]).then(({results}) => {
         return (getTournamentById(tournamentId));
     });
 }
 
 function deleteTournament(tournamentId) {
-    return db.query('DELETE FROM tournaments WHERE id=?', [tournamentId]).then(({results}) => {
+    return db.query('DELETE FROM tournament WHERE id=?', [tournamentId]).then(({results}) => {
         return getAllTournaments();
     });
 }
 
-function getTournamentByID(tournamentId) {
-    return db.query('SELECT * FROM tournaments WHERE id=?', [tournamentId]).then(({results}) => {
+function getTournamentById(tournamentId) {
+    return db.query('SELECT * FROM tournament WHERE id=?', [tournamentId]).then(({results}) => {
         if(results[0])
             return new Tournament(results[0]);
     });
@@ -47,6 +47,5 @@ module.exports = {
     createTournament: createTournament,
     updateTournament: updateTournament,
     deleteTournament: deleteTournament,
-    getTournamentByID: getTournamentByID,
-    getTournamentsByUser: getTournamentsByUser
-};
+    getTournamentById: getTournamentById
+  };

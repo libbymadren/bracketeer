@@ -150,8 +150,8 @@ apiRouter.get('/tournaments', jwt.middleware, (req,  res) => {
         return;
     }
 
-    TournamentDAO.getTournaments().then(tournaments => {
-        res.json(tournaments);
+    TournamentDAO.getAllTournaments().then(tournament => {
+        res.json(tournament);
       })
       .catch(err => {
         res.status(400).json({error: err});
@@ -180,10 +180,10 @@ apiRouter.put('/tournaments/:tournamentId', jwt.middleware, (req, res) => {
 
 
     const tournamentId = req.params.tournamentId;
-    let tournament = req.body;
-    tournament = TournamentDAO.updateTournament(tournament, tournamentId).then(tournament => {
+    let newTournament = req.body;
+    newTournament = TournamentDAO.updateTournament(newTournament, tournamentId).then(tournament => {
         res.json(tournament);
-    })
+    });
 });
 
 // delete a tournament
@@ -195,8 +195,8 @@ apiRouter.delete('/tournaments/:tournamentId', jwt.middleware, (req, res) => {
 
 
     const tournamentId = req.params.tournamentId;
-    TournamentDAO.getUserById(tournamentId).then(tournaments => {
-        res.json(tournaments);
+    TournamentDAO.getUserById(tournamentId).then(tournament => {
+        res.json(tournament);
     })
     .catch(err => {
         res.status(500).json({error: err});

@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `tournament` (
     `description` varchar(100) NOT NULL,
     `created` varchar(100) NOT NULL,
     `start` varchar(100) NOT NULL,
-    `join_id` int(10) unsigned NOT NULL,
+    `join_id` varchar(10) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

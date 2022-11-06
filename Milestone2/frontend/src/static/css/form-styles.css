@@ -10,6 +10,14 @@ div#long {
     align-items: center;
 }
 
+div#currentInfo {
+    background-color: #e01c24;
+    color: white;
+    padding: 2%;
+    font-family: Arial, sans-serif;
+    border-radius: 10px;
+}
+
 form {
     width: 100vw;
     display: flex;
