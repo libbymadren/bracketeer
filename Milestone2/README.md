@@ -1,23 +1,24 @@
 # Bracketeer
-## Group T: Milestone 1
+## Group T: Milestone 2
 ### Group Members: Jack Randle, Libby Madren, Nathan Turpin
 
-### Frontend Routes
+## Frontend Routes
 
 Pages    | Status | Contributor(s) | Wireframe
 -------- | ------ | -------------- | ---------
 Home     | ✅     | Libby          | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-groupT-Wireframe-Landing.png)
 Profile  | ✅     | Libby          |
-Register | 0%     | N/A            | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342%20-%20Wireframes-register.png)
+Register | ✅     | Jack, Libby    | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342%20-%20Wireframes-register.png)
 Create   | ✅     | Nathan         | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-createjoin.png)
 Edit     | ✅     | Nathan         | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-edittournament.png)
 T. View  | ✅     | Jack           |
 Matches  | 0%     | N/A            | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-bracketviewedit.png)
 M. View  | ✅     | Jack           | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-bracketviewedit.png)
+Join     | 50% (currently part of T. View) | N/A | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-createjoin.png)
 
-6 pages / 8 pages = 75%
+**7.5 pages / 9 pages = 83%**
 
-### API Routes
+## API Routes
 
 Method   | Route                                         | Description                                                     | Contributor(s)
 -------- | --------------------------------------------- | --------------------------------------------------------------- | --------------
@@ -40,8 +41,19 @@ Method   | Route                                         | Description          
 `GET`    | `/matches/:matchId`                           | Return a specific match                                         | Jack
 
 
-<h2> What is Done </h2>
-<p>We have implemented all endpoints that we think we currently need for our main implementation. We have also used mock data to complete the majority of our HTML pages.</p>
+## ER Diagram
+[diagram](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Milestone2/ER_Diagram.png)
 
-<h2> What is Not Done</h2>
-<p>We still need to implement the following: User authentication system, database for storing persistent data, the view matches page which will require a good amount of design before implementing. A method of joining tournaments by qr code (the qr code is being generated, but it currently doesn't join you to a tournament).</p>
+## Individual Contributions
+** Link file here when it's finished? **
+___
+
+<h2> What is Done </h2>
+<p>xxx</p>
+
+<h2> What is Not Done </h2>
+<p>xxx</p>
+
+<h2> Authentication/Authorization Process </h2>
+<p>xxx</p>
+
