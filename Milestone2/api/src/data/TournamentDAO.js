@@ -36,6 +36,12 @@ function getTournamentById(tournamentId) {
     });
 }
 
+function getTournamentsByUser(userId) {
+    return db.query('SELECT * FROM tournament_user WHERE user_id=?', [userId]).then(({results}) => {
+        return results.map(tournamentUser => getTournamentById(tournamentUser.tournament_id));
+    });
+}
+
 module.exports = {
     getAllTournaments: getAllTournaments,
     createTournament: createTournament,

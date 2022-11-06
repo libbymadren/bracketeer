@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(100) NOT NULL,
   `salt` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `profile_picture` varchar(100) NOT NULL,
+  `profile_picture` varchar(100),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

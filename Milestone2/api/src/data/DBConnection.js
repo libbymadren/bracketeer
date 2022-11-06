@@ -38,5 +38,3 @@ exports.close = () => {
     connection = null;
   }
 };
-
-
