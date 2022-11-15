@@ -28,7 +28,7 @@ form.addEventListener("submit", function (e) {
             errorBox.innerHTML = "Incorrect username or password";
         }
         else {
-            document.location = "/landing";
+            document.location = "/";
         }
     }).catch(error => {
         console.error(error);

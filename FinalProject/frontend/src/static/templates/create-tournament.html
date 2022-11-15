@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Tournament</title>
+  <link rel="stylesheet" href="/css/navbar-styles.css">
+  <link rel="stylesheet" href="/css/create-tournament-styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+</head>
+<body>
+  <script src="/js/navbar.js" type="module"></script>
+  <script defer type="module">
+      import {buildLink} from "/js/navbar.js";
+      buildLink("profile-link", "/profile", "Home");
+      buildLink("logout-link", "/api/logout", "Logout");
+  </script>
+
+  <main>
+    <h1>Create Tournament</h1>
+
+    
+  
+    <form id="create" class="form-group">
+      <!-- ENTER NAME -->
+      <div>
+        <label for="name">Tournament Name: </label><br>
+        <input class="form-control" type="text" placeholder="Enter name" name="name" required>
+      </div>
+
+      <!-- SELECT BANNER IMAGE -->
+      <div>
+        <label for="banner" class="form-label">Banner Image: </label><br>
+        <input class="form-control" id="formFile" type="file" name="banner" type="file"></input>
+      </div>
+
+      <!-- ABOUT -->
+      <div>
+        <label for="description" class="form-label">About: </label><br>
+        <textarea class="form-control" id="description" name="description" placeholder="Add a description..." required minlength="10"></textarea>
+      </div>
+
+      <!-- START DATE -->
+      <div>
+        <label for="start">Start Date: </label><br>
+        <input class="form-control" type="date" name="start" id="date" required>
+      </div>
+
+      <!-- Tournament LOCATION -->
+      <div>
+        <label for="location">Location:</label><br>
+        <input class="form-control" type="location" name="location" placeholder="Tournament location" required>
+      </div>
+
+      <!-- CREATE BUTTON -->
+      <div>
+        <input type="submit" class="form-control btn btn-primary" value="Create">
+      </div>
+    </form>
+  </main>
+
+  
+
+
+</body>
+
+<script src="/js/main.js"></script>
+<script src="/js/create.js"></script>
+</html>

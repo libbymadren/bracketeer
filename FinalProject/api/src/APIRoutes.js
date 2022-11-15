@@ -165,6 +165,8 @@ apiRouter.post('/tournaments', jwt.middleware, (req, res) => {
         return;
     }
 
+    console.log(req.body);
+
     let newTournament = req.body;
     newTournament = TournamentDAO.createTournament(newTournament).then(tournament => {
         res.json(tournament);

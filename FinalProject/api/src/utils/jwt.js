@@ -63,12 +63,13 @@ module.exports["generateToken"] = function(req, res, payload) {
     res.cookie(TOKEN_COOKIE_NAME, token, {
         httpOnly: true,
         secure: true,
-        maxAge: 5 * 60 * 1000
+        maxAge: "10000"
     });
 }
 
 
 module.exports["removeToken"] = function(req, res) {
+    console.log("Removing token")
     //send session ID in cookie to client
     res.cookie(TOKEN_COOKIE_NAME, "", {
         httpOnly: true,
