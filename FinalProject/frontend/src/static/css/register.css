@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+
+#display-text {
+    font-family: 'Lilita One', cursive;
+    margin-top: 3rem;
+}
+
+#form-container {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#form-container form {
+    border: 1px solid black;
+    border-radius: 10px;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#form-container form div {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+}
