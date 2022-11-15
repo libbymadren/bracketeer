@@ -4,6 +4,7 @@ const MatchDAO = require('./data/MatchDAO');
 const User = require('./data/models/User');
 const jwt = require('./utils/jwt')
 const TournamentDAO = require('./data/TournamentDAO');
+const crypto = require('node:crypto')
 // let users = require(data_path + 'users.json');
 // let tournaments = require(data_path + 'tournaments.json');
 // let matches = require(data_path + 'matches.json');
@@ -15,7 +16,8 @@ const data_path = __dirname + '/data/';
 const cookieParser = require('cookie-parser');
 apiRouter.use(cookieParser());
 
-apiRouter.use(express.json());
+
+apiRouter.use(express.json({limit: '50mb'}));
 
 // ----------------------------------------------------
 // USERS API
@@ -158,18 +160,25 @@ apiRouter.get('/tournaments', jwt.middleware, (req,  res) => {
       });
 });
 
-// Create a specific tournament
+// Create a tournament
 apiRouter.post('/tournaments', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
         res.status(401).json({"error": "Authentication Failed"});
         return;
     }
 
-    console.log(req.body);
+    // generate a join id
+    let joinId = crypto.createHash('SHAKE256',{outputLength: 10}).update(JSON.stringify(req.body)).digest("hex");
 
-    let newTournament = req.body;
-    newTournament = TournamentDAO.createTournament(newTournament).then(tournament => {
-        res.json(tournament);
+    // add join id to incoming 
+    let tournamentInfo = req.body;
+    tournamentInfo["join_id"] = joinId;
+    tournamentInfo.picture = Buffer.from(tournamentInfo.picture, 'base64')
+    
+    console.log(Buffer.byteLength(tournamentInfo.picture));
+
+    let queryResult = TournamentDAO.createTournament(tournamentInfo).then(tournament => {
+        res.status(200).json(tournament);
     });
  });
 
