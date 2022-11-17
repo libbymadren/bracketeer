@@ -10,7 +10,31 @@ const html_path = __dirname + '/static/templates';
 // Designate the static folder as serving static resources
 app.use(express.static(__dirname + '/static'));
 
-app.use(cookieParser())
+app.use(cookieParser());
+
+app.get('/join/:joinId', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.redirect('/login')
+        return;
+    }
+    res.sendFile(html_path + "/join.html");
+});
+
+app.get('/tournaments/join', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.redirect('/login')
+        return;
+    }
+    res.sendFile(html_path + "/join-tournament.html");
+});
+
+app.get('/tournaments/active', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.redirect('/login');
+        return;
+    }
+    res.sendFile(html_path + "/active-tournaments.html");
+})
 
 app.get('/', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
@@ -38,7 +62,7 @@ app.get('/tournaments/create', jwt.middleware, (req, res) => {
     res.sendFile(html_path + '/create-tournament.html');
 });
   
-app.get('/edit/:tournamentId', (req, res) => {
+app.get('tournaments/edit/:tournamentId', (req, res) => {
     if (!req.valid_jwt) {
         res.redirect('/login');
         return;

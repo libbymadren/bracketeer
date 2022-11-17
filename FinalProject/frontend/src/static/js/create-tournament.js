@@ -17,7 +17,6 @@ async function loadFile(file){
         // get the binary data of the selected file
         let reader = new FileReader();
         reader.onload = function() {
-
             resolve(window.btoa(reader.result))
         }
         reader.readAsBinaryString(file);

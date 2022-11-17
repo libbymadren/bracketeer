@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bracketeer</title>
+  <title>Create Tournament</title>
   <link rel="stylesheet" href="/css/navbar-styles.css">
-  <link rel="stylesheet" href="/css/home-styles.css">
+  <link rel="stylesheet" href="/css/active-tournaments.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </head>
@@ -14,23 +14,17 @@
   <script src="/js/navbar.js" type="module"></script>
   <script defer type="module">
       import {buildLink} from "/js/navbar.js";
-      buildLink("profile-link", "/profile", "Home");
+      buildLink("home-link", "/", "Home");
       buildLink("logout-link", "/api/logout", "Logout");
   </script>
 
-  <div>
-    <h1 id="display-text" class="display-2 text-center mb-5"></h1>
-    <p class="h3 text-center">Start a tournament, join a new tournament, or view tournaments you're participating in.</p>
-    <div class="text-center mt-2">
-      <a href="/tournaments/create" class="btn btn-danger btn-lg me-1">Create Tournament</a>
-      <!-- link join tournament button when join page is made -->
-      <a href='tournaments/join' class="btn btn-danger btn-lg ms-1">Join Tournament</a>
-      <!-- link my tournament button when join page is made -->
-      <a href="/tournaments/active" class="btn btn-danger btn-lg ms-1">My Active Tournaments</a>
+  <h1 id="main-header" class="display-3 text-center mb-4">Active Tournaments</h1>
+  <main>
+    <div id="tournaments-container">
+
     </div>
-  </div>
+  </main>
 </body>
 
-<script src="/js/landing.js"></script>
-<script src="/js/logout.js"></script>
+<script src="/js/active-tournaments.js"></script>
 </html>

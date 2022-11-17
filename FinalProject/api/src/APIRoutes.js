@@ -255,7 +255,7 @@ apiRouter.get('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) =
     }
 });
 
-
+// Not sure if we need this? I think matches would only be generated on the backend
 // create a match for a tournament
 apiRouter.post('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
@@ -276,25 +276,55 @@ apiRouter.post('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) 
     }
 });
 
-// ----------------------------------------------------
-// JOIN API
-// ----------------------------------------------------
-
-apiRouter.post('/join/:joinId', jwt.middleware, (req, res) => {
+apiRouter.get('/tournaments/join/:joinId', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
         res.status(401).json({"error": "Authentication Failed"});
         return;
     }
 
-    let targetJoinId = req.params.tournamentId;
+    let targetTournamentJoinId = req.params.joinId;
 
-    let tournament = tournaments.find(tournament => tournament.join_id == targetJoinId);
+    TournamentDAO.getTournamentByJoinId(targetTournamentJoinId).then(tournament => {
+        if(tournament) {
+            res.json(tournament);
+        }
+        else {
+            res.status(404).json({error: 'Tournament not found'});
+        }
+    }).catch(err => {
+        res.status(500).json({error: err});
+    });
+});
 
-    if (tournament) {
-        tournament.participants.push(req.body.json.user.id);
-    } else {
-        res.status(404).json({error: "No tournaments found with join id: " + targetJoinId});
+// ----------------------------------------------------
+// JOIN API
+// ----------------------------------------------------
+
+apiRouter.put('/tournaments/join/:joinId', jwt.middleware, async (req, res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
     }
+
+    console.log(req.params.joinId);
+    let targetTournament = await TournamentDAO.getTournamentByJoinId(req.params.joinId)
+    console.log(targetTournament);
+
+    let tournamentId = targetTournament.id;
+    let userId = req.jwt_payload.id;
+
+    console.log(tournamentId, userId);
+
+    TournamentDAO.addUserToTournament(tournamentId, userId).then(addition => {
+        if(addition) {
+            res.json(addition);
+        }
+        else {
+            res.status(500).json({error: 'Error'});
+        }
+    }).catch(err => {
+        res.status(500).json({error: err});
+    });
 });
 
 // ----------------------------------------------------
