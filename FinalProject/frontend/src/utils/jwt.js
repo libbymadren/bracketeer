@@ -42,6 +42,9 @@ module.exports["middleware"] = function(req, res, next) {
         req.jwt_payload = decoded;
         req.valid_jwt = true;
 
+        // regenerate the token
+        module.exports.generateToken(req, res, decoded);
+
         next();
 
     } catch(err) {
