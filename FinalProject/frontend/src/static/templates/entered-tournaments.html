@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Tournament</title>
   <link rel="stylesheet" href="/css/navbar-styles.css">
-  <link rel="stylesheet" href="/css/participated-tournaments.css">
+  <link rel="stylesheet" href="/css/entered-tournaments.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </head>
@@ -20,17 +20,15 @@
 
   
   <main>
-    <div>
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-danger active">Active</button>
-        <button type="button" class="btn btn-danger">Upcoming</button>
-        <button type="button" class="btn btn-danger">Old</button>
-      </div>
-      <div id="tournaments-container">
-      </div>
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button id="active-btn" type="button" class="btn btn-danger active">Active</button>
+      <button id="upcoming-btn" type="button" class="btn btn-danger">Upcoming</button>
+      <button id="old-btn" type="button" class="btn btn-danger">Old</button>
+    </div>
+    <div id="tournaments-container">
     </div>
   </main>
 </body>
 
-<script src="/js/participated-tournaments.js"></script>
+<script src="/js/entered-tournaments.js"></script>
 </html>

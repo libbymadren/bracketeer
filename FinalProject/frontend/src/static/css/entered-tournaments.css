@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+
+.main-header {
+    font-family: 'Lilita One', cursive;
+    margin-top: 3rem;
+}
+
+#tournaments-container {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: 100vh;
+    width: 75vw;
+    row-gap: 20px;
+    margin-top: 10px;
+}
+#tournaments-container>div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.461);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    width: 100vw;
+}
+
+.tournament-header {
+    min-height: 100px;
+    max-height: 100px;
+    overflow: hidden;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 4px solid grey;
+    
+}
+.tournament-header img {
+    min-width: 100vw;
+    position: absolute;
+}
+.tournament-header div{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 50px 0px 50px 0px;
+}
+.tournament-header div h2 {
+    margin: 0 0 0 0;
+    padding: 15px 15px 15px 15px;
+    background-color: rgba(0, 0, 0, 0.65);
+    color: white;
+    border-radius: 3px;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+}
+
+.tournament-info {
+    min-height: 50px;
+    max-height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.tournament-info div {
+    width: fit-content;
+}
+
+.tournament-card:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.153);
+}
