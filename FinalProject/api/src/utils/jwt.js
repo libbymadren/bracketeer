@@ -42,6 +42,9 @@ module.exports["middleware"] = function(req, res, next) {
         req.jwt_payload = decoded;
         req.valid_jwt = true;
 
+        // regenerate the token
+        module.exports.generateToken(req, res, decoded);
+
         next();
 
     } catch(err) {
@@ -55,20 +58,23 @@ module.exports["middleware"] = function(req, res, next) {
 module.exports["generateToken"] = function(req, res, payload) {
     console.log("Generating token with payload: ");
     console.log(payload);
-    let token = jwt.sign(payload, API_SECRET_KEY, {
-        "algorithm": "HS256"
-    });
+
+    payload['alg'] = 'HS256';
+    payload['exp'] = Math.floor(Date.now() / 1000) + (60 * 10);
+
+    let token = jwt.sign(payload, API_SECRET_KEY);
 
     // Send the jwt back as a cookie
     res.cookie(TOKEN_COOKIE_NAME, token, {
         httpOnly: true,
         secure: true,
-        maxAge: 5 * 60 * 1000
+        maxAge: 10 * 60 * 1000
     });
 }
 
 
 module.exports["removeToken"] = function(req, res) {
+    console.log("Removing token")
     //send session ID in cookie to client
     res.cookie(TOKEN_COOKIE_NAME, "", {
         httpOnly: true,

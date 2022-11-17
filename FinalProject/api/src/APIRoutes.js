@@ -4,6 +4,7 @@ const MatchDAO = require('./data/MatchDAO');
 const User = require('./data/models/User');
 const jwt = require('./utils/jwt')
 const TournamentDAO = require('./data/TournamentDAO');
+const crypto = require('node:crypto')
 // let users = require(data_path + 'users.json');
 // let tournaments = require(data_path + 'tournaments.json');
 // let matches = require(data_path + 'matches.json');
@@ -15,7 +16,8 @@ const data_path = __dirname + '/data/';
 const cookieParser = require('cookie-parser');
 apiRouter.use(cookieParser());
 
-apiRouter.use(express.json());
+
+apiRouter.use(express.json({limit: '50mb'}));
 
 // ----------------------------------------------------
 // USERS API
@@ -158,16 +160,23 @@ apiRouter.get('/tournaments', jwt.middleware, (req,  res) => {
       });
 });
 
-// Create a specific tournament
+// Create a tournament
 apiRouter.post('/tournaments', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
         res.status(401).json({"error": "Authentication Failed"});
         return;
     }
 
-    let newTournament = req.body;
-    newTournament = TournamentDAO.createTournament(newTournament).then(tournament => {
-        res.json(tournament);
+    // generate a join id
+    let joinId = crypto.createHash('SHAKE256',{outputLength: 10}).update(JSON.stringify(req.body)).digest("hex");
+
+    // add join id to incoming 
+    let tournamentInfo = req.body;
+    tournamentInfo["join_id"] = joinId;
+    tournamentInfo.picture = Buffer.from(tournamentInfo.picture, 'base64')
+
+    TournamentDAO.createTournament(tournamentInfo).then(tournament => {
+        res.status(200).json(tournament);
     });
  });
 
@@ -244,7 +253,7 @@ apiRouter.get('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) =
     }
 });
 
-
+// Not sure if we need this? I think matches would only be generated on the backend
 // create a match for a tournament
 apiRouter.post('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
@@ -265,25 +274,75 @@ apiRouter.post('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) 
     }
 });
 
-// ----------------------------------------------------
-// JOIN API
-// ----------------------------------------------------
-
-apiRouter.post('/join/:joinId', jwt.middleware, (req, res) => {
+apiRouter.get('/tournaments/join/:joinId', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
         res.status(401).json({"error": "Authentication Failed"});
         return;
     }
 
-    let targetJoinId = req.params.tournamentId;
+    let targetTournamentJoinId = req.params.joinId;
 
-    let tournament = tournaments.find(tournament => tournament.join_id == targetJoinId);
+    TournamentDAO.getTournamentByJoinId(targetTournamentJoinId).then(tournament => {
+        if(tournament) {
+            res.json(tournament);
+        }
+        else {
+            res.status(404).json({error: 'Tournament not found'});
+        }
+    }).catch(err => {
+        res.status(500).json({error: err});
+    });
+});
 
-    if (tournament) {
-        tournament.participants.push(req.body.json.user.id);
-    } else {
-        res.status(404).json({error: "No tournaments found with join id: " + targetJoinId});
+apiRouter.get('/tournaments/:tournamentId/participants', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
     }
+
+    let targetTournamentId = req.params.tournamentId;
+
+    TournamentDAO.getTournamentParticipants(targetTournamentId).then(pariticpants => {
+        if(pariticpants) {
+            res.json(pariticpants);
+        }
+        else {
+            res.status(404).json({error: 'Participants not found'});
+        }
+    }).catch(err => {
+        res.status(500).json({error: err});
+    });
+});
+
+// ----------------------------------------------------
+// JOIN API
+// ----------------------------------------------------
+
+apiRouter.put('/tournaments/join/:joinId', jwt.middleware, async (req, res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
+    console.log(req.params.joinId);
+    let targetTournament = await TournamentDAO.getTournamentByJoinId(req.params.joinId)
+    console.log(targetTournament);
+
+    let tournamentId = targetTournament.id;
+    let userId = req.jwt_payload.id;
+
+    console.log(tournamentId, userId);
+
+    TournamentDAO.addUserToTournament(tournamentId, userId).then(addition => {
+        if(addition) {
+            res.json(addition);
+        }
+        else {
+            res.status(500).json({error: 'Error'});
+        }
+    }).catch(err => {
+        res.status(500).json({error: err});
+    });
 });
 
 // ----------------------------------------------------
@@ -313,6 +372,7 @@ apiRouter.post('/login', async (req,  res) => {
 
     // search the database for the user by credentials
     try {
+        console.log(req.body.username, req.body.password);
         let user = await UserDAO.getUserByCredentials(req.body.username, req.body.password);
         // Create a JWT for the user
         let payload = {
@@ -380,6 +440,8 @@ apiRouter.post('/register', async (req, res) => {
 
 apiRouter.post('/logout', (req, res) => {
     jwt.removeToken(req, res);
+    res.status(200).json({"message": "user logged out"});
+    return;
 });
 
 module.exports = apiRouter;

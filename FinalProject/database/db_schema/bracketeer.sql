@@ -6,21 +6,22 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(100) NOT NULL,
   `salt` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `profile_picture` varchar(100),
+  `profile_picture` MEDIUMBLOB,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE IF NOT EXISTS `tournament` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `picture` varchar(100) NOT NULL, 
+    `picture` MEDIUMBLOB, 
     `name`  varchar(100) NOT NULL, 
     `organizer_id` int(10) unsigned NOT NULL,
     `location` varchar(100) NOT NULL, 
     `description` varchar(100) NOT NULL,
     `created` varchar(100) NOT NULL,
-    `start` varchar(100) NOT NULL,
-    `join_id` varchar(10) NOT NULL,
+    `start` DATETIME NOT NULL,
+    `end` DATETIME NOT NULL,
+    `join_id` varchar(25) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

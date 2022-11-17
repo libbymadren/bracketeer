@@ -1,36 +1,28 @@
-
-
 let targetTournamentId = ("" + window.location).split('/').at(-1);
 console.log(targetTournamentId);
+
+function generateImageUrl(arrayBuffer) {
+    let blob = new Blob([arrayBuffer], {
+        type: "image"
+    });
+    let urlCreator = window.URL || window.webkitURL;
+    let imageUrl = urlCreator.createObjectURL(blob);
+    return imageUrl;
+}
 
 fetch('/api/tournaments/' + targetTournamentId).then(response => {
     console.log(response);
     return response.json();
 }).then(json => {
     console.log(json);
-
-    // create the qr code
-    let joinURL = "http://localhost/join/" + json.join_id;
-    let qrCode = new QRCode("qr-code", {
-        text: joinURL,
-        width: 300,
-        height: 300,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
-    });
-    let joinIdAnchor = document.querySelector("#join-id-anchor");
-    joinIdAnchor.innerHTML = joinURL;
-    joinIdAnchor.href = joinURL;
+    buildHeader(json);
+    buildInfo(json);
+    buildJoin(json);
+    getParticipants(json);
+});
 
 
-    let tournamentHeader = document.querySelector("#tournament-header");
-    let tournamentHeaderImg = document.querySelector("#tournament-header img");
-    let tournamentHeaderName = document.querySelector("#tournament-header h2");
-    tournamentHeaderImg.src = json.picture;
-    tournamentHeaderName.innerHTML = json.name;
-
-
+function buildInfo(json) {
     let tournamentInfo = document.querySelector("#tournament-info-container");
     
     // create organizer field
@@ -63,22 +55,67 @@ fetch('/api/tournaments/' + targetTournamentId).then(response => {
     start.innerHTML = json.start;
     startContainer.appendChild(start);
 
+    // create end field
+    let endContainer = document.querySelector("#ends-container");
+    let end = document.createElement('label');
+    end.innerHTML = json.end;
+    endContainer.appendChild(end);
+}
 
+function buildHeader(json) {
+    
+
+    let bannerArrayBuffer = (new Uint8Array(json.picture.data)).buffer;
+
+    let tournamentHeader = document.querySelector("#tournament-header");
+    document.querySelector("#tournament-header img").src = generateImageUrl(bannerArrayBuffer);
+    let tournamentHeaderName = document.querySelector("#tournament-header h2");
+    tournamentHeaderName.innerHTML = json.name;
+}
+
+function buildJoin(json) {
+    let joinIdAnchor = document.querySelector("#join-id-anchor");
+
+    // create the qr code
+    let joinURL = "http://localhost/join/" + json.join_id;
+    let qrCode = new QRCode("qr-code", {
+        text: joinURL,
+        width: 300,
+        height: 300,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+    joinIdAnchor.innerHTML = joinURL;
+    joinIdAnchor.href = joinURL;
+}
+
+function getParticipants(json) {
+    fetch("/api/tournaments/" + json.id + "/participants").then(response => {
+        return response.json()
+    }).then(json => {
+        console.log(json);
+        buildParticipants(json);
+    }).catch(err => {
+        console.error(err);
+    });
+}
+
+function buildParticipants(json) {
     let participantsContainer = document.querySelector("#participants-container");
 
-    // for (let participant of json.participants) {
+    for (let participant of json) {
 
-    //     let pContainer = document.createElement('div');
-    //     pContainer.className = "participant-info"
-    //     let pImg = document.createElement('img');
-    //     pImg.src = "https://robohash.org/" + Math.random();
-    //     let pUsr = document.createElement('label');
-    //     pUsr.innerHTML = participant.id;
-    //     pContainer.appendChild(pImg);
-    //     pContainer.appendChild(pUsr);
+        let pContainer = document.createElement('div');
+        pContainer.className = "participant-info"
+        let pImg = document.createElement('img');
+        // let avatarArray = Uint8Array(participant.avatar);
+        // pImg.src = generateImageUrl(avatarArray);
+        let pUsr = document.createElement('label');
+        pUsr.innerHTML = participant.username;
+        pContainer.appendChild(pImg);
+        pContainer.appendChild(pUsr);
 
-    //     participantsContainer.appendChild(pContainer);
-
-    // }
-
-});
+        participantsContainer.appendChild(pContainer);
+    }
+}

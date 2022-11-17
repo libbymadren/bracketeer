@@ -15,19 +15,12 @@
   <script src="/lib/qrcode.min.js"></script>
 </head>
 <body>
-  <nav class="navbar navbar-dark">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#">
-      <img src="/images/logo-cropped.jpeg" alt="logo">
-    </a>
-  </nav>
-  <div class="collapse" id="navbarToggleExternalContent">
-    <div class="bg-dark p-4">
-      <h5 class="text-white h4">Collapsed content</h5>
-    </div>
-  </div>
+  <script defer type="module">
+    import {buildLink} from "/js/navbar.js";
+    buildLink("home-link", "/", "Home");
+    buildLink("profile-link", "/profile", "Profile");
+    buildLink("logout-link", "/api/logout", "Logout");
+  </script>
 
   <div id="tournament-header">
     <img>
@@ -38,29 +31,28 @@
   </div>
 
   <main>
-    
-
     <div id="tournament-info-container">
       <h2>Info</h2>
-      <div id="organizer-container">
-        <label class="field-title">Organizer: </label>
-
+      <div id="info-container-one">
+        <div id="organizer-container">
+          <label class="field-title">Organizer: </label>
+        </div>
+        <div id="location-container">
+          <label class="field-title">Location: </label>
+        </div>
+        <div id="created-container">
+          <label class="field-title">Created: </label>
+        </div>
+        <div id="starts-container">
+          <label class="field-title">Starts: </label>
+        </div>
+        <div id="ends-container">
+          <label class="field-title">Ends: </label>
+        </div>
       </div>
-      <div id="location-container">
-        <label class="field-title">Location: </label>
-        
-      </div>
-      <div id="created-container">
-        <label class="field-title">Created: </label>
-        
-      </div>
-      <div id="starts-container">
-        <label class="field-title">Starts: </label>
-        
-      </div>
+      
       <div id="description-container">
         <label class="field-title">Description: </label>
-        
       </div>
       <input type="button" value="View Matches" class="btn btn-outline-primary">
     </div>

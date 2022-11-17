@@ -10,10 +10,38 @@ const html_path = __dirname + '/static/templates';
 // Designate the static folder as serving static resources
 app.use(express.static(__dirname + '/static'));
 
-app.use(cookieParser())
+app.use(cookieParser());
 
-app.get('/home', (req, res) => {
-    res.sendFile(html_path + '/home.html');
+app.get('/join/:joinId', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.redirect('/login')
+        return;
+    }
+    res.sendFile(html_path + "/join.html");
+});
+
+app.get('/tournaments/join', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.redirect('/login')
+        return;
+    }
+    res.sendFile(html_path + "/join-tournament.html");
+});
+
+app.get('/tournaments/active', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.redirect('/login');
+        return;
+    }
+    res.sendFile(html_path + "/participated-tournaments.html");
+})
+
+app.get('/', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.sendFile(html_path + '/home.html');
+    } else {
+        res.sendFile(html_path + "/landing.html");
+    }
 });
 
 app.get('/profile', jwt.middleware, (req, res) => {
@@ -25,16 +53,16 @@ app.get('/profile', jwt.middleware, (req, res) => {
     res.sendFile(html_path + '/profile.html');
 });
 
-app.get('/create', jwt.middleware, (req, res) => {
+app.get('/tournaments/create', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
         res.redirect('/login');
         return;
     }
 
-    res.sendFile(html_path + '/create.html');
+    res.sendFile(html_path + '/create-tournament.html');
 });
   
-app.get('/edit/:tournamentId', (req, res) => {
+app.get('tournaments/edit/:tournamentId', (req, res) => {
     if (!req.valid_jwt) {
         res.redirect('/login');
         return;
@@ -66,15 +94,6 @@ app.get('/register', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.sendFile(html_path + "/login.html");
-});
-
-app.get('/landing', jwt.middleware, (req, res) => {
-    if (!req.valid_jwt) {
-        res.redirect('/login');
-        return;
-    }
-
-    res.sendFile(html_path + "/landing.html");
 });
 
 // As our server to listen for incoming connections
