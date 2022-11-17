@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS `tournament` (
     `location` varchar(100) NOT NULL, 
     `description` varchar(100) NOT NULL,
     `created` varchar(100) NOT NULL,
-    `start` varchar(100) NOT NULL,
+    `start` DATETIME NOT NULL,
+    `end` DATETIME NOT NULL,
     `join_id` varchar(25) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

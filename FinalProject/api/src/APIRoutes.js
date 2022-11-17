@@ -174,10 +174,8 @@ apiRouter.post('/tournaments', jwt.middleware, (req, res) => {
     let tournamentInfo = req.body;
     tournamentInfo["join_id"] = joinId;
     tournamentInfo.picture = Buffer.from(tournamentInfo.picture, 'base64')
-    
-    console.log(Buffer.byteLength(tournamentInfo.picture));
 
-    let queryResult = TournamentDAO.createTournament(tournamentInfo).then(tournament => {
+    TournamentDAO.createTournament(tournamentInfo).then(tournament => {
         res.status(200).json(tournament);
     });
  });
@@ -296,6 +294,26 @@ apiRouter.get('/tournaments/join/:joinId', jwt.middleware, (req, res) => {
     });
 });
 
+apiRouter.get('/tournaments/:tournamentId/participants', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
+    let targetTournamentId = req.params.tournamentId;
+
+    TournamentDAO.getTournamentParticipants(targetTournamentId).then(pariticpants => {
+        if(pariticpants) {
+            res.json(pariticpants);
+        }
+        else {
+            res.status(404).json({error: 'Participants not found'});
+        }
+    }).catch(err => {
+        res.status(500).json({error: err});
+    });
+});
+
 // ----------------------------------------------------
 // JOIN API
 // ----------------------------------------------------
@@ -354,6 +372,7 @@ apiRouter.post('/login', async (req,  res) => {
 
     // search the database for the user by credentials
     try {
+        console.log(req.body.username, req.body.password);
         let user = await UserDAO.getUserByCredentials(req.body.username, req.body.password);
         // Create a JWT for the user
         let payload = {
@@ -421,6 +440,8 @@ apiRouter.post('/register', async (req, res) => {
 
 apiRouter.post('/logout', (req, res) => {
     jwt.removeToken(req, res);
+    res.status(200).json({"message": "user logged out"});
+    return;
 });
 
 module.exports = apiRouter;

@@ -47,7 +47,11 @@ export function buildLink(id, href, innerHtmlText) {
     container.appendChild(anchor);
     dropdownDiv.appendChild(container);
     
-    return container;
+    return {
+        container: container,
+        anchor: anchor,
+        dropdownDiv: dropdownDiv
+    };
 }
 
 let body = document.querySelector("body");

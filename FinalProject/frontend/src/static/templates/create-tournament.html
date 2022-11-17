@@ -15,7 +15,23 @@
   <script defer type="module">
       import {buildLink} from "/js/navbar.js";
       buildLink("home-link", "/", "Home");
-      buildLink("logout-link", "/api/logout", "Logout");
+      buildLink("logout-link", "/api/logout", "Logout").anchor.addEventListener("click", function(e) {
+        e.preventDefault();
+
+        fetch("/api/logout", {
+          method: "POST",
+          body: "{}",
+          headers:{
+            "Content-Type": "application/json"
+          }
+        }).then(response => {
+          if (response.status == 200) {
+            window.location = "/"
+          }
+        }).catch(err => {
+          console.error(err);
+        })
+      });
   </script>
 
   <h1 id="main-header" class="display-3 text-center mb-4">Create Tournament</h1>
@@ -41,8 +57,13 @@
 
       <!-- START DATE -->
       <div>
-        <label for="start">Start Date: </label><br>
-        <input class="form-control" type="date" name="start" id="date" required>
+        <label for="start">Start Date and Time: </label><br>
+        <input class="form-control" type="datetime-local" name="start" id="date" required>
+      </div>
+
+      <div>
+        <label for="end">End Date and Time: </label>
+        <input class="form-control" type="datetime-local" name="end" id="date" required>
       </div>
 
       <!-- Tournament LOCATION -->
@@ -63,6 +84,5 @@
 
 </body>
 
-<script src="/js/main.js"></script>
 <script src="/js/create-tournament.js"></script>
 </html>

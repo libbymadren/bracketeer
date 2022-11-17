@@ -1,5 +1,11 @@
 let currentUser = null;
 
+let tournaments {
+    "active": [],
+    "old": [],
+    "upcoming": []
+}
+
 // get the current user
 fetch("/api/users/current").then(request => {
     return request.json();
@@ -12,6 +18,12 @@ function getUserTournaments() {
     fetch('/api/users/' + currentUser.id + '/tournaments').then(response => {
         return response.json();
     }).then(json => {
+
+
+        
+    
+
+
         buildTournamentCards(json);
     });
 }

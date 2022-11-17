@@ -33,7 +33,7 @@ app.get('/tournaments/active', jwt.middleware, (req, res) => {
         res.redirect('/login');
         return;
     }
-    res.sendFile(html_path + "/active-tournaments.html");
+    res.sendFile(html_path + "/participated-tournaments.html");
 })
 
 app.get('/', jwt.middleware, (req, res) => {

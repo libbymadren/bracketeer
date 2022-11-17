@@ -31,6 +31,7 @@ createForm.addEventListener('submit', async (e) => {
     let location = e.target.elements.location.value;
     let name = e.target.elements.name.value;
     let start = e.target.elements.start.value;
+    let end = e.target.elements.end.value;
 
     let data = {
         picture: bannerImage,
@@ -39,7 +40,8 @@ createForm.addEventListener('submit', async (e) => {
         location: location,
         description: description,
         created: new Date(Date.now()).toLocaleDateString(),
-        start: start
+        start: start,
+        end: end
     }
 
     console.log(e.target.elements.banner);
@@ -49,17 +51,21 @@ createForm.addEventListener('submit', async (e) => {
     fetch("/api/tournaments", {
         method: "POST",
         body: JSON.stringify(data),
-        "headers": {
-            "Content-Type": "application/json"
-        }
+            "headers": {
+                "Content-Type": "application/json"
+            }
     }).then(response => {
         console.log("POST /api/tournaments: ", response.statusText)
 
         // handle if the file is too large
         if (response.status == 413) {
             console.log("Banner image too large.")
+        } else if (response.status = 200) {
+            return response.json()
         }
 
+    }).then(json => {
+        window.location = "/tournaments/" + json.id;
     }).catch(err => {
         console.error(err)
     })
