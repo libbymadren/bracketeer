@@ -51,8 +51,15 @@ function getTournamentByJoinId(joinId) {
     });
 }
 
-function getTournamentsByUser(userId) {
+function getEnteredTournamentsByUser(userId) {
     let query = "SELECT * FROM tournament LEFT JOIN tournament_user ON tournament.id=tournament_user.tournament_id  WHERE user_id=?"
+    return db.query(query, [userId]).then(({results}) => {
+        return results;
+    });
+}
+
+function getCreatedTournamentsByUser(userId) {
+    let query = "SELECT * FROM tournament WHERE organizer_id=?"
     return db.query(query, [userId]).then(({results}) => {
         return results;
     });
@@ -80,8 +87,9 @@ module.exports = {
     updateTournament: updateTournament,
     deleteTournament: deleteTournament,
     getTournamentById: getTournamentById,
-    getTournamentsByUser: getTournamentsByUser,
     getTournamentByJoinId: getTournamentByJoinId,
     addUserToTournament: addUserToTournament,
-    getTournamentParticipants: getTournamentParticipants
+    getTournamentParticipants: getTournamentParticipants,
+    getEnteredTournamentsByUser: getEnteredTournamentsByUser,
+    getCreatedTournamentsByUser: getCreatedTournamentsByUser
 };

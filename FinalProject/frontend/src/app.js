@@ -36,6 +36,14 @@ app.get('/tournaments/entered', jwt.middleware, (req, res) => {
     res.sendFile(html_path + "/entered-tournaments.html");
 })
 
+app.get('/tournaments/created', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.redirect('/login');
+        return;
+    }
+    res.sendFile(html_path + "/created-tournaments.html");
+})
+
 app.get('/', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
         res.sendFile(html_path + '/home.html');

@@ -75,14 +75,31 @@ apiRouter.get('/users/:userId/matches', jwt.middleware, (req,  res) => {
 });
 
 // Get all tournaments for a specific user
-apiRouter.get('/users/:userId/tournaments', jwt.middleware, (req,  res) => {
+apiRouter.get('/users/:userId/tournaments/entered', jwt.middleware, (req,  res) => {
     if (!req.valid_jwt) {
         res.status(401).json({"error": "Authentication Failed"});
         return;
     }
 
     const userId = req.params.userId;
-    TournamentDAO.getTournamentsByUser(userId).then(tournaments => {
+    TournamentDAO.getEnteredTournamentsByUser(userId).then(tournaments => {
+        console.log(tournaments);
+        res.json(tournaments);
+    }) 
+    .catch(err => {
+        res.status(500).json({error: err});
+    });
+});
+
+// Get all tournaments for a specific user
+apiRouter.get('/users/:userId/tournaments/created', jwt.middleware, (req,  res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
+    const userId = req.params.userId;
+    TournamentDAO.getCreatedTournamentsByUser(userId).then(tournaments => {
         console.log(tournaments);
         res.json(tournaments);
     }) 

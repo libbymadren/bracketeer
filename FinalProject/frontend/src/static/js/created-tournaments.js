@@ -24,7 +24,7 @@ fetch("/api/users/current").then(request => {
 });
 
 function getUserTournaments() {
-    fetch('/api/users/' + currentUser.id + '/tournaments/entered').then(response => {
+    fetch('/api/users/' + currentUser.id + '/tournaments/created').then(response => {
         return response.json();
     }).then(json => {
 
