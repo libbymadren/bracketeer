@@ -14,7 +14,8 @@
   <script src="/js/navbar.js" type="module"></script>
   <script defer type="module">
       import {buildLink} from "/js/navbar.js";
-      buildLink("profile-link", "/profile", "Home");
+      buildLink("home-link", "/", "Home");
+      buildLink("profile-link", "/profile", "Profile")
       buildLink("logout-link", "/api/logout", "Logout").anchor.addEventListener("click", function(e) {
         e.preventDefault();
 

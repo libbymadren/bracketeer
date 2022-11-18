@@ -1,80 +1,153 @@
-const query = window.location.search;
-let parameters = new URLSearchParams(query);
-let id = parameters.get('id');
+function generateImageUrl(arrayBuffer) {
+    let blob = new Blob([arrayBuffer], {
+        type: "image"
+    });
+    let urlCreator = window.URL || window.webkitURL;
+    let imageUrl = urlCreator.createObjectURL(blob);
+    return imageUrl;
+}
 
-let profileUser;
+let currentUser = null;
+let tournaments = {
+    "old": [],
+    "active": [],
+    "upcoming": []
+}
 
 fetch('api/users/current').then(res => {
     return res.json();
-})
-.then(loggedInUser => {
-    document.querySelector('#profile-link').href = "/profile?id=" + loggedInUser.id;
-})
-.catch(err => {
+}).then(json => {
+    currentUser = json;
+    buildUserInfo(json);
+    getUserTournaments();
+}).catch(err => {
     console.log(err);
 });
 
-fetch('api/users/byId/' + id).then(res => {
-    return res.json();
-})
-.then(user => {
-    profileUser = user;
-    document.querySelector('#profile-username').innerHTML = profileUser.username;
-    document.querySelector('#profile-picture').src = profileUser.profile_picture;
+function buildUserInfo(json) {
+    document.querySelector('#profile-username').innerHTML = json.username;
+    console.log(json);
+    let profilePictureArrayBuffer = (new Uint8Array(json.profile_picture.data)).buffer;
+    console.log(profilePictureArrayBuffer);
+    document.querySelector('#profile-picture').src = generateImageUrl(profilePictureArrayBuffer);
+}
 
-    return fetch('api/users/' + profileUser.id + '/tournaments');
-})
-.then(res => {
-    if (res.ok) {
-        return res.json();
+
+
+function getUserTournaments() {
+    fetch('/api/users/' + currentUser.id + '/tournaments/created').then(response => {
+        return response.json();
+    }).then(json => {
+        document.querySelector("#total-tournaments-enetered").innerHTML = json.length;
+
+        for (let tournament of json) {
+
+            let tournamentStartDate = Date.parse(tournament.start);
+            let tournamentEndDate = Date.parse(tournament.end);
+            let currentDate = new Date();
+
+            if (tournamentEndDate < currentDate && tournamentStartDate < currentDate) {
+                // check if old
+                console.log('old tournament');
+                tournaments.old.push(tournament);
+            } else if (tournamentStartDate < currentDate && tournamentEndDate > currentDate) {
+                // check if active
+                console.log("active tournament");
+                tournaments.active.push(tournament);
+            } else if (tournamentStartDate > currentDate && tournamentEndDate > currentDate) {
+                // check if upcoming
+                console.log("upcoming tournament");
+                tournaments.upcoming.push(tournament);
+            } else {
+                console.error("Impossible dates")
+            }
+        }
+        console.log(tournaments);
+
+        loadTournaments(tournaments.old);
+    });
+}
+
+function loadTournaments(tournaments) {
+    let tournamentsContainer = document.querySelector("#tournaments-container");
+
+    // remove tournaments
+    console.log("clear cards");
+    while (tournamentsContainer.firstChild)
+        tournamentsContainer.removeChild(tournamentsContainer.firstChild);
+
+    for (let tournament of tournaments) {
+        console.log(tournament);
+
+        console.log("create tournament card");
+        let tournamentCard = document.createElement('div');
+        tournamentCard.classList.add("tournament-card");
+
+        // create header div
+        let tournamentCardHeader = document.createElement('div');
+        tournamentCardHeader.classList.add("tournament-header")
+
+        // add header info
+        let bannerArrayBuffer = (new Uint8Array(tournament.picture.data)).buffer;
+        let headerImage = document.createElement("img");
+        headerImage.src = generateImageUrl(bannerArrayBuffer);
+        let headerTitleContainer = document.createElement("div");
+        let headerTitle = document.createElement("h2");
+        headerTitle.innerHTML = tournament.name;
+        tournamentCardHeader.appendChild(headerImage);
+        headerTitleContainer.appendChild(headerTitle);
+        tournamentCardHeader.appendChild(headerTitleContainer);
+        tournamentCard.appendChild(tournamentCardHeader);
+
+
+
+        // create info div
+        let tournamentCardInfo = document.createElement('div');
+        tournamentCardInfo.classList.add("tournament-info");
+
+        // create organizer field
+        let organizerContainer = document.createElement("div");
+        let organizer = document.createElement('label');
+        organizer.innerHTML = "<strong>Organizer: </strong>" + tournament.organizer_id; //TODO replace with actual orgainzer name
+        organizerContainer.appendChild(organizer);
+        tournamentCardInfo.appendChild(organizerContainer);
+
+        // create location field
+        let locationContainer = document.createElement("div");
+        let location = document.createElement('label');
+        location.innerHTML = "<strong>Location: </strong>" + tournament.location;
+        locationContainer.appendChild(location);
+        tournamentCardInfo.appendChild(locationContainer);
+
+        // create start field
+        let startContainer = document.createElement("div");
+        let start = document.createElement('label');
+        start.innerHTML = "<strong>Starts: </strong>" + tournament.start;
+        startContainer.appendChild(start);
+        tournamentCardInfo.appendChild(startContainer);
+
+        // create end field
+        let endContainer = document.createElement("div");
+        let end = document.createElement('label');
+        end.innerHTML = "<strong>Ends: </strong>" + tournament.end;
+        endContainer.appendChild(end);
+        tournamentCardInfo.appendChild(endContainer);
+
+
+
+        tournamentCard.appendChild(tournamentCardInfo);
+
+
+        tournamentCard.addEventListener("click", function(e) {
+            window.location = "/tournaments/" + tournament.id;
+        });
+
+        tournamentsContainer.appendChild(tournamentCard);
     }
-})
-.then(tournaments => {
-    if (tournaments) {
-        const totalTournamentsEntered = document.querySelector('#total-tournaments-enetered');
-        totalTournamentsEntered.innerHTML = tournaments.length;
+}
 
-        const recentTournamentsList = document.querySelector('#recent-tournaments-list');
-        tournaments.forEach(tournament => {
-            const card = document.createElement('div');
-            card.classList.add('card');
 
-            const cardBody = document.createElement('div');
-            cardBody.classList.add('card-body');
-            cardBody.classList.add('d-flex');
-            cardBody.classList.add('align-items-center');
+// TODO: Get matches and add number to matches played
+function getMatches() {
 
-            const tournamentImage = document.createElement('img');
-            tournamentImage.classList.add('tournament-image');
-            tournamentImage.classList.add('rounded-circle');
-            tournamentImage.src = tournament.picture;
-
-            const tournamentText = document.createElement('div');
-            tournamentText.classList.add('ms-3');
-
-            const tournamentTitle = document.createElement('span');
-            tournamentTitle.classList.add('h5');
-            tournamentTitle.classList.add('card-title');
-            tournamentTitle.innerHTML = tournament.name;
-
-            tournamentText.appendChild(tournamentTitle);
-            cardBody.appendChild(tournamentImage);
-            cardBody.appendChild(tournamentText);
-            card.appendChild(cardBody);
-            recentTournamentsList.appendChild(card);
-        })
-
-        return fetch('api/users/' + profileUser.id + '/matches');
-    }    
-})
-.then(res => {
-    if (res && res.ok) {
-        return res.json();
-    }
-})
-.then(matches => {
-    if (matches) {
-        const totalMatchesPlayed = document.querySelector('#total-matches-played');
-        totalMathcesPlayed.innerHTML = matches.length;
-    }
-});
+}
