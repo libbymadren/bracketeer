@@ -75,14 +75,31 @@ apiRouter.get('/users/:userId/matches', jwt.middleware, (req,  res) => {
 });
 
 // Get all tournaments for a specific user
-apiRouter.get('/users/:userId/tournaments', jwt.middleware, (req,  res) => {
+apiRouter.get('/users/:userId/tournaments/entered', jwt.middleware, (req,  res) => {
     if (!req.valid_jwt) {
         res.status(401).json({"error": "Authentication Failed"});
         return;
     }
 
     const userId = req.params.userId;
-    TournamentDAO.getTournamentsByUser(userId).then(tournaments => {
+    TournamentDAO.getEnteredTournamentsByUser(userId).then(tournaments => {
+        console.log(tournaments);
+        res.json(tournaments);
+    }) 
+    .catch(err => {
+        res.status(500).json({error: err});
+    });
+});
+
+// Get all tournaments for a specific user
+apiRouter.get('/users/:userId/tournaments/created', jwt.middleware, (req,  res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
+    const userId = req.params.userId;
+    TournamentDAO.getCreatedTournamentsByUser(userId).then(tournaments => {
         console.log(tournaments);
         res.json(tournaments);
     }) 
@@ -129,15 +146,18 @@ apiRouter.get('/users/current', jwt.middleware, (req, res) => {
         return;
     }
 
-    let currentUserInfo = {
-        "id": req.jwt_payload.id,
-        "username": req.jwt_payload.username,
-        "profile_picture": req.jwt_payload.profile_picture
-    }
-    console.log("User:");
-    console.log(currentUserInfo);
+    UserDAO.getUserById(req.jwt_payload.id).then(user => {
+        if(user) {
+            res.json(user);
+        }
+        else {
+            res.status(404).json({error: 'User not found'});
+        }
+    })
+    .catch(err => {
+        res.status(500).json({error: err});
+    });
 
-    res.json(currentUserInfo);
 });
 
 
@@ -377,8 +397,7 @@ apiRouter.post('/login', async (req,  res) => {
         // Create a JWT for the user
         let payload = {
             "id": user.id,
-            "username": user.username,
-            "profile_picture": user.profile_picture            
+            "username": user.username           
         }
 
         jwt.generateToken(req, res, payload);
@@ -396,7 +415,7 @@ apiRouter.post('/register', async (req, res) => {
 
     let username = req.body.username;
     let password = req.body.password;
-    let profile_picture = req.body.profile_picture;
+    let profile_picture = Buffer.from(req.body.profile_picture, "base64");
 
     let newUser = new User({
         "username": username,

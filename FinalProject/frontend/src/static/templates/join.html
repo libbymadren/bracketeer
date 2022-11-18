@@ -15,7 +15,23 @@
   <script defer type="module">
       import {buildLink} from "/js/navbar.js";
       buildLink("home-link", "/", "Home");
-      buildLink("logout-link", "/api/logout", "Logout");
+      buildLink("logout-link", "/api/logout", "Logout").anchor.addEventListener("click", function(e) {
+        e.preventDefault();
+
+        fetch("/api/logout", {
+          method: "POST",
+          body: "{}",
+          headers:{
+            "Content-Type": "application/json"
+          }
+        }).then(response => {
+          if (response.status == 200) {
+            window.location = "/"
+          }
+        }).catch(err => {
+          console.error(err);
+        })
+      });;
   </script>
   
   <main>

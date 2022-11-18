@@ -28,12 +28,20 @@ app.get('/tournaments/join', jwt.middleware, (req, res) => {
     res.sendFile(html_path + "/join-tournament.html");
 });
 
-app.get('/tournaments/active', jwt.middleware, (req, res) => {
+app.get('/tournaments/entered', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
         res.redirect('/login');
         return;
     }
-    res.sendFile(html_path + "/participated-tournaments.html");
+    res.sendFile(html_path + "/entered-tournaments.html");
+})
+
+app.get('/tournaments/created', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.redirect('/login');
+        return;
+    }
+    res.sendFile(html_path + "/created-tournaments.html");
 })
 
 app.get('/', jwt.middleware, (req, res) => {

@@ -1,3 +1,11 @@
+let currentUser = null;
+
+let tournaments = {
+    "active": [],
+    "old": [],
+    "upcoming": []
+}
+
 function generateImageUrl(arrayBuffer) {
     let blob = new Blob([arrayBuffer], {
         type: "image"
@@ -7,38 +15,18 @@ function generateImageUrl(arrayBuffer) {
     return imageUrl;
 }
 
-let currentUser = null;
-let tournaments = {
-    "old": [],
-    "active": [],
-    "upcoming": []
-}
-
-fetch('api/users/current').then(res => {
-    return res.json();
+// get the current user
+fetch("/api/users/current").then(request => {
+    return request.json();
 }).then(json => {
     currentUser = json;
-    buildUserInfo(json);
     getUserTournaments();
-}).catch(err => {
-    console.log(err);
 });
-
-function buildUserInfo(json) {
-    document.querySelector('#profile-username').innerHTML = json.username;
-    console.log(json);
-    let profilePictureArrayBuffer = (new Uint8Array(json.profile_picture.data)).buffer;
-    console.log(profilePictureArrayBuffer);
-    document.querySelector('#profile-picture').src = generateImageUrl(profilePictureArrayBuffer);
-}
-
-
 
 function getUserTournaments() {
     fetch('/api/users/' + currentUser.id + '/tournaments/created').then(response => {
         return response.json();
     }).then(json => {
-        document.querySelector("#total-tournaments-enetered").innerHTML = json.length;
 
         for (let tournament of json) {
 
@@ -62,13 +50,45 @@ function getUserTournaments() {
                 console.error("Impossible dates")
             }
         }
-        console.log(tournaments);
 
-        loadTournaments(tournaments.old);
+        loadTournaments(tournaments.active);
     });
 }
 
-function loadTournaments(tournaments) {
+let oldButton = document.querySelector("#old-btn");
+let activeButton = document.querySelector("#active-btn");
+let upcomingButton = document.querySelector("#upcoming-btn");
+
+
+oldButton.addEventListener("click", function(e) {
+    oldButton.classList.add("active");
+    activeButton.classList.remove("active");
+    upcomingButton.classList.remove("active");
+
+    // load old tournaments
+    loadTournaments(tournaments.old);
+
+});
+
+activeButton.addEventListener("click", function(e) {
+    activeButton.classList.add("active");
+    oldButton.classList.remove("active");
+    upcomingButton.classList.remove("active");
+
+    // load active tournaments
+    loadTournaments(tournaments.active);
+});
+
+upcomingButton.addEventListener("click", function(e) {
+    upcomingButton.classList.add("active");
+    activeButton.classList.remove("active");
+    oldButton.classList.remove("active");
+    
+    // load upcoming tournaments
+    loadTournaments(tournaments.upcoming)
+});
+
+function loadTournaments(tournaments){
     let tournamentsContainer = document.querySelector("#tournaments-container");
 
     // remove tournaments
@@ -143,11 +163,6 @@ function loadTournaments(tournaments) {
         });
 
         tournamentsContainer.appendChild(tournamentCard);
+
     }
-}
-
-
-// TODO: Get matches and add number to matches played
-function getMatches() {
-
 }
