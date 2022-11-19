@@ -30,11 +30,17 @@ fetch('/api/tournaments/join/' + joinId).then(response => {
 
     let tournamentInfo = document.querySelector("#tournament-info-container");
     
-    // create organizer field
-    let organizerContainer = document.querySelector('#organizer-container');
-    let organizer = document.createElement('label');
-    organizer.innerHTML = json.organizer_id; //TODO replace with actual orgainzer name
-    organizerContainer.appendChild(organizer);
+    console.log(json.organizer_id);
+    fetch('/api/users/byId/' + json.organizer_id).then(response => {
+        console.log(response);
+        return response.json();
+    }).then(organizer_username => {
+        // create organizer field
+        let organizerContainer = document.querySelector('#organizer-container');
+        let organizer = document.createElement('label');
+        organizer.innerHTML = organizer_username.username;
+        organizerContainer.appendChild(organizer);
+    })
 
     // create location field
     let locationContainer = document.querySelector('#location-container');
