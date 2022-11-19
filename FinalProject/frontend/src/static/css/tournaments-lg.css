@@ -79,7 +79,6 @@ img {
     margin-bottom: 5px;
 }
 
-
 #participants-container {
     display: flex;
     flex-direction: row;
@@ -88,6 +87,7 @@ img {
     overflow-x: scroll;
     overflow-y: hidden;
     margin-bottom: 5px;
+    gap: 5px;
 }
 #participants-container div {
     border: 1px solid rgba(0, 0, 0, 0.063);
@@ -101,6 +101,9 @@ img {
 
 #participants-container div img {
     max-height: 50px;
+}
+#participants-container div label {
+    white-space: nowrap;
 }
 
 #participants-header-container {
