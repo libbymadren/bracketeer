@@ -79,7 +79,6 @@ document.querySelector("#yes-btn").addEventListener("click", function(e) {
     });
 });
 
-
 document.querySelector("#no-btn").addEventListener("click", function(e) {
     window.location = '/tournaments/join';
 });

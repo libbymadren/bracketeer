@@ -1,5 +1,5 @@
 let targetTournamentId = ("" + window.location).split('/').at(-1);
-console.log(targetTournamentId);
+// console.log(targetTournamentId);
 
 function generateImageUrl(arrayBuffer) {
     let blob = new Blob([arrayBuffer], {

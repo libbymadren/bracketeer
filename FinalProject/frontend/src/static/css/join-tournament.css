@@ -69,3 +69,16 @@ button.html5-qrcode-element:active {
   background-color: var(--bs-btn-bg);
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+
+#reader__scan_region {
+  padding: 1vw;
+}
+
+#reader__dashboard {
+    padding: 1vw;
+  }
+
+#html5-qrcode-button-camera-permission {
+  max-width: 30vw;
+  overflow-wrap: anywhere;
+}

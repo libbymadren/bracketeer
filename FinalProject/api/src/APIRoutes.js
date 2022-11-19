@@ -346,12 +346,23 @@ apiRouter.put('/tournaments/join/:joinId', jwt.middleware, async (req, res) => {
 
     console.log(req.params.joinId);
     let targetTournament = await TournamentDAO.getTournamentByJoinId(req.params.joinId)
-    console.log(targetTournament);
+    // console.log(targetTournament);
 
     let tournamentId = targetTournament.id;
     let userId = req.jwt_payload.id;
 
-    console.log(tournamentId, userId);
+    // console.log(tournamentId, userId);
+
+    // let participants = await TournamentDAO.getTournamentParticipants(tournamentId);
+
+    // console.log("LOOK AT ME!");
+    // console.log(participants);
+
+    // if (participants.indexOf(userId) !== -1) {
+    //     console.log("User is already entered into this tournament");
+    //     res.status(401).json({"error": "User is already entered into this tournament"});
+    //     return;
+    // }
 
     TournamentDAO.addUserToTournament(tournamentId, userId).then(addition => {
         if(addition) {
