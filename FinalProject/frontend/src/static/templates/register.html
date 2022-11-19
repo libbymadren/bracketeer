@@ -27,18 +27,18 @@
         <h1 id="display-text" class="display-2 text-center mb-3">Register</h1>
 
         <div id="form-container">
-            <form>
+            <form id="register" name="register">
                 <div>
                     <label for="username">Username: </label>
-                    <input id="username-input" type="text" name="username">
+                    <input id="username-input" type="text" name="username" minlength="1" maxlength="20" required></input>
                 </div>
                 <div>
                     <label for="password">Password: </label>
-                    <input id="password-input" type="password" name="password">
+                    <input id="password-input" type="password" name="password" required></input>
                 </div>
                 <div>
                     <label for="repeatPassword">Repeat Password: </label>
-                    <input id="password-repeat-input" type="password" name="repeatPassword">
+                    <input id="password-repeat-input" type="password" name="repeatPassword" required></input>
                 </div>
                 <div>
                     <div id="croppie-container">
@@ -46,9 +46,9 @@
                 </div>
                 <div>
                     <label for="banner" class="form-label">Avatar Image: </label><br>
-                    <input class="form-control" id="formFile" type="file" name="banner" type="file"></input>
+                    <input class="form-control" id="formFile" type="file" name="banner" type="file" required></input>
                 </div>
-                <input id="register-button" type="submit" value="Register" class="btn btn-danger">
+                <input id="register-button" type="submit" value="Register" class="btn btn-danger"></input>
             </form>
         </div>
         <div id="errorbox" class="hidden text-center text-danger mt-3"></div>

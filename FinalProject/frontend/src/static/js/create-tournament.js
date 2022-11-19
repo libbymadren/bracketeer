@@ -35,12 +35,12 @@ createForm.addEventListener('submit', async (e) => {
 
     let now = new Date(Date.now()).toISOString();
 
-    console.log(now.toString())
-    console.log(start.toString())
-    console.log(end.toString())
-    console.log(start.toString() < now.toString())
-    console.log(end.toString() < now.toString())
-    console.log(start.toString() > end.toString())
+    // console.log(now.toString())
+    // console.log(start.toString())
+    // console.log(end.toString())
+    // console.log(start.toString() < now.toString())
+    // console.log(end.toString() < now.toString())
+    // console.log(start.toString() > end.toString())
 
     if (start.toString() < now.toString()) {
         document.create.start.focus();
