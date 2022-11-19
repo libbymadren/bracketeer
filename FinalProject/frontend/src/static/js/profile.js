@@ -35,7 +35,7 @@ function buildUserInfo(json) {
 
 
 function getUserTournaments() {
-    fetch('/api/users/' + currentUser.id + '/tournaments/created').then(response => {
+    fetch('/api/users/' + currentUser.id + '/tournaments/entered').then(response => {
         return response.json();
     }).then(json => {
         document.querySelector("#total-tournaments-enetered").innerHTML = json.length;
