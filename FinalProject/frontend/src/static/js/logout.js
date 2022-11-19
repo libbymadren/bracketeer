@@ -1,15 +1,18 @@
 const logoutLink = document.querySelector('#logout-link');
 
-logoutLink.addEventListener('click', e => {
-    fetch('/api/logout', {
-        "method": "post",
-        "body": '',
-        "headers": {
+
+function logout(e) {
+    e.preventDefault();
+    fetch("/api/logout", {
+        method: "POST",
+        body: "{}",
+        headers:{
             "Content-Type": "application/json"
+    }}).then(response => {
+        if (response.status == 200) {
+            window.location = "/"
         }
-    }).then(response => {
-        document.location = "/login";
-    }).catch(error => {
-        console.error(error);
-    });
-})
+    }).catch(err => {
+        console.error(err);
+    })
+}
