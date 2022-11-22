@@ -18,29 +18,36 @@ async function loadFile(file){
     });
 }
 
+let tournament;
 fetch('/api/tournaments/' + tournamentId).then(response => {
     console.log(response);
     return response.json();
 }).then(json => {
-    console.log(json);
+    tournament = json;
+    return fetch('/api/users/current');
+})
+.then(loggedInUser => {
+    if (loggedInUser.id !== tournament.organizer_id) {
+        window.location = '/error';
+    }
+})
+.then(() => {
+    console.log(tournament);
 
     const name = document.querySelector('#name')
-    name.value = json.name;
-
-    // const banner = document.querySelector('#formFile')
-    // banner.value += json.picture;
+    name.value = tournament.name;
 
     const desc = document.querySelector('#description')
-    desc.value += json.description;
+    desc.value += tournament.description;
 
     const start = document.querySelector('#start')
-    start.value += (json.start).substring(0, 16);
+    start.value += (tournament.start).substring(0, 16);
 
     const end = document.querySelector('#end')
-    end.value += (json.end).substring(0, 16);
+    end.value += (tournament.end).substring(0, 16);
 
     const location = document.querySelector('#location')
-    location.value += json.location;
+    location.value += tournament.location;
 
     editForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -48,13 +55,13 @@ fetch('/api/tournaments/' + tournamentId).then(response => {
         const data = new FormData(e.target);
 
         const newTournament = {
-            id: json.id,
-            // picture: await loadFile(e.target.elements.banner.files[0]) || json.picture,
-            name: data.get('name') || json.name,
-            location: data.get('location') || json.location,
-            description: data.get('description') || json.description,
-            start: data.get('start') || json.start,
-            end: data.get('end') || json.end,
+            id: tournament.id,
+            // picture: await loadFile(e.target.elements.banner.files[0]) || tournament.picture,
+            name: data.get('name') || tournament.name,
+            location: data.get('location') || tournament.location,
+            description: data.get('description') || tournament.description,
+            start: data.get('start') || tournament.start,
+            end: data.get('end') || tournament.end,
         }
 
         console.log(e.target.elements.banner);

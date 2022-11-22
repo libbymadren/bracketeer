@@ -19,7 +19,10 @@ fetch('/api/tournaments/' + targetTournamentId).then(response => {
     buildInfo(json);
     buildJoin(json);
     getParticipants(json);
-});
+})
+// .catch(err => {
+//     window.location = '/error';
+// });
 
 
 function buildInfo(json) {
@@ -52,13 +55,13 @@ function buildInfo(json) {
     // create start field
     let startContainer = document.querySelector('#starts-container');
     let start = document.createElement('label');
-    start.innerHTML = json.start;
+    start.innerHTML = formatDatetime(json.start);
     startContainer.appendChild(start);
 
     // create end field
     let endContainer = document.querySelector("#ends-container");
     let end = document.createElement('label');
-    end.innerHTML = json.end;
+    end.innerHTML = formatDatetime(json.end);
     endContainer.appendChild(end);
 }
 
@@ -121,6 +124,16 @@ function getParticipants(json) {
 
             }
         }
+        // if the logged in user is the organizer, show the edit tournament button
+        else {
+            const editTournament = document.createElement('input');
+            editTournament.type = 'button';
+            editTournament.value = 'Edit Tournament';
+            editTournament.classList.add('btn');
+            editTournament.classList.add('btn-outline-primary');
+            editTournament.onclick = 'editTournament()';
+            document.querySelector('#tournament-buttons').prepend(editTournament);
+        }
 
         buildParticipants(participants);
     })
@@ -150,4 +163,16 @@ function buildParticipants(json) {
 
 function editTournament() {
     window.location = "/tournaments/edit/" + targetTournamentId;
+}
+
+function formatDatetime(date) {
+    const datetime = new Date(date);
+    let hours = datetime.getUTCHours();
+    let minutes = datetime.getUTCMinutes();
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0'+ minutes : minutes;
+    const strTime = hours + ':' + minutes + ' ' + ampm;
+    return (datetime.getUTCMonth()+1) + "/" + datetime.getUTCDate() + "/" + datetime.getUTCFullYear() + "  " + strTime;
 }

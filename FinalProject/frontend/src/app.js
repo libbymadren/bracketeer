@@ -20,12 +20,12 @@ app.get('/join/:joinId', jwt.middleware, (req, res) => {
     res.sendFile(html_path + "/join.html");
 });
 
-app.get('/join-error', jwt.middleware, (req, res) => {
+app.get('/error', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
         res.redirect('/login')
         return;
     }
-    res.sendFile(html_path + "/join-error.html");
+    res.sendFile(html_path + "/error.html");
 });
 
 app.get('/tournaments/join', jwt.middleware, (req, res) => {
