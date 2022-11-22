@@ -119,3 +119,7 @@ function buildParticipants(json) {
         participantsContainer.appendChild(pContainer);
     }
 }
+
+function editTournament() {
+    window.location = "/tournaments/edit/" + targetTournamentId;
+}
