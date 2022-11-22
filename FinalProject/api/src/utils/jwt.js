@@ -28,15 +28,9 @@ module.exports["middleware"] = function(req, res, next) {
         return;
     }
 
-    console.log("found a token!");
-    console.log(token);
-
     // validate token
     try {
         const decoded = jwt.verify(token, API_SECRET_KEY)
-
-        console.log("decoded token:");
-        console.log(decoded);
 
         // set the request variables
         req.jwt_payload = decoded;
@@ -56,8 +50,6 @@ module.exports["middleware"] = function(req, res, next) {
 }
 
 module.exports["generateToken"] = function(req, res, payload) {
-    console.log("Generating token with payload: ");
-    console.log(payload);
 
     payload['alg'] = 'HS256';
     payload['exp'] = Math.floor(Date.now() / 1000) + (60 * 10);

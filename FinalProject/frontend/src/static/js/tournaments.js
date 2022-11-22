@@ -1,3 +1,6 @@
+
+
+
 let targetTournamentId = ("" + window.location).split('/').at(-1);
 console.log(targetTournamentId);
 
@@ -19,10 +22,19 @@ fetch('/api/tournaments/' + targetTournamentId).then(response => {
     buildInfo(json);
     buildJoin(json);
     getParticipants(json);
+
+    let tournament = json
+
+    fetch('/api/users/current').then(response => {
+        return response.json();
+    }).then(user => {
+        buildMatchButton(user, tournament);
+    })
 });
 
 
 function buildInfo(json) {
+    console.log(json);
     let tournamentInfo = document.querySelector("#tournament-info-container");
     
     // create organizer field
@@ -60,6 +72,39 @@ function buildInfo(json) {
     let end = document.createElement('label');
     end.innerHTML = json.end;
     endContainer.appendChild(end);
+
+    
+}
+
+function buildMatchButton(user, tournament) {
+    let tournamentInfo = document.querySelector("#tournament-info-container");
+
+    // create view matches button if matches exist
+    if (tournament.matches_generated) {
+        let viewBtn = document.createElement("input");
+        viewBtn.type = "button";
+        viewBtn.classList.add("btn", "btn-outline-primary")
+        tournamentInfo.appendChild(viewBtn);
+    } else if (user.id = tournament.organizer_id) {
+        console.log("Orgainizer");
+
+        let generateButton = document.createElement("input");
+        generateButton.type = "button";
+        generateButton.classList.add("btn", "btn-outline-primary")
+        generateButton.value = "Generate Matches";
+        generateButton.addEventListener("click", function(e) {
+            fetch("/api/tournaments/" + tournament.id + "/matches", {
+                "method": "POST",
+                "body": "{}"
+            }).then(response => {
+                console.log(response.status, response.statusText);
+            }).catch(err => {
+                console.err(err.status, err.statusText);
+            });
+        })
+        tournamentInfo.appendChild(generateButton);
+
+    }
 }
 
 function buildHeader(json) {

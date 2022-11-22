@@ -40,7 +40,7 @@ function deleteTournament(tournamentId) {
 function getTournamentById(tournamentId) {
     return db.query('SELECT * FROM tournament WHERE id=?', [tournamentId]).then(({results}) => {
         if(results[0])
-            return new Tournament(results[0]);
+            return results[0];
     });
 }
 

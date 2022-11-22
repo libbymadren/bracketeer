@@ -243,6 +243,7 @@ apiRouter.get('/tournaments/:tournamentId', jwt.middleware, (req, res) => {
 
     TournamentDAO.getTournamentById(tournamentId).then(tournament => {
         if(tournament) {
+            console.log(tournament);
             res.json(tournament);
         }
         else {
@@ -273,7 +274,6 @@ apiRouter.get('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) =
     }
 });
 
-// Not sure if we need this? I think matches would only be generated on the backend
 // create a match for a tournament
 apiRouter.post('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
@@ -281,30 +281,227 @@ apiRouter.post('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) 
         return;
     }
 
-    let targetTournamentId = req.params.tournamentId;
-
-    let tournament = tournaments.find(tournament => tournament.id == targetTournamentId);
-
-    if (tournament) {
-        // if the tournament exists then add the match
-        tournament.matches.push(req.body);
-        res.status(200).json(req.body);
-    } else {
-        res.status(404).json({error: "No matches found for tournament with id: " + targetTournamentId});
-    }
-});
-
-apiRouter.get('/tournaments/join/:joinId', jwt.middleware, (req, res) => {
-    if (!req.valid_jwt) {
-        res.status(401).json({"error": "Authentication Failed"});
-        return;
-    }
-
-    let targetTournamentJoinId = req.params.joinId;
-
-    TournamentDAO.getTournamentByJoinId(targetTournamentJoinId).then(tournament => {
+    // get the tournament
+    TournamentDAO.getTournamentById(req.params.tournamentId).then(tournament => {
         if(tournament) {
-            res.json(tournament);
+
+            // check to make sure that the user is the owner
+            if (tournament.organizer_id != req.jwt_payload.id) {
+                res.status(401).json({"error": "Not authorized to modify this tournament"});
+                return;
+            }
+
+            // get the participants for the tournament
+            TournamentDAO.getTournamentParticipants(tournament.id).then(participants => {
+                if(participants) {
+
+                    function processingQueueString(queue) {
+                        
+                        let processingString = "[";
+                        for (let node of processingQueue) {
+                            if (typeof(node) != 'undefined') {
+                                processingString += " " + node.number + " ";
+                            } else {
+                                processingString += " undefined ";
+                            }
+                        }
+                        processingString += "]";
+                        
+                        return processingString;
+                    }
+
+                    function printTree(rootNode) {
+                        
+                        let printQueue = [];
+                        printQueue.unshift(rootNode);
+                        
+                        while (printQueue.length > 0) {
+                            // print everything in queue
+                            let printString ="";
+                            for (let node of printQueue) {
+                                printString += " " + node.number;
+                            }
+                            printString += " ";
+                            console.log(printString);
+                            
+                        
+                            // add children
+                            let nodesInQueue = printQueue.length;
+                            for (let i = 0; i < nodesInQueue; i++) {
+                                let node = printQueue.pop();
+                                for (let child of node.children) {
+                                    printQueue.unshift(child);
+                                }
+                            }
+                        }
+                        
+                    }
+
+                    // have participants
+                    // have tournament
+
+                    // number of matches will be one less than the number of participants
+                    // due to the fact that every match will eliminate one participant until
+                    // one is left
+                    let numMatches = participants.length - 1;
+
+                    console.log("Number of matches: " + numMatches);
+
+
+                    let rootNode = {
+                        "children": [],
+                        "tournament_id": tournament.id,
+                        "participant_one_id": null,
+                        "participant_two_id": null,
+                        "winner_id": null,
+                        "next_match_number": null,
+                        "number": numMatches,
+                        "round": null
+                    }
+
+                    let processingQueue = []
+
+                    console.log("Add root node");
+                    processingQueue.unshift(rootNode);
+
+                    console.log("");
+
+                    // create matches in a tree like structure
+                    // order of generation goes like:
+                    // generate root node
+                    // generate first child
+                    // generate second child
+                    // generate one child for each root child
+                    // generate the second child for each root child
+                    // repeat until match number has been met
+                    let roundNumber = 1;
+                    for (let matchesGenerated = 1; matchesGenerated < numMatches;)  {
+                        
+                        // generate first childs
+                        let matchesToProcess = processingQueue.length;
+                        for (let j = 0; j < matchesToProcess && matchesGenerated < numMatches; j++) {
+                            matchesGenerated++;
+                            let parent = processingQueue.pop();
+                            console.log("Add first child to node " + parent.number);
+                            
+                            parent.round = roundNumber;
+
+                            // add first child
+                            let child = {
+                                "children": [],
+                                "tournament_id": tournament.id,
+                                "participant_one_id": null,
+                                "participant_two_id": null,
+                                "winner_id": null,
+                                "next_match_number": parent.number,
+                                "number": numMatches - matchesGenerated + 1,
+                                "round": roundNumber + 1,
+                            }
+                            parent.children[0] = child;
+
+                            // add the parent back to the processing queue 
+                            // so that the second child can be added
+                            processingQueue.unshift(parent);
+
+                            
+                        }
+
+                        // generate second 
+                        matchesToProcess = processingQueue.length;
+                        for (let j = 0; j < matchesToProcess && matchesGenerated < numMatches; j++) {
+                            
+                            matchesGenerated++;
+                            
+                            let parent = processingQueue.pop();
+                            console.log("Add second child to node " + parent.number);
+
+                            // add first child
+                            let child = {
+                                "children": [],
+                                "tournament_id": tournament.id,
+                                "participant_one_id": null,
+                                "participant_two_id": null,
+                                "winner_id": null,
+                                "next_match_number": parent.number,
+                                "number": numMatches - matchesGenerated + 1,
+                                "round": roundNumber + 1,
+                            }
+                            parent.children[1] = child;
+
+                            // add the children to the processing queue
+                            console.log("Adding node " + parent.number + "'s two children: [" + parent.children[0].number + ", " + parent.children[1].number + "] children to processing queue");
+                            processingQueue.unshift(parent.children[0]);
+                            processingQueue.unshift(parent.children[1]);
+
+                            
+                        }
+                        
+                        console.log("Matches made after iteration: " + matchesGenerated);
+                        console.log("Processing queue after iteration: " + processingQueueString(processingQueue));
+                        console.log("");
+                        
+                        roundNumber++;
+                    }
+
+                    console.log("Total rounds: " + (roundNumber-1));
+
+                    printTree(rootNode);
+
+
+                    processingQueue = [];
+                    let matches = []
+                    processingQueue.unshift(rootNode);
+                    while (processingQueue.length > 0) {
+                        // add everything in queue
+                        for (let node of processingQueue) {
+                            // adjust round number and add to array
+                            node.round = Math.abs(node.round - roundNumber)
+                            matches.push(node);
+                        }
+
+                        // add children
+                        let nodesInQueue = processingQueue.length;
+                        for (let i = 0; i < nodesInQueue; i++) {
+                            let node = processingQueue.pop();
+                            for (let child of node.children) {
+                                processingQueue.unshift(child);
+                            }
+                        }
+                    }
+                    
+
+                    console.log("Adding participants");
+
+                    // add participants to matches
+                    let participantsAdded = 0;
+                    for (let match of matches) {
+                        if (match.children.length == 0) {
+                            // all root nodes will have two participants
+                            match.participant_one_id = participants.splice(Math.floor(Math.random()*participants.length), 1)[0].id;
+                            match.participant_two_id = participants.splice(Math.floor(Math.random()*participants.length), 1)[0].id;
+                            console.log("Root node participants added");
+                            participantsAdded += 2;
+                        } else if (match.children.length == 1) {
+                            // all parents to a singular root node will have one participant
+                            match.participant_one_id = participants.splice(Math.floor(Math.random()*participants.length), 1)[0].id;
+                            console.log("Parent to singular root node participants added");
+                            participantsAdded++;
+                        }
+                    }
+                    console.log("Participants added: " + participantsAdded)
+
+                    MatchDAO.bulkInsertMatches(matches);
+
+                }
+                else {
+                    res.status(404).json({error: 'Participants not found'});
+                }
+            }).catch(err => {
+                console.log(err);
+                res.status(500).json({error: err});
+            });
+
+
         }
         else {
             res.status(404).json({error: 'Tournament not found'});
@@ -312,6 +509,14 @@ apiRouter.get('/tournaments/join/:joinId', jwt.middleware, (req, res) => {
     }).catch(err => {
         res.status(500).json({error: err});
     });
+
+    // generate the matches for the tournament
+
+
+
+
+
+
 });
 
 apiRouter.get('/tournaments/:tournamentId/participants', jwt.middleware, (req, res) => {
