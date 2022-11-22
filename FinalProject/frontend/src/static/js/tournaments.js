@@ -91,12 +91,40 @@ function buildJoin(json) {
 }
 
 function getParticipants(json) {
+    const organizerId = json.organizer_id;
+    let participants;
     fetch("/api/tournaments/" + json.id + "/participants").then(response => {
         return response.json()
     }).then(json => {
+        participants = json;
         console.log(json);
-        buildParticipants(json);
-    }).catch(err => {
+        // get the current logged in user
+        return fetch('/api/users/current');
+    })
+    .then(res => {
+        return res.json();
+    })
+    .then(loggedInUser => {
+        if (loggedInUser.id !== organizerId) {
+            let validParticipant = participants.find(participant => participant.id == loggedInUser.id);
+
+            if (!validParticipant) {
+                const main = document.querySelector('main');
+                main.innerHTML = '';
+
+                const errorText = document.createElement('h1');
+                errorText.id = 'display-text';
+                errorText.classList.add('display-3');
+                errorText.classList.add('text-center');
+                errorText.innerText = 'You must be an organizer or participant of this tournament to view this page!';
+                main.appendChild(errorText);
+
+            }
+        }
+
+        buildParticipants(participants);
+    })
+    .catch(err => {
         console.error(err);
     });
 }

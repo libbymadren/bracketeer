@@ -24,14 +24,15 @@
   <main>
     <div style="min-width: 20vw; max-width: 40vw" id="reader"></div>
     <h3>Or</h3>
-    <form class="form-group">
+    <form id="join-id-form" class="form-group">
         <div>
-            <input type="text" class="form-control" name="join_id" placeholder="Join Id">
+            <input id="join-id" type="text" class="form-control" name="join_id" placeholder="Join Id">
         </div>
         <div>
-            <input class="btn btn-primary" type="submit" class="form-control" value="submit">
+            <input class="btn btn-primary mb-3" type="submit" class="form-control" value="Submit">
         </div>
     </form>
+    <div id="error-text" class="text-danger"></div>
   </main>
 </body>
 
