@@ -81,6 +81,18 @@ function getTournamentParticipants(tournamentId) {
     });
 }
 
+function markMatchesGenerated(tournamentId) {
+    let query = "UPDATE tournament SET matches_generated=1 WHERE id=?";
+    return db.query(query, [tournamentId])
+}
+
+function getTournamentMatches(tournamentId) {
+    let query = "SELECT * FROM `match` WHERE tournament_id=?";
+    return db.query(query, [tournamentId]).then(({results}) => {
+        return results;
+    })
+}
+
 module.exports = {
     getAllTournaments: getAllTournaments,
     createTournament: createTournament,
@@ -91,5 +103,7 @@ module.exports = {
     addUserToTournament: addUserToTournament,
     getTournamentParticipants: getTournamentParticipants,
     getEnteredTournamentsByUser: getEnteredTournamentsByUser,
-    getCreatedTournamentsByUser: getCreatedTournamentsByUser
+    getCreatedTournamentsByUser: getCreatedTournamentsByUser,
+    markMatchesGenerated: markMatchesGenerated,
+    getTournamentMatches: getTournamentMatches
 };

@@ -92,7 +92,16 @@ app.get('/tournaments/:tournamentId', jwt.middleware, (req, res) => {
         return;
     }
 
-    res.sendFile(html_path + "/tournaments.html");
+    res.sendFile(html_path + "/tournament.html");
+});
+
+app.get('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.redirect('/login');
+        return;
+    }
+
+    res.sendFile(html_path + "/matches.html");
 });
 
 app.get('/matches/:matchId', jwt.middleware, (req, res) => {

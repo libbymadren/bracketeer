@@ -85,7 +85,11 @@ function buildMatchButton(user, tournament) {
     if (tournament.matches_generated) {
         let viewBtn = document.createElement("input");
         viewBtn.type = "button";
-        viewBtn.classList.add("btn", "btn-outline-primary")
+        viewBtn.value = "View Matches"
+        viewBtn.classList.add("btn", "btn-outline-primary");
+        viewBtn.addEventListener("click", function(e) {
+            window.location = "/tournaments/" + tournament.id + "/matches";
+        })
         tournamentInfo.appendChild(viewBtn);
     } else if (user.id = tournament.organizer_id) {
         console.log("Orgainizer");
@@ -100,6 +104,18 @@ function buildMatchButton(user, tournament) {
                 "body": "{}"
             }).then(response => {
                 console.log(response.status, response.statusText);
+                if (response.status == 200) {
+                    // hide the join container
+                    let joinContainer = document.querySelector("join-container");
+                    joinContainer.sytle.display = "none";
+
+                    // hide the generate matches button
+                    generateButton.style.display = "none";
+
+                    // show the view button
+
+
+                }
             }).catch(err => {
                 console.err(err.status, err.statusText);
             });

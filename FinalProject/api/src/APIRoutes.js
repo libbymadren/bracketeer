@@ -264,14 +264,12 @@ apiRouter.get('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) =
 
     let targetTournamentId = req.params.tournamentId;
 
-    // filter for only matches associated with the current tournament
-    let tournamentMatches = matches.filter(match => match.tournament_id == targetTournamentId);
-
-    if (tournamentMatches) {
-        res.json(tournamentMatches);
-    } else {
-        res.status(404).json({error: "No matches found for tournament with id: " + targetTournamentId});
-    }
+    TournamentDAO.getTournamentMatches(targetTournamentId).then(result => {
+        res.status(200).json(result);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({"Error":"Error getting matches"});
+    })
 });
 
 // create a match for a tournament
@@ -490,7 +488,14 @@ apiRouter.post('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) 
                     }
                     console.log("Participants added: " + participantsAdded)
 
-                    MatchDAO.bulkInsertMatches(matches);
+                    try {
+                        MatchDAO.bulkInsertMatches(matches);
+                        TournamentDAO.markMatchesGenerated(tournament.id);
+                    } catch {
+                        console.log("ERROR: Error saving match generation");
+                    }
+
+                    
 
                 }
                 else {
