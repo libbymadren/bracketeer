@@ -96,6 +96,15 @@ app.get('/matches/:matchId', jwt.middleware, (req, res) => {
     res.sendFile(html_path + "/matches.html");
 });
 
+app.get('/matches/edit/:matchId', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.redirect('/login');
+        return;
+    }
+
+    res.sendFile(html_path + "/edit-match.html");
+});
+
 app.get('/register', (req, res) => {
     res.sendFile(html_path + "/register.html");
 });
