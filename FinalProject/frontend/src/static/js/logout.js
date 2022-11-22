@@ -3,6 +3,13 @@ const logoutLink = document.querySelector('#logout-link');
 
 function logout(e) {
     e.preventDefault();
+    
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) {
+         registration.unregister()
+        } 
+    });
+    
     fetch("/api/logout", {
         method: "POST",
         body: "{}",
