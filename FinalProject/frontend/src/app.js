@@ -70,12 +70,12 @@ app.get('/tournaments/create', jwt.middleware, (req, res) => {
     res.sendFile(html_path + '/create-tournament.html');
 });
   
-app.get('tournaments/edit/:tournamentId', (req, res) => {
+app.get('/tournaments/edit/:tournamentId', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
         res.redirect('/login');
         return;
     }
-    res.sendFile(html_path + '/edit.html');
+    res.sendFile(html_path + '/edit-tournament.html');
 });
 
 app.get('/tournaments/:tournamentId', jwt.middleware, (req, res) => {

@@ -1,5 +1,5 @@
 let targetTournamentId = ("" + window.location).split('/').at(-1);
-console.log(targetTournamentId);
+// console.log(targetTournamentId);
 
 function generateImageUrl(arrayBuffer) {
     let blob = new Blob([arrayBuffer], {
@@ -118,4 +118,8 @@ function buildParticipants(json) {
 
         participantsContainer.appendChild(pContainer);
     }
+}
+
+function editTournament() {
+    window.location = "/tournaments/edit/" + targetTournamentId;
 }

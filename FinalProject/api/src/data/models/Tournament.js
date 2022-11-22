@@ -8,6 +8,7 @@ module.exports = class {
       this.description = data.description;
       this.created = data.created;
       this.start = data.start;
+      this.end = data.end;
       this.join_id = data.join_id;
       this.participants = data.participants;
     }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Tournament</title>
+  <link rel="stylesheet" href="/css/navbar-styles.css">
+  <link rel="stylesheet" href="/css/create-tournament-styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+</head>
+<body>
+  <script src="/js/navbar.js" type="module"></script>
+  <script defer type="module">
+      import {buildLink} from "/js/navbar.js";
+      buildLink("home-link", "/", "Home");
+      buildLink("logout-link", "/api/logout", "Logout").anchor.addEventListener("click", function(e) {
+        e.preventDefault();
+
+        fetch("/api/logout", {
+          method: "POST",
+          body: "{}",
+          headers:{
+            "Content-Type": "application/json"
+          }
+        }).then(response => {
+          if (response.status == 200) {
+            window.location = "/"
+          }
+        }).catch(err => {
+          console.error(err);
+        })
+      });
+  </script>
+
+  <h1 id="main-header" class="display-3 text-center mb-4">Edit Tournament</h1>
+
+  <!-- <div id="currentInfo" style="display: flex; flex-direction: column; align-items: center"></div> -->
+
+  <main>
+    <form id="edit" name="edit" class="form-group">
+      <!-- ENTER NAME -->
+      <div>
+        <label for="name">Tournament Name: </label><br>
+        <input class="form-control" type="text" id="name" name="name" required>
+      </div>
+
+      <!-- SELECT BANNER IMAGE -->
+      <!-- <div>
+        <label for="banner" class="form-label">Banner Image: </label><br>
+        <input class="form-control" id="formFile" type="file" name="banner" type="file"></input>
+      </div> -->
+
+      <!-- ABOUT -->
+      <div>
+        <label for="description" class="form-label">About: </label><br>
+        <textarea class="form-control" id="description" name="description" required minlength="10"></textarea>
+      </div>
+
+      <!-- START DATE -->
+      <div>
+        <label for="start">Start Date and Time: </label><br>
+        <input class="form-control" type="datetime-local" name="start" id="start" required>
+      </div>
+
+      <div>
+        <label for="end">End Date and Time: </label>
+        <input class="form-control" type="datetime-local" name="end" id="end" required>
+      </div>
+
+      <!-- Tournament LOCATION -->
+      <div>
+        <label for="location">Location:</label><br>
+        <input class="form-control" type="location" name="location" id="location" required>
+      </div>
+
+      <!-- CREATE BUTTON -->
+      <div style="width: 20vw; display: flex;">
+        <input type="submit" class="form-control btn btn-danger btn-lg me-1" value="Save">
+        <br>
+        <input type="submit" class="form-control btn btn-secondary btn-lg me-1" value="Cancel">
+      </div>
+    </form>
+  </main>
+
+  
+
+
+</body>
+
+<script src="/js/edit-tournament.js"></script>
+</html>
