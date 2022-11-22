@@ -60,6 +60,10 @@ fetch('/api/tournaments/join/' + joinId).then(response => {
     start.innerHTML = json.start;
     startContainer.appendChild(start);
 
+})
+.catch(err => {
+    window.location = '/join-error';
+    console.log(err);
 });
 
 document.querySelector("#yes-btn").addEventListener("click", function(e) {
