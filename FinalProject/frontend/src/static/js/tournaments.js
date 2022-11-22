@@ -109,8 +109,8 @@ function buildParticipants(json) {
         let pContainer = document.createElement('div');
         pContainer.className = "participant-info"
         let pImg = document.createElement('img');
-        // let avatarArray = Uint8Array(participant.avatar);
-        // pImg.src = generateImageUrl(avatarArray);
+        let profilePictureArrayBuffer = (new Uint8Array(participant.profile_picture.data)).buffer;
+        pImg.src = generateImageUrl(profilePictureArrayBuffer);
         let pUsr = document.createElement('label');
         pUsr.innerHTML = participant.username;
         pContainer.appendChild(pImg);
