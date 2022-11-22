@@ -30,7 +30,7 @@ apiRouter.get('/users', jwt.middleware, (req,  res) => {
         return;
     }
 
-    UserDAO.getUsers().then(users => {
+    UserDAO.getAllUsers().then(users => {
         res.json(users);
       })
       .catch(err => {
@@ -38,7 +38,7 @@ apiRouter.get('/users', jwt.middleware, (req,  res) => {
       });
 });
 
-// Get specific user
+// Get specific user by id
 apiRouter.get('/users/byId/:userId', jwt.middleware, (req,  res) => {
     if (!req.valid_jwt) {
         res.status(401).json({"error": "Authentication Failed"});
@@ -47,6 +47,27 @@ apiRouter.get('/users/byId/:userId', jwt.middleware, (req,  res) => {
 
     const userId = req.params.userId;
     UserDAO.getUserById(userId).then(user => {
+        if(user) {
+            res.json(user);
+        }
+        else {
+            res.status(404).json({error: 'User not found'});
+        }
+    })
+    .catch(err => {
+        res.status(500).json({error: err});
+    });
+});
+
+// Get specific user by username
+apiRouter.get('/users/byUsername/:username', jwt.middleware, (req,  res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication Failed"});
+        return;
+    }
+
+    const username = req.params.username;
+    UserDAO.getUserByUsername(username).then(user => {
         if(user) {
             res.json(user);
         }

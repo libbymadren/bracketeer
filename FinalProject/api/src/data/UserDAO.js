@@ -43,6 +43,13 @@ function getUserById(userId) {
     });
 }
 
+function getUserByUsername(username) {
+    return db.query('SELECT * FROM user WHERE username=?', [username]).then(({results}) => {
+      if(results[0])
+        return new User(results[0]).toJSON();
+    });
+}
+
 function deleteUser(userId) {
     return db.query('DELETE FROM user WHERE id=?', [userId]).then(({results}) => {
         return getAllUsers();
@@ -68,6 +75,7 @@ module.exports = {
   getUserByCredentials: getUserByCredentials,
   getAllUsers: getAllUsers,
   getUserById: getUserById,
+  getUserByUsername: getUserByUsername,
   deleteUser: deleteUser,
   createUser: createUser,
   updateUser: updateUser
