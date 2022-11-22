@@ -4,6 +4,7 @@ const errorBox = document.querySelector('#errorbox');
 let croppieContainer = document.querySelector("#croppie-container");
 croppieContainer.style.display = "none";
 
+const registerForm = document.querySelector('#register');
 
 opts={
     viewport: {
@@ -14,7 +15,9 @@ opts={
 }
 let c = new Croppie(croppieContainer, opts);
 
-registerButton.addEventListener("click", async function(e) {
+registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
     const username = document.querySelector('#username-input').value;
     const password = document.querySelector('#password-input').value;
     const passwordRepeat = document.querySelector('#password-repeat-input').value;
@@ -25,8 +28,6 @@ registerButton.addEventListener("click", async function(e) {
         quality: 1,
         circle: true
     });
-
-    e.preventDefault();
 
     errorBox.classList.add("hidden");
 

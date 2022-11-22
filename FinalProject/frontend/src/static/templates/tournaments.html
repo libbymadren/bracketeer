@@ -16,10 +16,10 @@
 <body>
   <script src="/js/navbar.js" type="module"></script>
   <script defer type="module">
-    import {buildLink} from "/js/navbar.js";
-    buildLink("/", "Home");
-    buildLink("/profile", "Profile");
-    buildLink("/api/logout", "Logout", "click", logout);
+      import {buildLink} from "/js/navbar.js";
+      buildLink("/", "Home");
+      buildLink("/profile", "Profile");
+      buildLink("/api/logout", "Logout", "click", logout);
   </script>
 
   <div id="tournament-header">
@@ -63,11 +63,15 @@
       <div id="participants-container">
       </div>
   
-      <div id="join-container">
+      <div id="join-container" class="mb-5">
         <h2>Join</h2>
         <div id="qr-code"></div>
         <a id="join-id-anchor"></a>
       </div>
+      <!-- <div class="text-center mb-5 mt-3">
+        <input type="button" value="Edit Tournament" class="btn btn-outline-primary" onclick="editTournament()">
+        <input type="button" value="View Matches" class="btn btn-outline-primary">
+      </div> -->
     </div>
     
 
