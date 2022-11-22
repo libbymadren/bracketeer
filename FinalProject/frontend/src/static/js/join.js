@@ -68,7 +68,7 @@ fetch('/api/tournaments/join/' + joinId).then(response => {
 
 })
 .catch(err => {
-    window.location = '/join-error';
+    window.location = '/error';
     console.log(err);
 });
 

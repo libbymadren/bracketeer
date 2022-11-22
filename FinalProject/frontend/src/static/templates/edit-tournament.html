@@ -1,37 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Tournament</title>
-  <link rel="stylesheet" href="/css/navbar-styles.css">
-  <link rel="stylesheet" href="/css/create-tournament-styles.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bracketeer</title>
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/home-styles.css">
+    <link rel="stylesheet" href="/css/create-tournament-styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script src="/js/logout.js"></script>
+  </head>
 <body>
   <script src="/js/navbar.js" type="module"></script>
   <script defer type="module">
       import {buildLink} from "/js/navbar.js";
-      buildLink("home-link", "/", "Home");
-      buildLink("logout-link", "/api/logout", "Logout").anchor.addEventListener("click", function(e) {
-        e.preventDefault();
-
-        fetch("/api/logout", {
-          method: "POST",
-          body: "{}",
-          headers:{
-            "Content-Type": "application/json"
-          }
-        }).then(response => {
-          if (response.status == 200) {
-            window.location = "/"
-          }
-        }).catch(err => {
-          console.error(err);
-        })
-      });
+      buildLink("/", "Home");
+      buildLink("/profile", "Profile");
+      buildLink("/api/logout", "Logout", "click", logout);
   </script>
 
   <h1 id="main-header" class="display-3 text-center mb-4">Edit Tournament</h1>

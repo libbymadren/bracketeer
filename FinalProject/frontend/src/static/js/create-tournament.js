@@ -33,7 +33,8 @@ createForm.addEventListener('submit', async (e) => {
     let start = e.target.elements.start.value;
     let end = e.target.elements.end.value;
 
-    let now = new Date(Date.now()).toISOString();
+    //let now = new Date(Date.now()).toISOString();
+    let now = new Date();
 
     // console.log(now.toString())
     // console.log(start.toString())
@@ -42,13 +43,13 @@ createForm.addEventListener('submit', async (e) => {
     // console.log(end.toString() < now.toString())
     // console.log(start.toString() > end.toString())
 
-    if (start.toString() < now.toString()) {
+    if (start < now) {
         document.create.start.focus();
         alert("Please provide a future start date.")
-    } else if (end.toString() < now.toString()) {
+    } else if (end < now) {
         document.create.end.focus();
         alert("Please provide a future end date.")
-    } else if (start.toString() > end.toString()) {
+    } else if (start > end) {
         document.create.end.focus();
         alert("Please provide a date that occurs after the tournament's start date.")
     } else {

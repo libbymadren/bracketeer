@@ -15,28 +15,12 @@
   <script src="/js/logout.js"></script>
 </head>
 <body>
-  <script src="/js/navbar.js"></script>
+  <script src="/js/navbar.js" type="module"></script>
   <script defer type="module">
-    import {buildLink} from "/js/navbar.js";
-    buildLink("home-link", "/", "Home");
-    buildLink("profile-link", "/profile", "Profile");
-    buildLink("logout-link", "/api/logout", "Logout").anchor.addEventListener("click", function(e) {
-        e.preventDefault();
-
-        fetch("/api/logout", {
-          method: "POST",
-          body: "{}",
-          headers:{
-            "Content-Type": "application/json"
-          }
-        }).then(response => {
-          if (response.status == 200) {
-            window.location = "/"
-          }
-        }).catch(err => {
-          console.error(err);
-        })
-      });
+      import {buildLink} from "/js/navbar.js";
+      buildLink("/", "Home");
+      buildLink("/profile", "Profile");
+      buildLink("/api/logout", "Logout", "click", logout);
   </script>
 
   <div id="tournament-header">
@@ -72,7 +56,10 @@
         <div id="description-container">
           <label class="field-title">Description: </label>
         </div>
-        <input type="button" value="View Matches" class="btn btn-outline-primary">
+        <div id="tournament-buttons">
+          <!-- <input type="button" value="Edit Tournament" class="btn btn-outline-primary" onclick="editTournament()"> -->
+          <input type="button" value="View Matches" class="btn btn-outline-primary">
+        </div>
       </div>
   
       <div id="participants-header-container">
@@ -81,29 +68,15 @@
       <div id="participants-container">
       </div>
   
-      <div id="join-container">
+      <div id="join-container" class="mb-5">
         <h2>Join</h2>
         <div id="qr-code"></div>
         <a id="join-id-anchor"></a>
       </div>
-      <div>
+      <!-- <div class="text-center mb-5 mt-3">
         <input type="button" value="Edit Tournament" class="btn btn-outline-primary" onclick="editTournament()">
         <input type="button" value="View Matches" class="btn btn-outline-primary">
-      </div>
-    </div>
-
-    <div id="participants-header-container">
-      <h2>Participants</h2>
-    </div>
-    <div id="participants-container">
-      
-
-    </div>
-
-    <div id="join-container">
-      <h2>Join</h2>
-      <div id="qr-code"></div>
-      <a id="join-id-anchor"></a>
+      </div> -->
     </div>
     
 
