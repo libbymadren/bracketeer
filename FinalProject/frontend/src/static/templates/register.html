@@ -8,17 +8,19 @@
     <link href="/css/register.css" rel="stylesheet">
     <link href="/css/register-sm.css" rel="stylesheet" media="screen and (max-width: 900px)">
     <link href="/css/register-lg.css" rel="stylesheet" media="screen and (min-width: 900px)">
-    <link href="/css/navbar-styles.css" rel="stylesheet">
+    <link href="/css/navbar.css" rel="stylesheet">
+    <link href="/lib/croppie.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script src="/lib/croppie.min.js"></script>
 </head>
 <body>
     <script src="/js/navbar.js" type="module"></script>
     <script defer type="module">
         import {buildLink} from "/js/navbar.js";
-        buildLink("home-link", "/", "Home");
-        buildLink("login-link", "/login", "Login");
-        buildLink("register-link", "/register", "Register");
+        buildLink("/", "Home");
+        buildLink("/login", "Login");
+        buildLink("/register", "Register");
     </script>
 
     <main>
@@ -39,8 +41,12 @@
                     <input id="password-repeat-input" type="password" name="repeatPassword">
                 </div>
                 <div>
-                    <label for="Avatar">Avatar URL: </label>
-                    <input id="avatar-input" type="text" name="avatar">
+                    <div id="croppie-container">
+                    </div>
+                </div>
+                <div>
+                    <label for="banner" class="form-label">Avatar Image: </label><br>
+                    <input class="form-control" id="formFile" type="file" name="banner" type="file"></input>
                 </div>
                 <input id="register-button" type="submit" value="Register" class="btn btn-danger">
             </form>
