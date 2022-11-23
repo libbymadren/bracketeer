@@ -495,8 +495,8 @@ apiRouter.post('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) 
                         console.log("ERROR: Error saving match generation");
                     }
 
+                    res.status(200).json({"Message": "Matches generated"});
                     
-
                 }
                 else {
                     res.status(404).json({error: 'Participants not found'});

@@ -106,18 +106,26 @@ function buildMatchButton(user, tournament) {
                 console.log(response.status, response.statusText);
                 if (response.status == 200) {
                     // hide the join container
-                    let joinContainer = document.querySelector("join-container");
-                    joinContainer.sytle.display = "none";
+                    let joinContainer = document.querySelector("#join-container");
+                    joinContainer.style.display = "none";
 
                     // hide the generate matches button
                     generateButton.style.display = "none";
 
                     // show the view button
+                    let viewBtn = document.createElement("input");
+                    viewBtn.type = "button";
+                    viewBtn.value = "View Matches"
+                    viewBtn.classList.add("btn", "btn-outline-primary");
+                    viewBtn.addEventListener("click", function(e) {
+                        window.location = "/tournaments/" + tournament.id + "/matches";
+                    })
+                    tournamentInfo.appendChild(viewBtn);
 
 
                 }
             }).catch(err => {
-                console.err(err.status, err.statusText);
+                console.error(err);
             });
         })
         tournamentInfo.appendChild(generateButton);
