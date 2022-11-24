@@ -1,3 +1,4 @@
+import { currentUser } from "/js/common.js";
 
 const queryParams = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop)
@@ -36,7 +37,7 @@ fetch("/api/tournaments/" + targetTournamentId + "/matches").then(response => {
 
     generateRoundButtons(numberOfRounds);
 
-    getTournamentParticipants();
+    getTournament();
 
 }).catch(err => {
     console.error(err);
@@ -59,6 +60,17 @@ function generateRoundButtons(numberOfRounds) {
     }
     console.log(buttonGroup);
     buttonGroup.firstElementChild.classList.add("active");
+}
+
+function getTournament() {
+    fetch('/api/tournaments/' + queryParams.id).then(response => {
+        if (response.status == 200) {
+            return response.json();
+        }
+    }).then(json => {
+        tournament = json;
+        getTournamentParticipants();
+    })
 }
 
 function getTournamentParticipants() {
@@ -170,6 +182,10 @@ function buildRoundCard(match) {
         participantTwoContainer.appendChild(participantTwoUsernameLabel);
     }
 
+    console.log(tournament);
+    console.log("TOURNAMNET ORGANIZER ID: " + tournament.organizer_id);
+    console.log("CURRENT USER ID: " + currentUser.id);
+
     if (match.winner_id) {
         // if there is already a winner, build card to show winner
 
@@ -213,7 +229,7 @@ function buildRoundCard(match) {
 
         }
 
-    } else if (participant_one && participant_two) {
+    } else if (participant_one && participant_two && tournament.organizer_id == currentUser.id) {
         // add the winner selection buttons
         let winnerButtonContainerOne = document.createElement('div');
         winnerButtonContainerOne.classList.add("winner-button-container")

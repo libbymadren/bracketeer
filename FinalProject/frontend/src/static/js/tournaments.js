@@ -244,6 +244,7 @@ function updateView() {
 
         let script = document.createElement('script');
         script.src = "/js/matches.js";
+        script.type = "module";
         let css = document.createElement("link");
         css.href = "/css/matches.css";
         css.rel = "stylesheet";
