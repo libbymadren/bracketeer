@@ -225,33 +225,99 @@ function buildRoundCard(match) {
         winnerSelectionButtonTwo.appendChild(crownIconTwo);
 
         winnerSelectionButtonOne.addEventListener("click", function(e) {
-            winnerSelectionButtonOne.classList.remove("winner-button", "btn", "btn-danger");
-            winnerSelectionButtonOne.classList.add("winner-display", "bg-success", "text-white", "border-white");
-            winnerSelectionButtonTwo.style.display = "none";
-            participantOneContainer.classList.add("winner");
-            participantTwoContainer.classList.add("loser");
+            // save the match
+
             match.winner_id = match.participant_one_id;
             let nextMatch = matches.filter(nextMatch => nextMatch.number == match.next_match_number)[0];
-            if (nextMatch.participant_one_id) {
-                nextMatch.participant_two_id = match.participant_one_id;
-            } else {
-                nextMatch.participant_one_id = match.participant_one_id;
-            }
+            
+
+            fetch("/api/matches", {
+                "method": "PUT",
+                "body": JSON.stringify(match),
+                "headers": {
+                    "Content-Type": "application/json"
+                }
+            }).then(response => {
+                if (response.status == 200) {
+                    winnerSelectionButtonOne.classList.remove("winner-button", "btn", "btn-danger");
+                    winnerSelectionButtonOne.classList.add("winner-display", "bg-success", "text-white", "border-white");
+                    winnerSelectionButtonTwo.style.display = "none";
+                    participantOneContainer.classList.add("winner");
+                    participantTwoContainer.classList.add("loser");
+
+                    if (nextMatch.participant_one_id) {
+                        nextMatch.participant_two_id = match.participant_one_id;
+                    } else {
+                        nextMatch.participant_one_id = match.participant_one_id;
+                    }
+
+                    fetch("/api/matches", {
+                        "method": "PUT",
+                        "body": JSON.stringify(nextMatch),
+                        "headers": {
+                            "Content-Type": "application/json"
+                        }
+                    }).then(response => {
+                        if (response.status == 200) {
+                        }
+                    }).catch(err => {
+                        console.error(err);
+                    });
+                }
+            }).catch(err => {
+                console.error(err);
+            });
+
+            
         });
 
         winnerSelectionButtonTwo.addEventListener("click", function(e) {
-            winnerSelectionButtonTwo.classList.remove("winner-button", "btn", "btn-danger");
-            winnerSelectionButtonTwo.classList.add("winner-display", "bg-success", "text-white", "border-white");
-            winnerSelectionButtonOne.style.display = "none";
-            participantOneContainer.classList.add("loser");
-            participantTwoContainer.classList.add("winner");
+
             match.winner_id = match.participant_two_id;
-            let nextMatch = matches.filter(nextMatch => nextMatch.number == match.next_match_number)[0];
-            if (nextMatch.participant_one_id) {
-                nextMatch.participant_two_id = match.participant_two_id;
-            } else {
-                nextMatch.participant_one_id = match.participant_two_id;
-            }
+            
+
+            // save the match
+            fetch("/api/matches", {
+                "method": "PUT",
+                "body": JSON.stringify(match),
+                "headers": {
+                    "Content-Type": "application/json"
+                }
+            }).then(response => {
+                if (response.status == 200) {
+                    winnerSelectionButtonTwo.classList.remove("winner-button", "btn", "btn-danger");
+                    winnerSelectionButtonTwo.classList.add("winner-display", "bg-success", "text-white", "border-white");
+                    winnerSelectionButtonOne.style.display = "none";
+                    participantOneContainer.classList.add("loser");
+                    participantTwoContainer.classList.add("winner");
+                    let nextMatch = matches.filter(nextMatch => nextMatch.number == match.next_match_number)[0];
+                    if (nextMatch.participant_one_id) {
+                        nextMatch.participant_two_id = match.participant_two_id;
+                    } else {
+                        nextMatch.participant_one_id = match.participant_two_id;
+                    }
+                    
+                    fetch("/api/matches", {
+                        "method": "PUT",
+                        "body": JSON.stringify(nextMatch),
+                        "headers": {
+                            "Content-Type": "application/json"
+                        }
+                    }).then(response => {
+                        if (response.status == 200) {
+                        }
+                    }).catch(err => {
+                        console.error(err);
+                    });
+
+                }
+            }).catch(err => {
+                console.error(err);
+            });
+
+            
+
+
         });
 
 

@@ -39,10 +39,20 @@ function bulkInsertMatches(matches) {
     })
 }
 
+function updateMatch(match) {
+    let query = "UPDATE `match` SET ? WHERE id=?";
+    return db.query(query, [match, match.id]).then(({results}) => {
+        return results;
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
 module.exports = {
     getMatchById: getMatchById,
     getMatchesByUser: getMatchesByUser,
     getMatchesByTournament: getMatchesByTournament,
     createMatch: createMatch,
-    bulkInsertMatches: bulkInsertMatches
+    bulkInsertMatches: bulkInsertMatches,
+    updateMatch: updateMatch
 };

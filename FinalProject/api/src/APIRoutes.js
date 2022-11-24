@@ -272,7 +272,7 @@ apiRouter.get('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) =
     })
 });
 
-// create a match for a tournament
+// Generate matches for a tournament
 apiRouter.post('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
         res.status(401).json({"error": "Authentication Failed"});
@@ -597,7 +597,7 @@ apiRouter.put('/tournaments/join/:joinId', jwt.middleware, async (req, res) => {
 // MATCHES API
 // ----------------------------------------------------
 
-apiRouter.get('/matches/:matchId', (req, res) => {
+apiRouter.get('/matches/:matchId', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
         res.status(401).json({"error": "Authentication Failed"});
         return;
@@ -609,6 +609,24 @@ apiRouter.get('/matches/:matchId', (req, res) => {
         res.json(match);
     }).catch(err => {
         res.status(400).json({error: err});
+    });
+});
+
+apiRouter.put('/matches', jwt.middleware, (req, res) => {
+    if (!req.valid_jwt) {
+        res.status(401).json({"error": "Authentication failed"});
+        return;
+    }
+
+    let match = req.body;
+    console.log(match);
+
+    MatchDAO.updateMatch(match).then(match => {
+        console.log("Successful update");
+        res.status(200).json({"Message": "Match updated"});
+    }).catch(err => {
+        console.log(err);
+        res.status(400).json({"Error": "Error updating match"});
     });
 });
 
