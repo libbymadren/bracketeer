@@ -86,16 +86,17 @@ app.get('/tournaments/edit/:tournamentId', jwt.middleware, (req, res) => {
     res.sendFile(html_path + '/edit-tournament.html');
 });
 
-app.get('/tournaments/:tournamentId', jwt.middleware, (req, res) => {
+app.get('/tournaments', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
         res.redirect('/login');
         return;
     }
 
     res.sendFile(html_path + "/tournament.html");
+
 });
 
-app.get('/tournaments/:tournamentId/matches', jwt.middleware, (req, res) => {
+app.get('/tournaments/matches', jwt.middleware, (req, res) => {
     if (!req.valid_jwt) {
         res.redirect('/login');
         return;

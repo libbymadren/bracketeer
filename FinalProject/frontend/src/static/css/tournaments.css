@@ -1,14 +1,12 @@
-main {
- margin-top: 20px;
- width: 100vw;
- display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center;
-}
+/* GLOBAL */
 
-main>div {
-    width: 75vw;
+main {
+    margin-top: 20px;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 img {
@@ -19,19 +17,6 @@ img {
     width: 175px;
     height: 175px;
 }
-
-#join-container {
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid rgba(0, 0, 0, 0.13);
-    padding: 10px 10px 10px 10px;
-    border-radius: 10px;
-}
-
-
-
 
 #tournament-header {
     width: 100vw;
@@ -115,13 +100,17 @@ img {
     margin-bottom: 2px;
 }
 
-
+.participant-info:hover {
+    background-color: rgba(0, 0, 0, 0.199);
+    cursor: pointer;
+}
 
 
 #info-container-one {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    flex-wrap: wrap;
     width: 100%;
     margin-bottom: 20px;
     border-radius: 10px;
@@ -132,3 +121,60 @@ img {
     flex-direction: column;
     padding: 10px 10px 10px 10px;
 }
+
+#join-container {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.13);
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px;
+}
+
+#matches-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#buttons-container {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+/* SMALL SCREEN */
+@media screen and (max-width: 900px) {
+    main>div {
+        width: 95vw;
+    }
+
+    #participants-container>div {
+        flex: 50%;
+    }
+
+}
+
+/* LARGE SCREEN */
+@media screen and (min-width: 900px) {
+    main>div {
+        width: 75vw;
+    }
+}
+
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   

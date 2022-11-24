@@ -1,6 +1,5 @@
 
 
-
 let targetMatchId = ("" + window.location).split('/').at(-1);
 console.log(targetMatchId);
 

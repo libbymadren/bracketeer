@@ -1,6 +1,10 @@
 
-let targetTournamentId = ("" + window.location).split('/').at(-2);
-console.log(targetTournamentId);
+const queryParams = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop)
+});
+
+let targetTournamentId = queryParams.id;
+
 
 let matches = [];
 let participants = [];
@@ -43,13 +47,18 @@ function generateRoundButtons(numberOfRounds) {
     for (let i = 1; i <= numberOfRounds; i++) {
         let roundButton = document.createElement("input");
         roundButton.type = "button";
-        roundButton.value = i;
+        roundButton.value = "Round " + i;
         roundButton.classList.add("btn", "btn-danger");
         roundButton.addEventListener("click", function(e) {
-            generateRoundDisplay(e.target.value);
+            for (let child of buttonGroup.children)
+                child.classList.remove("active");
+            e.target.classList.add("active");
+            generateRoundDisplay(e.target.value.replace("Round ", ""));
         });
         buttonGroup.appendChild(roundButton);
     }
+    console.log(buttonGroup);
+    buttonGroup.firstElementChild.classList.add("active");
 }
 
 function getTournamentParticipants() {
@@ -84,7 +93,6 @@ function generateRoundDisplay(roundNumber) {
     }
 
 }
-
 
 function buildRoundCard(match) {
 

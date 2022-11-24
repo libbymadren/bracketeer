@@ -23,29 +23,69 @@ apiRouter.use(express.json({limit: '50mb'}));
 // USERS API
 // ----------------------------------------------------
 
-// Get all users
+// Get specific user
 apiRouter.get('/users', jwt.middleware, (req,  res) => {
     if (!req.valid_jwt) {
         res.status(401).json({"error": "Authentication Failed"});
         return;
     }
 
-    UserDAO.getUsers().then(users => {
-        res.json(users);
-      })
-      .catch(err => {
-        res.status(400).json({error: err});
-      });
+    if (req.query.id && req.query.username) {
+        res.status(401).json({"Error": "Bad request, only supply either id or username"})
+    }
+
+    if (req.query.id) {
+        console.log("Getting user by id");
+        const userId = req.query.id;
+        UserDAO.getUserById(userId).then(user => {
+            if(user) {
+                res.json(user);
+            }
+            else {
+                res.status(404).json({error: 'User not found'});
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err});
+        });
+
+    } else if (req.query.username) {
+        console.log("Getting user by username");
+        const username = req.query.username;
+        console.log(username);
+        UserDAO.getUserByUsername(username).then(user => {
+            if(user) {
+                res.json(user);
+            }
+            else {
+                res.status(404).json({error: 'User not found'});
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err});
+        });
+    } else {
+        console.log("Getting all users")
+        UserDAO.getAllUsers().then(users => {
+            res.json(users);
+        }).catch(err => {
+            console.log(err);
+            res.status(400).json({error: err});
+        });
+    }
+
+    
 });
 
-// Get specific user
-apiRouter.get('/users/byId/:userId', jwt.middleware, (req,  res) => {
+apiRouter.get('/users', jwt.middleware, (req,  res) => {
     if (!req.valid_jwt) {
         res.status(401).json({"error": "Authentication Failed"});
         return;
     }
 
-    const userId = req.params.userId;
+    const userId = req.query.username;
     UserDAO.getUserById(userId).then(user => {
         if(user) {
             res.json(user);
