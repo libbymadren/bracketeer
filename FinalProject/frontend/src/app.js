@@ -112,5 +112,9 @@ app.get('/login', (req, res) => {
     res.sendFile(html_path + "/login.html");
 });
 
+app.get('/offline', (req,  res) => {
+    res.sendFile(html_path + "/offline.html");
+});
+
 // As our server to listen for incoming connections
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));
