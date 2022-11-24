@@ -45,6 +45,8 @@ fetch('/api/tournaments/' + queryParams.id).then(response => {
     buildHeader();
     buildInfo();
 
+    getOrgainizerUsername();
+
     // check to see if the current user is the owner of the tournament
     // if so, build the owner buttons
     if (tournament.organizer_id == currentUser.id)
@@ -116,7 +118,7 @@ function buildInfo() {
     // create organizer field
     let organizerContainer = document.querySelector('#organizer-container');
     let organizer = document.createElement('label');
-    organizer.innerHTML = tournament.organizer_id; //TODO replace with actual orgainzer name
+    organizer.id="organizer-username";
     organizerContainer.appendChild(organizer);
 
     // create location field
@@ -253,7 +255,17 @@ function updateView() {
     }
 }
 
-
+function getOrgainizerUsername() {
+    fetch("/api/users?id=" + tournament.organizer_id).then(response => {
+        if (response.status == 200) {
+            return response.json();
+        }
+    }).then(json => {
+        // create organizer field
+        let organizer = document.querySelector('#organizer-username');
+        organizer.innerHTML = json.username;
+    });
+}
 
 function userValidation() {
 
