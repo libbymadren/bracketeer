@@ -1,0 +1,32 @@
+{
+    "name": "Bracketeer",
+    "short_name": "Bracket",
+    "lang": "en-US",
+    "scope": "/",
+    "start_url": "/",
+    "display": "minimal-ui",
+    "theme_color": "#e01c24",
+    "background_color": "#e01c24",
+    "icons": [
+      {
+        "src": "/images/logo-icon-transparent.png",
+        "sizes": "225x190",
+        "type": "image/png"
+      },
+      {
+        "src": "/images/logo-cropped.jpg",
+        "sizes": "863x359",
+        "type": "image/jpg"
+      },
+      {
+        "src": "/images/logo.jpg",
+        "sizes": "1200x1200",
+        "type": "image/jpg"
+      },
+      {
+        "src": "/android-chrome-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    }
+    ]
+  }
