@@ -4,18 +4,18 @@
 
 ## Frontend Routes
 
-Pages    | Status | Contributor(s) | Wireframe
--------- | ------ | -------------- | ---------
-Home     | ✅     | Libby          | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-groupT-Wireframe-Landing.png)
+Pages    | Status | Contributor(s) | 
+-------- | ------ | -------------- | 
+Home     | ✅     | Libby          | 
 Profile  | ✅     | Libby          |
-Register | ✅     | Jack, Libby    | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342%20-%20Wireframes-register.png)
+Register | ✅     | Jack, Libby    | 
 Login    | ✅     | Libby          |
 Landing  | ✅     | Libby          |
-Create Tournament  | ✅     | Nathan         | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-createjoin.png)
-Edit Tournament    | ✅     | Nathan         | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-edittournament.png)
+Create Tournament  | ✅     | Nathan         | 
+Edit Tournament    | ✅     | Nathan         | 
 T. View  | ✅     | Jack, Nathan           |
-Match View  | ✅     | Jack, Libby, Nathan           | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-bracketviewedit.png)
-Join     | ✅ | Jack | [wireframe](https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Proposal/Wireframes/csc342-Wireframe-createjoin.png)
+Match View  | ✅     | Jack, Libby, Nathan           | 
+Join     | ✅ | Jack | 
 Confirm Join  | ✅     | Jack, Nathan          |
 View Created Tournaments  | ✅     | Jack          |
 View Entered Tournaments  | ✅     | Jack          |
