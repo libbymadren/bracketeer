@@ -371,8 +371,8 @@ This site uses a cache-first strategy, due to the fact that only static resource
             <td>How to navigate them, and the offline functionality they provide</td>
             <td>Libby</td>
             <td></td>
-            <td></td>
-            <td></td>
+            <td>11/26/22</td>
+            <td>11/26/22</td>
         </tr>
         <tr>
             <td>Description of caching strategy</td>
@@ -380,7 +380,7 @@ This site uses a cache-first strategy, due to the fact that only static resource
             <td>Libby</td>
             <td></td>
             <td>11/26/22</td>
-            <td></td>
+            <td>11/26/22</td>
         </tr>
         <tr>
             <td>API Description</td>
