@@ -24,6 +24,8 @@ Error  | ✅     | Libby          |
 
 **15 pages / 15 pages = 100%**
 
+**Offline Functionality:** If a user has visited a page before going offline, these pages are still viewable when in offline mode. Otherwise, the user will view the Offline page, which gives a message stating that they are offline. This functionality is only available when the user is logged in, and does not apply to the Register, Login, and Home pages.  
+
 ## API Routes
 All API routes from the previous milestone were updated to connect to the database instead of using mock data.
 
@@ -69,4 +71,339 @@ xxx
 
 ## Individual Contributions
 
-xxx
+## Individual Contributions
+
+<table>
+    <thead>
+        <th colspan="6">Preliminary</th>
+    </thead>
+    <thead>
+        <th>Task Name</th>
+        <th>Description</th>
+        <th>Owner</th>
+        <th>Contributors</th>
+        <th>Due Date</th>
+        <th>Completion Date</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Create Task Plan</td>
+            <td>Create a Google Sheets that maps out all tasks that need to be done and in what order those tasks need to be completed</td>
+            <td>Jack</td>
+            <td>Jack</td>
+            <td>11/15/22</td>
+            <td>11/15/22</td>
+        </tr>
+        <tr>
+            <td>Set Up Repository</td>
+            <td>Create final project directory</td>
+            <td>Jack</td>
+            <td>Jack</td>
+            <td>11/15/22</td>
+            <td>11/15/22</td>
+        </tr>
+    </tbody>
+    
+</table>
+
+<br>
+<br>
+<br>
+
+<table>
+    <thead>
+        <th colspan="3">Part One: Finish Core functionality</th>
+    </thead>
+    <thead>
+        <th>Issue</th>
+        <th>Assignee</th>
+        <th>Completion Date</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Change header formatting on /tournaments/create frontend page</td>
+            <td>Jack</td>
+            <td>11/16/22</td>
+        </tr>
+        <tr>
+            <td>Add image upload/save to user avatar</td>
+            <td>Jack</td>
+            <td>11/17/22</td>
+        </tr>
+        <tr>
+            <td>Refresh JWT when a user visits a new page</td>
+            <td>Jack</td>
+            <td>11/16/22</td>
+        </tr>
+        <tr>
+            <td>Create responsive nav bar</td>
+            <td>Jack</td>
+            <td>11/18/22</td>
+        </tr>
+        <tr>
+            <td>Create bracket view for tournament</td>
+            <td>Jack</td>
+            <td>11/24/22</td>
+        </tr>
+        <tr>
+            <td>Create a page to view your created tournaments</td>
+            <td>Jack</td>
+            <td>11/17/22</td>
+        </tr>
+        <tr>
+            <td>Create a page to view your entered tournaments</td>
+            <td>Jack</td>
+            <td>11/17/22</td>
+        </tr>
+        <tr>
+            <td>Create join tournaments page</td>
+            <td>Jack</td>
+            <td>11/17/22</td>
+        </tr>
+        <tr>
+            <td>Make join tournament page responsive</td>
+            <td>Nathan</td>
+            <td>11/18/22</td>
+        </tr>
+        <tr>
+            <td>Make sure that every page is using a dynamic header</td>
+            <td>Libby</td>
+            <td>11/21/22</td>
+        </tr>
+        <tr>
+            <td>Join confirmation page needs to load organizer username</td>
+            <td>Nathan</td>
+            <td>11/18/22</td>
+        </tr>
+        <tr>
+            <td>Add error message if tournament doesn't exist on join confirm page</td>
+            <td>Libby</td>
+            <td>11/21/22</td>
+        </tr>
+        <tr>
+            <td>Fix: User can join tournaments multiple times</td>
+            <td>Nathan</td>
+            <td>11/19/22</td>
+        </tr>
+        <tr>
+            <td>Load banner image and participant images on tournament page</td>
+            <td>Jack</td>
+            <td>11/18/22</td>
+        </tr>
+        <tr>
+            <td>Restrict access to tournaments</td>
+            <td>Libby</td>
+            <td>11/19/22</td>
+        </tr>
+        <tr>
+            <td>Add end datetime to tournament</td>
+            <td>Jack</td>
+            <td>11/17/22</td>
+        </tr>
+        <tr>
+            <td>Validate start and end dates for tournament creation</td>
+            <td>Nathan</td>
+            <td>11/24/22</td>
+        </tr>
+        <tr>
+            <td>Add error handling to tournament create form</td>
+            <td>Nathan</td>
+            <td>11/19/22</td>
+        </tr>
+        <tr>
+            <td>Input validation on the register page</td>
+            <td>Nathan</td>
+            <td>11/19/22</td>
+        </tr>
+        <tr>
+            <td>Update profile page</td>
+            <td>Jack</td>
+            <td>11/17/22</td>
+        </tr>
+        <tr>
+            <td>Allow tournament page to display end date</td>
+            <td>Nathan</td>
+            <td>11/18/22</td>
+        </tr>
+        <tr>
+            <td>Fix: Tournaments entered stat on profile page includes tournaments created</td>
+            <td>Jack</td>
+            <td>11/18/22</td>
+        </tr>
+        <tr>
+            <td>Fix: Ends field is showing up as undefined in tournaments page</td>
+            <td>Nathan</td>
+            <td>11/19/22</td>
+        </tr>
+        <tr>
+            <td>Create edit page for tournament info</td>
+            <td>Nathan</td>
+            <td>11/21/22</td>
+        </tr>
+        <tr>
+            <td>Fix: Non-organizers can edit tournaments</td>
+            <td>Libby</td>
+            <td>11/21/22</td>
+        </tr>
+        <tr>
+            <td>Allow tournaments to be created on today's date at a future time</td>
+            <td>Libby</td>
+            <td>11/21/22</td>
+        </tr>
+        <tr>
+            <td>Cleaner date formatting for start/end time on tournaments page</td>
+            <td>Libby</td>
+            <td>11/21/22</td>
+        </tr>
+        <tr>
+            <td>Organizer field on tournaments page is showing up as user id</td>
+            <td>Jack</td>
+            <td>11/24/22</td>
+        </tr>
+        <tr>
+            <td>Only tournament owner should be able to select winner of their tournament's matches</td>
+            <td>Jack</td>
+            <td>11/24/22</td>
+        </tr>
+        <tr>
+            <td>Link up tournament edit page to the tournament page</td>
+            <td>Jack</td>
+            <td>11/24/22</td>
+        </tr>
+        <tr>
+            <td>Allow for clicking on participant on tournament page</td>
+            <td>Jack</td>
+            <td>11/24/22</td>
+        </tr>
+        <tr>
+            <td>Hide join container on tournaments page if matches have already been created</td>
+            <td>Jack</td>
+            <td>11/24/22</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
+<br>
+
+<table>
+    <thead>
+        <th colspan="6">Part Two: Implement Service Workers</th>
+    </thead>
+    <thead>
+        <th>Task Name</th>
+        <th>Description</th>
+        <th>Owner</th>
+        <th>Contributors</th>
+        <th>Due Date</th>
+        <th>Completion Date</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ADD CONTENT</td>
+        </tr>
+    </tbody>
+    
+</table>
+
+<br>
+<br>
+<br>
+
+<table>
+    <thead>
+        <th colspan="6">Part Three: Make App Installable</th>
+    </thead>
+    <thead>
+        <th>Task Name</th>
+        <th>Description</th>
+        <th>Owner</th>
+        <th>Contributors</th>
+        <th>Due Date</th>
+        <th>Completion Date</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ADD CONTENT</td>
+        </tr>
+    </tbody>
+    
+</table>
+
+<br>
+<br>
+<br>
+
+<table>
+    <thead>
+        <th colspan="6">Part Four: Final Project Writeup</th>
+    </thead>
+    <thead>
+        <th>Task Name</th>
+        <th>Description</th>
+        <th>Owner</th>
+        <th>Contributors</th>
+        <th>Due Date</th>
+        <th>Completion Date</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Final Progress</td>
+            <td>(description of your features) and what doesn't work (any known issues)</td>
+            <td>Nathan</td>
+            <td></td>
+            <td>11/26/22</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Authorization and Authentication Writeup</td>
+            <td>What techniques are you using? What data is being stored where and how? How are you making sure users only access what they are allowed to?</td>
+            <td>Jack</td>
+            <td></td>
+            <td>11/26/22</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Pages List</td>
+            <td>How to navigate them, and the offline functionality they provide</td>
+            <td>Libby</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Description of caching strategy</td>
+            <td>A description of your caching strategy and why you chose it</td>
+            <td>Libby</td>
+            <td></td>
+            <td>11/26/22</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>API Description</td>
+            <td>A list of all API endpoints with a description of their behavior. If you made changes since the previous milestone, make sure you update this table.</td>
+            <td>Nathan</td>
+            <td></td>
+            <td>11/26/22</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Final ER Diagram</td>
+            <td>Final ER digram reflecting final database structure</td>
+            <td>Jack</td>
+            <td></td>
+            <td>11/26/22</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Individual contributions section</td>
+            <td>Tasks completed by team members</td>
+            <td>Jack</td>
+            <td></td>
+            <td>11/26/22</td>
+            <td></td>
+        </tr>
+    </tbody>
+    
+</table>
