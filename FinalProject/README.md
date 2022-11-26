@@ -301,9 +301,30 @@ This site uses a cache-first strategy, due to the fact that only static resource
         <th>Due Date</th>
         <th>Completion Date</th>
     </thead>
-    <tbody>
+    <tbody>   
         <tr>
-            <td>ADD CONTENT</td>
+            <td>Discuss what offline functionality</td>
+            <td>Discuss what and where offline functionality is needed</td>
+            <td>Libby</td>
+            <td>Libby, Jack, Nathan</td>
+            <td>11/26/22</td>
+            <td>11/22/22</td>
+        </tr>
+        <tr>
+            <td>Create ServiceWorker.js</td>
+            <td>Add code to handle caching and offline functionality</td>
+            <td>Libby</td>
+            <td>Libby</td>
+            <td>11/26/22</td>
+            <td>11/23/22</td>
+        </tr>
+        <tr>
+            <td>Register service worker</td>
+            <td>Add code to register a service worker when a user logs in</td>
+            <td>Libby</td>
+            <td>Libby</td>
+            <td>11/26/22</td>
+            <td>11/23/22</td>
         </tr>
     </tbody>
     
