@@ -68,6 +68,8 @@ xxx
 ## ER Diagram
 <img src="https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Milestone2/ER_Diagram.png"/>
 
+## Caching Strategy
+This site uses a cache-first strategy, due to the fact that only static resources (pages) are being cached. If this project were to be expanded upon, more dynamic resources would likely be cached a more hybrid cache strategy would be implemented in order to handle more behavior when offline.
 
 ## Individual Contributions
 
