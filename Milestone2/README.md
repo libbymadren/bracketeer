@@ -350,7 +350,7 @@ Included below are a few more minor features that need to be implemented:
             <td>(description of your features) and what doesn't work (any known issues)</td>
             <td>Nathan</td>
             <td></td>
-            <td></td>
+            <td>11/26/22</td>
             <td></td>
         </tr>
         <tr>
@@ -358,7 +358,7 @@ Included below are a few more minor features that need to be implemented:
             <td>What techniques are you using? What data is being stored where and how? How are you making sure users only access what they are allowed to?</td>
             <td>Jack</td>
             <td></td>
-            <td></td>
+            <td>11/26/22</td>
             <td></td>
         </tr>
         <tr>
@@ -374,7 +374,7 @@ Included below are a few more minor features that need to be implemented:
             <td>A description of your caching strategy and why you chose it</td>
             <td>Libby</td>
             <td></td>
-            <td></td>
+            <td>11/26/22</td>
             <td></td>
         </tr>
         <tr>
@@ -382,7 +382,7 @@ Included below are a few more minor features that need to be implemented:
             <td>A list of all API endpoints with a description of their behavior. If you made changes since the previous milestone, make sure you update this table.</td>
             <td>Nathan</td>
             <td></td>
-            <td></td>
+            <td>11/26/22</td>
             <td></td>
         </tr>
         <tr>
@@ -390,7 +390,7 @@ Included below are a few more minor features that need to be implemented:
             <td>Final ER digram reflecting final database structure</td>
             <td>Jack</td>
             <td></td>
-            <td></td>
+            <td>11/26/22</td>
             <td></td>
         </tr>
         <tr>
@@ -398,7 +398,7 @@ Included below are a few more minor features that need to be implemented:
             <td>Tasks completed by team members</td>
             <td>Jack</td>
             <td></td>
-            <td></td>
+            <td>11/26/22</td>
             <td></td>
         </tr>
     </tbody>
