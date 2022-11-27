@@ -31,7 +31,6 @@ function buildNavLarge() {
     
     largeNav.appendChild(navLogoContainer);
     largeNav.appendChild(largeNavButtonsContainer);
-    console.log(currentUser);
     if (currentUser)
         buildNavProfile(currentUser);
     
@@ -98,10 +97,6 @@ function buildNavSmall() {
     let body = document.querySelector("body");
     body.prepend(dropdownDiv);
     body.prepend(nav);
-
-
-
-    console.log(body.childNodes);
 }
 
 

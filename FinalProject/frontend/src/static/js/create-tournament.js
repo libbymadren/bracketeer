@@ -86,7 +86,7 @@ createForm.addEventListener('submit', async (e) => {
             }
 
         }).then(json => {
-            window.location = "/tournaments/" + json.id;
+            window.location = "/tournaments?id=" + json.id;
         }).catch(err => {
             console.error(err)
         })
