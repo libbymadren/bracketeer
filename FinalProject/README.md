@@ -59,8 +59,18 @@ Method   | Route                                         | Description          
 `GET`    | `/logout`                                     | Logs out the current user                                       | Jack
 
 
-<h2> Working and Non-Working Features </h2>
-xxx
+<h2> Working Features </h2>
+Users can...
+
+* Make and manage accounts
+* See user statistics (Tournaments created and joined)
+* Create, edit, view, and manage Tournamnets
+* Join and participate in Tournaments owned by other users via link or QR Code
+* Create, edit, view, and manage a Bracket for each Tournament
+* Choose Match and Tournament winners for Tournaments they own
+* View Brackets offline
+
+The features above have no known bugs or issues. The current build of our project contains no notable in-progress or otherwise not yet fully functional features.
 
 <h2> Authentication/Authorization Process </h2>
 <p>For authentication we are using JWT tokens and password hashing + salt using Argon2. The JWT token implementation is using the jsonwebtoken Node.JS libary. We have a jwt utility javascript file that facilitates generating, deleting, and verifiying jwt tokens. As a part of the jwt.js file we have a middleware function that is used within our protected routes. In terms of password storage, we are using Argon2 to hash passwords and we are generating a random salt value by using a sha256 hash of a random value. To integrate Argon2, we are using the node.js argon2 library: https://www.npmjs.com/package/argon2. Lastly, I would like to mention that our JWT tokens have a short expiry time of 5 min and are refreshed on every valid request. The users hashed passwords and salts are being stored in our database's user table. Authorization is being facilitated by our middleware, certain routes are protected and require a valid JWT, then that JWT's payload will provide the route/frontend page with necessary information to retrieve/dispaly data that the user should have access to.</p>
@@ -348,7 +358,28 @@ This site uses a cache-first strategy, due to the fact that only static resource
     </thead>
     <tbody>
         <tr>
-            <td>ADD CONTENT</td>
+            <td>Generate Manifest</td>
+            <td>Generate manifest file</td>
+            <td>Nathan</td>
+            <td>Nathan</td>
+            <td>11/25/22</td>
+            <td>11/25/22</td>
+        </tr>
+        <tr>
+            <td>Generate Icons</td>
+            <td>Generate icons for various display types</td>
+            <td>Nathan</td>
+            <td>Nathan</td>
+            <td>11/25/22</td>
+            <td>11/25/22</td>
+        </tr>
+        <tr>
+            <td>Test Installable App</td>
+            <td>Generate manifest file</td>
+            <td>Nathan</td>
+            <td>Nathan</td>
+            <td>11/26/22</td>
+            <td>11/26/22</td>
         </tr>
     </tbody>
     
@@ -375,15 +406,15 @@ This site uses a cache-first strategy, due to the fact that only static resource
             <td>Final Progress</td>
             <td>(description of your features) and what doesn't work (any known issues)</td>
             <td>Nathan</td>
-            <td></td>
+            <td>Nathan</td>
             <td>11/26/22</td>
-            <td></td>
+            <td>11/26/22</td>
         </tr>
         <tr>
             <td>Authorization and Authentication Writeup</td>
             <td>What techniques are you using? What data is being stored where and how? How are you making sure users only access what they are allowed to?</td>
             <td>Jack</td>
-            <td></td>
+            <td>Jack</td>
             <td>11/26/22</td>
             <td></td>
         </tr>
@@ -391,7 +422,7 @@ This site uses a cache-first strategy, due to the fact that only static resource
             <td>Pages List</td>
             <td>How to navigate them, and the offline functionality they provide</td>
             <td>Libby</td>
-            <td></td>
+            <td>Libby</td>
             <td>11/26/22</td>
             <td>11/26/22</td>
         </tr>
@@ -399,7 +430,7 @@ This site uses a cache-first strategy, due to the fact that only static resource
             <td>Description of caching strategy</td>
             <td>A description of your caching strategy and why you chose it</td>
             <td>Libby</td>
-            <td></td>
+            <td>Libby</td>
             <td>11/26/22</td>
             <td>11/26/22</td>
         </tr>
@@ -407,15 +438,15 @@ This site uses a cache-first strategy, due to the fact that only static resource
             <td>API Description</td>
             <td>A list of all API endpoints with a description of their behavior. If you made changes since the previous milestone, make sure you update this table.</td>
             <td>Nathan</td>
-            <td></td>
+            <td>Nathan</td>
             <td>11/26/22</td>
-            <td></td>
+            <td>11/26/22</td>
         </tr>
         <tr>
             <td>Final ER Diagram</td>
             <td>Final ER digram reflecting final database structure</td>
             <td>Jack</td>
-            <td></td>
+            <td>Jack</td>
             <td>11/26/22</td>
             <td></td>
         </tr>
@@ -423,7 +454,7 @@ This site uses a cache-first strategy, due to the fact that only static resource
             <td>Individual contributions section</td>
             <td>Tasks completed by team members</td>
             <td>Jack</td>
-            <td></td>
+            <td>Jack</td>
             <td>11/26/22</td>
             <td></td>
         </tr>
