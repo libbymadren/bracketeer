@@ -18,20 +18,16 @@ async function loadFile(file){
     });
 }
 
-let tournament;
+let tournament = null;
 fetch('/api/tournaments/' + tournamentId).then(response => {
     console.log(response);
     return response.json();
 }).then(json => {
     tournament = json;
-    return fetch('/api/users/current');
+    buildForm();
 })
-.then(loggedInUser => {
-    if (loggedInUser.id !== tournament.organizer_id) {
-        window.location = '/error';
-    }
-})
-.then(() => {
+
+function buildForm() {
     console.log(tournament);
 
     const name = document.querySelector('#name')
@@ -85,9 +81,9 @@ fetch('/api/tournaments/' + tournamentId).then(response => {
                 return response.json()
             }
         }).then(json => {
-            window.location.replace("/tournaments/" + json.id);
+            window.location.replace("/tournaments?id=" + json.id);
         }).catch(err => {
             console.error(err)
         })
     });
-});
+};

@@ -21,9 +21,30 @@ function getMatchesByTournament(tournamentId) {
 }
 
 function createMatch(match) {
-    return db.query('INSERT INTO match (id, tournament_id, participant_one_id, participant_two_id, winner_id, next_match_id) VALUES (?,?,?,?,?,?)',
-    [match.id, match.tournament_id, match.participant_one_id, match.participant_two_id, match.winner_id, match.next_match_id]).then(({results}) => {
+    return db.query('INSERT INTO match (tournament_id, participant_one_id, participant_two_id, winner_id, number, round, next_match_number) VALUES (?,?,?,?,?,?, ?)',
+    [match.tournament_id, match.participant_one_id, match.participant_two_id, match.winner_id, match.number, match.next_match_number]).then(({results}) => {
         return getMatchById(results.insertId);
+    })
+}
+
+function bulkInsertMatches(matches) {
+    console.log("Bulk inserting matches");
+    let query = "INSERT INTO `match` (tournament_id, participant_one_id, participant_two_id, winner_id, number, round, next_match_number) VALUES ?";
+    values = [];
+    for (let match of matches) {
+        values.push([match.tournament_id, match.participant_one_id, match.participant_two_id, match.winner_id, match.number, match.round, match.next_match_number])
+    }
+    return db.query(query, [values]).then(({results}) => {
+        return results;
+    })
+}
+
+function updateMatch(match) {
+    let query = "UPDATE `match` SET ? WHERE id=?";
+    return db.query(query, [match, match.id]).then(({results}) => {
+        return results;
+    }).catch(err => {
+        console.log(err);
     })
 }
 
@@ -31,5 +52,7 @@ module.exports = {
     getMatchById: getMatchById,
     getMatchesByUser: getMatchesByUser,
     getMatchesByTournament: getMatchesByTournament,
-    createMatch: createMatch
+    createMatch: createMatch,
+    bulkInsertMatches: bulkInsertMatches,
+    updateMatch: updateMatch
 };

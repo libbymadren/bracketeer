@@ -1,3 +1,4 @@
+import { currentUser } from "/js/common.js";
 
 function generateImageUrl(arrayBuffer) {
     let blob = new Blob([arrayBuffer], {
@@ -26,15 +27,12 @@ function buildNavLarge() {
 
     
 
-    fetch('/api/users/current').then(response => {
-        return response.json();
-    }).then(json => {
-        buildNavProfile(json);
-    })
-
-
+    
+    
     largeNav.appendChild(navLogoContainer);
     largeNav.appendChild(largeNavButtonsContainer);
+    if (currentUser)
+        buildNavProfile(currentUser);
     
 
     let body = document.querySelector("body");
@@ -99,10 +97,6 @@ function buildNavSmall() {
     let body = document.querySelector("body");
     body.prepend(dropdownDiv);
     body.prepend(nav);
-
-
-
-    console.log(body.childNodes);
 }
 
 

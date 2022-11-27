@@ -63,6 +63,13 @@ function updateUser(userBody, userId) {
     });
 }
 
+function getUserByUsername(username) {
+  let query = "SELECT * FROM user WHERE username=?";
+  return db.query(query, [username]).then(({results}) => {
+    return results[0];
+  })
+}
+
 
 module.exports = {
   getUserByCredentials: getUserByCredentials,
@@ -70,5 +77,6 @@ module.exports = {
   getUserById: getUserById,
   deleteUser: deleteUser,
   createUser: createUser,
-  updateUser: updateUser
+  updateUser: updateUser,
+  getUserByUsername: getUserByUsername
 };

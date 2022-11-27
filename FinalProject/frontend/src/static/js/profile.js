@@ -14,15 +14,46 @@ let tournaments = {
     "upcoming": []
 }
 
-fetch('api/users/current').then(res => {
-    return res.json();
-}).then(json => {
-    currentUser = json;
+let targetUsername = ("" + window.location).split('/').at(-1);
+
+const queryParams = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop)
+});
+
+if (queryParams.username) {
+    fetch('api/users?username=' + queryParams.username).then(res => {
+        return res.json();
+    }).then(json => {
+        currentUser = json;
+        buildPage(json);
+    }).catch(err => {
+        console.log(err);
+    });
+} else if (queryParams.id) {
+    fetch('api/users?id=' + queryParams.id).then(res => {
+        return res.json();
+    }).then(json => {
+        currentUser = json;
+        buildPage(json);
+    }).catch(err => {
+        console.log(err);
+    });
+
+} else {
+    fetch('api/users/current').then(res => {
+        return res.json();
+    }).then(json => {
+        currentUser = json;
+        buildPage(json);
+    }).catch(err => {
+        console.log(err);
+    });
+}
+
+function buildPage(json) {
     buildUserInfo(json);
     getUserTournaments();
-}).catch(err => {
-    console.log(err);
-});
+}
 
 function buildUserInfo(json) {
     document.querySelector('#profile-username').innerHTML = json.username;
