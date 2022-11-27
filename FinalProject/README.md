@@ -417,7 +417,7 @@ This site uses a cache-first strategy, due to the fact that only static resource
             <td>Jack</td>
             <td>Jack</td>
             <td>11/26/22</td>
-            <td></td>
+            <td>11/26/22</td>
         </tr>
         <tr>
             <td>Pages List</td>
@@ -449,7 +449,7 @@ This site uses a cache-first strategy, due to the fact that only static resource
             <td>Jack</td>
             <td>Jack</td>
             <td>11/26/22</td>
-            <td></td>
+            <td>11/26/22</td>
         </tr>
         <tr>
             <td>Individual contributions section</td>
@@ -457,7 +457,7 @@ This site uses a cache-first strategy, due to the fact that only static resource
             <td>Jack</td>
             <td>Jack</td>
             <td>11/26/22</td>
-            <td></td>
+            <td>11/26/22</td>
         </tr>
     </tbody>
     
