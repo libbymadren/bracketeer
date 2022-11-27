@@ -84,8 +84,6 @@ This site uses a cache-first strategy, due to the fact that only static resource
 
 ## Individual Contributions
 
-## Individual Contributions
-
 <table>
     <thead>
         <th colspan="6">Preliminary</th>
