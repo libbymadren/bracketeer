@@ -1,3 +1,21 @@
+
+export let currentUser = await getCurrentUser();
+console.log(currentUser);
+function getCurrentUser() {
+  return new Promise((resolve, reject) => {
+    fetch('/api/users/current').then(response => {
+      if (response.status == 200) {
+        return response.json();
+      }
+    }).then(json => {
+      resolve(json);
+    }).catch(err => {
+      console.error(err);
+      window.location = "/error";
+    });
+  })
+}
+
 function registerServiceWorker() {
     if (!navigator.serviceWorker) { // Are SWs supported?
       return;

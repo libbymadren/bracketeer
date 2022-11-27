@@ -159,7 +159,7 @@ function loadTournaments(tournaments){
 
 
         tournamentCard.addEventListener("click", function(e) {
-            window.location = "/tournaments/" + tournament.id;
+            window.location = "/tournaments?id=" + tournament.id;
         });
 
         tournamentsContainer.appendChild(tournamentCard);
