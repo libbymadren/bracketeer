@@ -7,9 +7,11 @@ function log(...data) {
 console.log("SW")
 
 
-// const STATIC_CACHE_NAME = 'bracketeer-static-v0';
+const STATIC_CACHE_NAME = 'bracketeer-static-v0';
 
 self.addEventListener('install', event => {
+    caches.delete(STATIC_CACHE_NAME);
+    
     console.log("Installing service worker")
     log('install', event);
 
@@ -105,7 +107,7 @@ self.addEventListener('fetch', event => {
         event.respondWith(cacheSecond(event.request));
     }
 
-// });
+});
 
 async function cacheSecond(request) {
     let cache = await caches.open(STATIC_CACHE_NAME);
