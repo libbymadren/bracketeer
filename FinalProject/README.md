@@ -76,7 +76,8 @@ The features above have no known bugs or issues. The current build of our projec
 <p>For authentication we are using JWT tokens and password hashing + salt using Argon2. The JWT token implementation is using the jsonwebtoken Node.JS libary. We have a jwt utility javascript file that facilitates generating, deleting, and verifiying jwt tokens. As a part of the jwt.js file we have a middleware function that is used within our protected routes. In terms of password storage, we are using Argon2 to hash passwords and we are generating a random salt value by using a sha256 hash of a random value. To integrate Argon2, we are using the node.js argon2 library: https://www.npmjs.com/package/argon2. Lastly, I would like to mention that our JWT tokens have a short expiry time of 5 min and are refreshed on every valid request. The users hashed passwords and salts are being stored in our database's user table. Authorization is being facilitated by our middleware, certain routes are protected and require a valid JWT, then that JWT's payload will provide the route/frontend page with necessary information to retrieve/dispaly data that the user should have access to.</p>
 
 ## ER Diagram
-<img src="https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/Milestone2/ER_Diagram.png"/>
+<img src="https://github.ncsu.edu/engr-csc342/csc342-2022Fall-groupT/blob/master/FinalProject/ER_Diagram_Updated.png"/>
+
 
 ## Caching Strategy
 This site uses a cache-first strategy, due to the fact that only static resources (pages) are being cached. If this project were to be expanded upon, more dynamic resources would likely be cached a more hybrid cache strategy would be implemented in order to handle more behavior when offline.
